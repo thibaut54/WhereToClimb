@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.thibaut.wheretoclimb:business:unknown">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/thibaut/wheretoclimb/business/unknown/business-unknown.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/thibaut/wheretoclimb/business/unknown/business-unknown-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/thibaut/wheretoclimb/business/unknown/business-unknown-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
