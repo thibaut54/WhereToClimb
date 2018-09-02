@@ -12,8 +12,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>wheretoclimb</artifactId>
 		<groupId>org.thibaut</groupId>
+		<artifactId>wheretoclimb</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
@@ -28,7 +28,7 @@
 
 		<!-- =-=-=-= Module =-=-=-= -->
 		<dependency>
-			<groupId>org.thibaut.wheretoclimb</groupId>
+			<groupId>org.thibaut</groupId>
 			<artifactId>model</artifactId>
 		</dependency>
 
