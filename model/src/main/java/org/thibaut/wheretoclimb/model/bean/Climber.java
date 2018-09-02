@@ -80,23 +80,16 @@ public class Climber implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	//	public Climber( String gender, String firstName, String lastName,
-//	                String userName, String password, String email, boolean isEmailVisible,
-//	                String gradeFirstAttempt, String gradeMax, String gradeAverage,
-//	                Date createAccountDate, Date dateOfBirth ) {
-//		this.gender = gender;
-//		this.firstName = firstName;
-//		this.lastName = lastName;
-//		this.userName = userName;
-//		this.password = password;
-//		this.email = email;
-//		this.isEmailVisible = isEmailVisible;
-//		this.gradeFirstAttempt = gradeFirstAttempt;
-//		this.gradeMax = gradeMax;
-//		this.gradeAverage = gradeAverage;
-//		this.createAccountDate = createAccountDate;
-//		this.dateOfBirth = dateOfBirth;
-//	}
+	public Climber( String gender, String firstName, String lastName,
+	                String userName, String password, String email, Date createAccountDate ) {
+		this.gender = gender;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.createAccountDate = createAccountDate;
+	}
 
 
 //----------TOSTRING----------
