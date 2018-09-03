@@ -2,11 +2,13 @@ package org.thibaut.wheretoclimb.consumer.repository;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.thibaut.wheretoclimb.model.bean.Atlas;
 import org.thibaut.wheretoclimb.model.bean.Climber;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +18,11 @@ import java.util.List;
 public class DbSeeder implements CommandLineRunner {
 
 	private ClimberRepository climberRepository;
+	private AtlasRepository atlasRepository;
 
-	public DbSeeder( ClimberRepository climberRepository ) {
+	public DbSeeder( ClimberRepository climberRepository, AtlasRepository atlasRepository ) {
 		this.climberRepository = climberRepository;
+		this.atlasRepository = atlasRepository;
 	}
 
 	/**
@@ -32,28 +36,33 @@ public class DbSeeder implements CommandLineRunner {
 
 		System.out.println( "DbSeeder RUN" );
 
-		Climber climber1 = new Climber( "male", "John",
+		Collection< Climber > climbers = new ArrayList<>(  );
+
+		climbers.add( new Climber( "male", "John",
 				"Doe", "Another", "1235",
-				"john@gmail.com",
-				getDate());
+				"john@gmail.com", getDate()));
 
 
 		Climber climber2 = new Climber( "female", "Lea",
 				"Corvoisier", "Lele", "1265",
 				"lea@gmail.com", getDate() );
 
+		Atlas atlas1 = new Atlas( "Grimper en Lorraine", getDate(),
+				null, null, true);
 
+		Collection< Atlas > atlases = new ArrayList<Atlas>();
 
-		List< Climber > climbers = new ArrayList<>(  );
+		atlases.add( atlas1 );
 
-//		for ( Climber climber: climbers ) {
-//			climbers.add( climber );
-//		}
+		climber2.setAtlases( ( ArrayList< Atlas > ) atlases );
 
-		climbers.add( climber1 );
+		this.atlasRepository.saveAll( atlases );
+
+//		climbers.add( climber1 );
 		climbers.add( climber2 );
 
 		this.climberRepository.saveAll( climbers );
+		this.atlasRepository.deleteAll( atlases );
 
 		System.out.println( climberRepository.findUserFromEmail( "john@gmail.com","1235" ) );
 
