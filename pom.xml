@@ -44,7 +44,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<!--<java.version>1.8</java.version>-->
 	</properties>
 
 
@@ -76,6 +76,13 @@
 				<artifactId>business</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
+
+			<!--<dependency>-->
+				<!--<groupId>org.springframework.security</groupId>-->
+				<!--<artifactId>spring-security-bom</artifactId>-->
+				<!--<version>5.0.7.RELEASE</version>-->
+				<!--<type>pom</type>-->
+			<!--</dependency>-->
 
 			<!--<dependency>-->
 				<!--<groupId>javax</groupId>-->

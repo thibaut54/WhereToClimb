@@ -84,6 +84,10 @@
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.8.13" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:5.0.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-security:2.0.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:5.0.7.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.0.7.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:5.0.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.2.4" level="project" />
   </component>
 </module>
