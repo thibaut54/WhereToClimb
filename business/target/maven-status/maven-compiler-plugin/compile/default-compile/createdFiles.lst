@@ -1,0 +1,5 @@
+org\thibaut\wheretoclimb\business\impl\AbstractManager.class
+org\thibaut\wheretoclimb\business\impl\UserManagerImpl.class
+org\thibaut\wheretoclimb\business\contract\ManagerFactory.class
+org\thibaut\wheretoclimb\business\contract\UserManager.class
+org\thibaut\wheretoclimb\business\impl\ManagerFactoryImpl.class

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="WhereToClimb2" uuid="dc8dadc3-2402-4b91-bb8a-c87eaebab2a4">
+    <data-source name="WhereToClimb" uuid="4bf7d3dc-0e39-4b50-9144-f6e9949eb996">
       <database-info product="PostgreSQL" version="10.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.4" family="POSTGRES" exact-version="10.4">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>

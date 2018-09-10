@@ -1,5 +1,7 @@
 package org.thibaut.wheretoclimb.model.beans;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name="atlas")
 @PrimaryKeyJoinColumn(name = "element_id")
-public class Atlas extends Element implements Serializable {
+public class Atlas extends Element {
 
 //----------ATTRIBUTES----------
 
@@ -21,6 +23,7 @@ public class Atlas extends Element implements Serializable {
 		name = "areas_in_atlases",
 		joinColumns = { @JoinColumn(name = "atlas_id") },
 		inverseJoinColumns = { @JoinColumn(name = "area_id") } )
+	@JsonManagedReference
 	private Collection< Area > areas;
 	@ManyToMany
 	@JoinTable(
@@ -43,6 +46,18 @@ public class Atlas extends Element implements Serializable {
 	}
 
 
+//----------METHODS----------
+
+	@Override
+	public String toString( ) {
+		return "Atlas{" +
+				       "areas=" + areas +
+				       ", crags=" + crags +
+				       ", available=" + available +
+				       '}';
+	}
+
+
 //----------GETTERS & SETTERS----------
 
 	public Collection< Area > getAreas( ) {
@@ -59,5 +74,17 @@ public class Atlas extends Element implements Serializable {
 
 	public void setAvailable( boolean available ) {
 		this.available = available;
+	}
+
+	public void setAreas( Collection< Area > areas ) {
+		this.areas = areas;
+	}
+
+	public Collection< Crag > getCrags( ) {
+		return crags;
+	}
+
+	public void setCrags( Collection< Crag > crags ) {
+		this.crags = crags;
 	}
 }

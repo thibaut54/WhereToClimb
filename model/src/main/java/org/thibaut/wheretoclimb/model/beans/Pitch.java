@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name = "pitch")
 @PrimaryKeyJoinColumn(name = "element_id")
-public class Pitch extends Element implements Serializable {
+public class Pitch extends Element {
 
 //----------ATTRIBUTES----------
 

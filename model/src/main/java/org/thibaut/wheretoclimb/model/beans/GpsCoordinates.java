@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "gps_coordinates")
-public class GpsCoordinates implements Serializable {
+public class GpsCoordinates {
 
 //----------ATTRIBUTES----------
 

@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name = "route")
 @PrimaryKeyJoinColumn(name = "element_id")
-public class Route extends Element implements Serializable {
+public class Route extends Element {
 
 //----------ATTRIBUTES----------
 

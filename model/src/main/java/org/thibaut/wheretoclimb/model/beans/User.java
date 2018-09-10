@@ -1,8 +1,6 @@
 package org.thibaut.wheretoclimb.model.beans;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -11,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User {
 
 //----------ATTRIBUTES----------
 
@@ -21,11 +19,9 @@ public class User implements Serializable {
 	private String email;
 	@OneToMany/*(mappedBy = "climber", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "user_id")
-//	@JoinColumn(name = "user_email")
 	private Collection< Atlas > atlases;
 	@OneToMany/*(mappedBy = "climber", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "user_id")
-//	@JoinColumn(name = "user_email")
 	private Collection< Comment > comments;
 	private String password;
 	private String firstName;
@@ -38,59 +34,22 @@ public class User implements Serializable {
 	private String gradeMax;
 	private String gradeFirstAttempt;
 	private String gradeAverage;
+	@OneToMany/*(mappedBy = "user")*/
+	@JoinColumn(name = "user_id")
+	private Collection< UserRole > userRoles;
 //	@ManyToMany
-////	@OneToMany
 //	@JoinTable(
 //			name = "roles_of_users",
 //			joinColumns = { @JoinColumn(name = "user_id") },
 //			inverseJoinColumns = { @JoinColumn(name = "role_id") } )
-//	private Collection<Role> roles;
+//	private Collection<UserRole> roles;
 
-	@OneToOne
-	@JoinColumn(name = "role_id")
-	private Role role;
 
 
 //----------CONSTRUCTORS----------
 
 	public User( ) {
 
-	}
-
-	public User( ArrayList< Atlas > atlases, ArrayList< Comment > comments,
-	             String gender, String firstName, String lastName,
-	             String userName, String password, String email,
-	             boolean emailVisible, String gradeFirstAttempt, String gradeMax,
-	             String gradeAverage, Date createAccountDate, Date dateOfBirth ) {
-		this.atlases = atlases;
-		this.comments = comments;
-		this.gender = gender;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.password = password;
-		this.email = email;
-		this.emailVisible = emailVisible;
-		this.gradeFirstAttempt = gradeFirstAttempt;
-		this.gradeMax = gradeMax;
-		this.gradeAverage = gradeAverage;
-		this.createAccountDate = createAccountDate;
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public User( String gender, String firstName, String lastName, String userName, String password, String email, boolean emailVisible, String gradeFirstAttempt, String gradeMax, String gradeAverage, Date createAccountDate, Date dateOfBirth ) {
-		this.gender = gender;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.password = password;
-		this.email = email;
-		this.emailVisible = emailVisible;
-		this.gradeFirstAttempt = gradeFirstAttempt;
-		this.gradeMax = gradeMax;
-		this.gradeAverage = gradeAverage;
-		this.createAccountDate = createAccountDate;
-		this.dateOfBirth = dateOfBirth;
 	}
 
 	public User( String gender, String firstName, String lastName,
@@ -120,7 +79,7 @@ public class User implements Serializable {
 	@Override
 	public String toString( ) {
 		return "User{" +
-//				       "id=" + id +
+				       "id=" + id +
 				       ", gender='" + gender + '\'' +
 				       ", firstName='" + firstName + '\'' +
 				       ", lastName='" + lastName + '\'' +
@@ -134,13 +93,22 @@ public class User implements Serializable {
 
 //----------GETTERS & SETTERS
 
-//	public Integer getId( ) {
-//		return id;
-//	}
-//
-//	public void setId( Integer id ) {
-//		this.id = id;
-//	}
+
+	public Integer getId( ) {
+		return id;
+	}
+
+	public void setId( Integer id ) {
+		this.id = id;
+	}
+
+	public String getEmail( ) {
+		return email;
+	}
+
+	public void setEmail( String email ) {
+		this.email = email;
+	}
 
 	public Collection< Atlas > getAtlases( ) {
 		return atlases;
@@ -156,14 +124,6 @@ public class User implements Serializable {
 
 	public void setComments( Collection< Comment > comments ) {
 		this.comments = comments;
-	}
-
-	public String getEmail( ) {
-		return email;
-	}
-
-	public void setEmail( String email ) {
-		this.email = email;
 	}
 
 	public String getPassword( ) {
@@ -254,20 +214,12 @@ public class User implements Serializable {
 		this.gradeAverage = gradeAverage;
 	}
 
-	public Role getRole( ) {
-		return role;
+	public Collection< UserRole > getUserRoles( ) {
+		return userRoles;
 	}
 
-	public void setRole( Role role ) {
-		this.role = role;
+	public void setUserRoles( Collection< UserRole > userRoles ) {
+		this.userRoles = userRoles;
 	}
-
-	//	public Collection< Role > getRoles( ) {
-//		return roles;
-//	}
-//
-//	public void setRoles( Collection< Role > roles ) {
-//		this.roles = roles;
-//	}
 }
 

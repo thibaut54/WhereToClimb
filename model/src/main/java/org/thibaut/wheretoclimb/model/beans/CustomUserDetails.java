@@ -18,7 +18,7 @@
 //
 //        return getRoles()
 //                .stream()
-//                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole()))
+//                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleOfUsers()))
 //                .collect(Collectors.toList());
 //    }
 //

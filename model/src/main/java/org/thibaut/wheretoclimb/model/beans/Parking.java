@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "parking")
-public class Parking implements Serializable {
+public class Parking {
 
 //----------ATTRIBUTES----------
 

@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "comments") // **** CHECK IF THIS NAME WORKS WITH SQL!!!
-public class Comment implements Serializable {
+public class Comment {
 
 //----------ATTRIBUTES----------
 

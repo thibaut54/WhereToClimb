@@ -1,0 +1,10 @@
+org\thibaut\wheretoclimb\consumer\service\CustomUserDetailsService.class
+org\thibaut\wheretoclimb\consumer\service\UserServiceImpl.class
+org\thibaut\wheretoclimb\consumer\contract\DaoFactory.class
+org\thibaut\wheretoclimb\consumer\repository\UserRepository.class
+org\thibaut\wheretoclimb\consumer\repository\AreaRepository.class
+org\thibaut\wheretoclimb\consumer\repository\DaoFactoryImpl.class
+org\thibaut\wheretoclimb\consumer\repository\DbSeeder.class
+org\thibaut\wheretoclimb\consumer\contract\UserService.class
+org\thibaut\wheretoclimb\consumer\repository\RoleRepository.class
+org\thibaut\wheretoclimb\consumer\repository\AtlasRepository.class

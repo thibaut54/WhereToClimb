@@ -4,7 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.model.beans.Area;
 import org.thibaut.wheretoclimb.model.beans.Atlas;
-import org.thibaut.wheretoclimb.model.beans.Role;
+import org.thibaut.wheretoclimb.model.beans.UserRole;
 import org.thibaut.wheretoclimb.model.beans.User;
 
 import java.time.LocalDateTime;
@@ -18,16 +18,16 @@ public class DbSeeder implements CommandLineRunner {
 
 	private UserRepository userRepository;
 	private AtlasRepository atlasRepository;
-	private RoleRepository roleRepository;
+	private UserRoleRepository userRoleRepository;
 	private AreaRepository areaRepository;
 
 	public DbSeeder( UserRepository userRepository,
 	                 AtlasRepository atlasRepository,
-	                 RoleRepository roleRepository,
+	                 UserRoleRepository userRoleRepository,
 	                 AreaRepository areaRepository) {
 		this.userRepository = userRepository;
 		this.atlasRepository = atlasRepository;
-		this.roleRepository = roleRepository;
+		this.userRoleRepository = userRoleRepository;
 		this.areaRepository = areaRepository;
 	}
 
@@ -42,20 +42,22 @@ public class DbSeeder implements CommandLineRunner {
 
 		System.out.println( "DbSeeder RUN" );
 
+		//-----CLEAN DB
 		this.atlasRepository.deleteAll();
-		this.userRepository.deleteAll();
 		this.areaRepository.deleteAll();
-//		this.roleRepository.deleteAll();
+		this.userRoleRepository.deleteAll();
+		this.userRepository.deleteAll();
 
-		//POPULATE ROLE
-//		Collection< Role > roles = new ArrayList<>();
-//
-//		roles.add( new Role("ADMIN") );
-//		roles.add( new Role("USER") );
-//
-//		this.roleRepository.saveAll( roles );
 
-		//POPULATE AREA
+		//-----POPULATE USER_ROLES
+		Collection<UserRole> userRoles = new ArrayList<>();
+
+		userRoles.add( new UserRole("ADMIN"));
+
+		this.userRoleRepository.saveAll( userRoles );
+
+
+		//-----POPULATE AREA
 		Collection< Area > areas = new ArrayList<Area>();
 
 		areas.add( new Area("Maron", getDate(), null, null,
@@ -65,7 +67,7 @@ public class DbSeeder implements CommandLineRunner {
 		this.areaRepository.saveAll( areas );
 
 
-		//POPULATE ATLAS
+		//-----POPULATE ATLAS
 		Atlas atlas1 = new Atlas( "Grimper en Lorraine", getDate(),
 				null, null, true);
 
@@ -77,8 +79,8 @@ public class DbSeeder implements CommandLineRunner {
 		this.atlasRepository.saveAll( atlases );
 
 
-		//POPULATE USERS
-		ArrayList< User > users = new ArrayList<>(  );
+		//-----POPULATE USERS
+		Collection< User > users = new ArrayList<>(  );
 
 		users.add( new User( "male", "John",
 				"Doe", "Another", "1235",
@@ -88,20 +90,21 @@ public class DbSeeder implements CommandLineRunner {
 				"Corvoisier", "Lele", "1265",
 				"lea@gmail.com", getDate() ));
 
-		users.get( 1 ).setAtlases( atlases );
+		( ( ArrayList< User> ) users ).get( 1 ).setAtlases( atlases );
 
 		users.add( new User( "male", "Admin",
 				"Admin", "Admin", "123",
 				"admin@gmail.com", getDate()));
 
-		Role role = this.roleRepository.getOne( 1 );
+			//-----SET ROLE
+		( ( ArrayList< User> ) users ).get( 2 ).setUserRoles( userRoles );
 
-		users.get( 2 ).setRole( role );
 
-
+		//-----SAVE ALL USERS
 		this.userRepository.saveAll( users );
 
-		System.out.println( userRepository.findUserFromEmail( "john@gmail.com","1235" ) );
+//		users.forEach( (user -> System.out.println( user.toString() ) ) );
+
 
 	}
 

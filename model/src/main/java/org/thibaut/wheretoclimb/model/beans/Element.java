@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @Table(name="element")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Element implements Serializable {
+public abstract class Element {
 
 //----------ATTRIBUTES----------
 

@@ -11,7 +11,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "crag")
 @PrimaryKeyJoinColumn(name = "element_id")
-public class Crag extends Element implements Serializable {
+public class Crag extends Element {
 
 //----------ATTRIBUTES----------
 
