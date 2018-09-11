@@ -16,8 +16,8 @@ public interface UserRoleRepository extends JpaRepository< UserRole, Integer > {
 //	WHERE  user_role.user_id = users.id
 //	AND users.user_name = 'Admin'
 
-//	@Query("SELECT userRole.role FROM UserRole userRole , User user WHERE userRole.userId = user.id AND user.userName =?1")
-//	public List<UserRole /*String*/> findRoleByUserName( String username );
+	@Query("SELECT userRole.role FROM UserRole userRole , User user WHERE userRole.user.id = user.id AND user.userName =?1")
+	public List</*UserRole*/ String> findRoleByUserName( String username );
 
 	//Il n'arrive pas à choper l'attribut userId dans UserRole car ce putain d'attribut n'existe pas !!! L'attribut est bien créé en DB mais n'est pas dans mon bean Java. Je pense que c'est la faute au mapping mais alors comment fucking faire... ?!!
 

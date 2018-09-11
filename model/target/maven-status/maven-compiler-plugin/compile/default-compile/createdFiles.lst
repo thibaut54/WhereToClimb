@@ -1,5 +1,6 @@
 org\thibaut\wheretoclimb\model\beans\Comment.class
 org\thibaut\wheretoclimb\model\beans\Element.class
+org\thibaut\wheretoclimb\model\beans\UserRole.class
 org\thibaut\wheretoclimb\model\beans\Parking.class
 org\thibaut\wheretoclimb\model\beans\GpsCoordinates.class
 org\thibaut\wheretoclimb\model\beans\Crag.class
@@ -8,4 +9,3 @@ org\thibaut\wheretoclimb\model\beans\Area.class
 org\thibaut\wheretoclimb\model\beans\Route.class
 org\thibaut\wheretoclimb\model\beans\Atlas.class
 org\thibaut\wheretoclimb\model\beans\Pitch.class
-org\thibaut\wheretoclimb\model\beans\Role.class

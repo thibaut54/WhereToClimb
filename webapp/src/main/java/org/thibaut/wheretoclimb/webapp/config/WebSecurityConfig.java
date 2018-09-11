@@ -1,6 +1,7 @@
 //package org.thibaut.wheretoclimb.webapp.config;
 //
 //import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Qualifier;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.ComponentScan;
 //import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,8 @@
 //public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //
 ////	@Autowired
+//	@Autowired
+//	@Qualifier("customUserDetailsService")
 //	private UserDetailsService userDetailsService;
 //
 //	@Autowired
@@ -27,21 +30,28 @@
 //		auth.userDetailsService( userDetailsService ).passwordEncoder( passwordencoder( ) );
 //	}
 //
-//
 //	@Override
 //	protected void configure( HttpSecurity http ) throws Exception {
-//		http.authorizeRequests( )
-//					.antMatchers( "/hello" ).access( "hasRole('ROLE_ADMIN')" )
-//						.anyRequest( ).permitAll( )
-//				.and( )
-//					.formLogin( ).loginPage( "/login" )
-//					.usernameParameter( "username" ).passwordParameter( "password" )
-//				.and( )
-//					.logout( ).logoutSuccessUrl( "/login?logout" )
-//				.and( )
-//					.exceptionHandling( ).accessDeniedPage( "/403" )
-//				.and( )
-//					.csrf( );
+//
+//		http.csrf().disable();
+//        http.authorizeRequests()
+//                .antMatchers("**/secured/**").authenticated()
+//                .anyRequest().permitAll()
+//                .and()
+//                .formLogin().permitAll();
+//
+////		http.authorizeRequests( )
+////					.antMatchers( "/secured/users" ).access( "hasRole('ROLE_ADMIN')" )
+////						.anyRequest( ).permitAll( )
+////				.and( )
+////					.formLogin( ).loginPage( "/login" )
+////					.usernameParameter( "username" ).passwordParameter( "password" )
+////				.and( )
+////					.logout( ).logoutSuccessUrl( "/login?logout" )
+////				.and( )
+////					.exceptionHandling( ).accessDeniedPage( "/403" )
+////				.and( )
+////					.csrf( );
 //	}
 //
 //	@Bean( name = "passwordEncoder" )

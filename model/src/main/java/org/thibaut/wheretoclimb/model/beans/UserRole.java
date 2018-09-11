@@ -18,7 +18,6 @@ public class UserRole {
 	private Integer id;
 	private String role;
 	@ManyToOne
-//	@JoinColumn(name = "user_id")
 	private User user;
 //	private Integer userId;
 //	@OneToOne

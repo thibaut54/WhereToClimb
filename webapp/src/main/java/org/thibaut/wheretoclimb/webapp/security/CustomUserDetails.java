@@ -13,10 +13,10 @@
 //public class CustomUserDetails extends User implements UserDetails {
 //
 //	private static final long serialVersionUID = 1L;
-//	private List< UserRole /*String*/ > userRoles;
+//	private List< /*UserRole*/ String > userRoles;
 //
 //
-//	public CustomUserDetails( User user, List< UserRole /*String*/ > userRoles ) {
+//	public CustomUserDetails( User user, List< /*UserRole*/ String > userRoles ) {
 //		super( user );
 //		this.userRoles = userRoles;
 //	}

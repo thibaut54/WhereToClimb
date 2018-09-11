@@ -1,4 +1,5 @@
 D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut\wheretoclimb\model\beans\Parking.java
+D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut\wheretoclimb\model\beans\UserRole.java
 D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut\wheretoclimb\model\beans\Element.java
 D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut\wheretoclimb\model\beans\User.java
 D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut\wheretoclimb\model\beans\Crag.java
@@ -8,5 +9,4 @@ D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut
 D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut\wheretoclimb\model\beans\Atlas.java
 D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut\wheretoclimb\model\beans\Pitch.java
 D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut\wheretoclimb\model\beans\GpsCoordinates.java
-D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut\wheretoclimb\model\beans\Role.java
 D:\Workspace\OpenclassroomsProjects\WhereToClimb\model\src\main\java\org\thibaut\wheretoclimb\model\beans\Route.java

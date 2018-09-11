@@ -14,6 +14,7 @@
 //
 //@Service("customUserDetailsService")
 //public class CustomUserDetailsService implements UserDetailsService{
+//
 //	private final UserRepository userRepository;
 //	private final UserRoleRepository userRoleRepository;
 //
@@ -30,7 +31,7 @@
 //		if(null == user){
 //			throw new UsernameNotFoundException("No user present with username: "+username);
 //		}else{
-//			List< UserRole /*String*/ > userRoles = userRoleRepository.findRoleByUserName(username);
+//			List< /*UserRole*/ String > userRoles = userRoleRepository.findRoleByUserName(username);
 //			return new CustomUserDetails( user, userRoles );
 //		}
 //	}
