@@ -9,7 +9,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.business.contract.UserManager;
 import org.thibaut.wheretoclimb.model.beans.User;
 
 import java.util.List;
@@ -23,6 +22,7 @@ public class DemoApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run( DemoApplication.class, args );
+
 
 	}
 }

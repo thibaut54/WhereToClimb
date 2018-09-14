@@ -19,7 +19,6 @@ public class Area extends Element {
 //----------ATTRIBUTES----------
 
 	@ManyToMany(mappedBy = "areas")
-	@JsonBackReference
 	private Collection< Atlas > atlases;
 	@OneToMany/*(mappedBy = "area", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "area_id")

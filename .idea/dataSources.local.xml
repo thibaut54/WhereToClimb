@@ -10,5 +10,14 @@
       <user-name>admin_wtc</user-name>
       <introspection-schemas>@:@</introspection-schemas>
     </data-source>
+    <data-source name="WhereToClimb2" uuid="a16138cc-d3a2-4399-8b6a-6dc35187aab8">
+      <database-info product="PostgreSQL" version="10.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.4" family="POSTGRES" exact-version="10.4">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>admin_wtc</user-name>
+      <introspection-schemas>@:@</introspection-schemas>
+    </data-source>
   </component>
 </project>

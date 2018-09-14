@@ -14,7 +14,7 @@ public abstract class Element {
 //----------ATTRIBUTES----------
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String name;
 	private Date createDate;

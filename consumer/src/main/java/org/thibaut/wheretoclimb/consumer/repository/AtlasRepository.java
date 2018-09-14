@@ -7,4 +7,5 @@ import org.thibaut.wheretoclimb.model.beans.Atlas;
 @Repository
 public interface AtlasRepository  extends JpaRepository< Atlas, Integer > {
 
+	public Atlas findByName(String name);
 }

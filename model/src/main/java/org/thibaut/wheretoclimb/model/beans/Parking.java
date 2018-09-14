@@ -10,7 +10,7 @@ public class Parking {
 //----------ATTRIBUTES----------
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@OneToOne(mappedBy = "parking")
 	@JoinColumn(name = "crag_id")

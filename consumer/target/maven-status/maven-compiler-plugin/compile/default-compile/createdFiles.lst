@@ -1,6 +1,0 @@
-org\thibaut\wheretoclimb\consumer\repository\AreaRepository.class
-org\thibaut\wheretoclimb\consumer\repository\DaoFactoryImpl.class
-org\thibaut\wheretoclimb\consumer\repository\UserRoleRepository.class
-org\thibaut\wheretoclimb\consumer\contract\DaoFactory.class
-org\thibaut\wheretoclimb\consumer\repository\AtlasRepository.class
-org\thibaut\wheretoclimb\consumer\repository\UserRepository.class

@@ -1,8 +1,11 @@
 package org.thibaut.wheretoclimb.model.beans;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Bean used to define a user/climber account
@@ -14,11 +17,11 @@ public class User {
 //----------ATTRIBUTES----------
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String email;
-	@OneToMany/*(mappedBy = "climber", fetch = FetchType.LAZY)*/
-	@JoinColumn(name = "user_id")
+	@OneToMany(mappedBy = "user")
+//	@JoinColumn(name = "user_id")
 	private Collection< Atlas > atlases;
 	@OneToMany/*(mappedBy = "climber", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "user_id")
@@ -34,15 +37,12 @@ public class User {
 	private String gradeMax;
 	private String gradeFirstAttempt;
 	private String gradeAverage;
-	@OneToMany/*(mappedBy = "user")*/
-	@JoinColumn(name = "user_id")
-	private Collection< UserRole > userRoles;
-//	@ManyToMany
-//	@JoinTable(
-//			name = "roles_of_users",
-//			joinColumns = { @JoinColumn(name = "user_id") },
-//			inverseJoinColumns = { @JoinColumn(name = "role_id") } )
-//	private Collection<UserRole> roles;
+	@ManyToMany
+	@JoinTable(
+			name = "roles_of_users",
+			joinColumns = { @JoinColumn(name = "user_id") },
+			inverseJoinColumns = { @JoinColumn(name = "role_id") } )
+	private Collection< Role > roles;
 
 
 
@@ -53,25 +53,24 @@ public class User {
 	}
 
 	public User( String gender, String firstName, String lastName,
-	             String userName, String password, String email, Date createAccountDate ) {
+	             String userName, String email, Date createAccountDate ) {
 		this.gender = gender;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
-		this.password = password;
 		this.email = email;
 		this.createAccountDate = createAccountDate;
 	}
 
-	public User( User user ) {
-		this.gender = user.getGender();
-		this.firstName = user.getFirstName();
-		this.lastName = user.getLastName();
-		this.userName = user.getUserName();
-		this.password = user.getPassword();
-		this.email = user.getEmail();
-		this.createAccountDate = user.getCreateAccountDate();
-	}
+//	public User( User user ) {
+//		this.gender = user.getGender();
+//		this.firstName = user.getFirstName();
+//		this.lastName = user.getLastName();
+//		this.userName = user.getUserName();
+//		this.password = user.getPassword();
+//		this.email = user.getEmail();
+//		this.createAccountDate = user.getCreateAccountDate();
+//	}
 
 
 //----------TOSTRING----------
@@ -214,12 +213,12 @@ public class User {
 		this.gradeAverage = gradeAverage;
 	}
 
-	public Collection< UserRole > getUserRoles( ) {
-		return userRoles;
+	public Collection< Role > getUserRoles( ) {
+		return roles;
 	}
 
-	public void setUserRoles( Collection< UserRole > userRoles ) {
-		this.userRoles = userRoles;
+	public void setUserRoles( List< Role > userRoles ) {
+		this.roles = userRoles;
 	}
 }
 

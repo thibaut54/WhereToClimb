@@ -23,7 +23,6 @@ public class Atlas extends Element {
 		name = "areas_in_atlases",
 		joinColumns = { @JoinColumn(name = "atlas_id") },
 		inverseJoinColumns = { @JoinColumn(name = "area_id") } )
-	@JsonManagedReference
 	private Collection< Area > areas;
 	@ManyToMany
 	@JoinTable(
@@ -32,6 +31,9 @@ public class Atlas extends Element {
 			inverseJoinColumns = { @JoinColumn(name = "crag_id") } )
 	private Collection< Crag > crags;
 	private boolean available;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 
 //----------CONSTRUCTORS----------
@@ -40,9 +42,10 @@ public class Atlas extends Element {
 	}
 
 	public Atlas( String name, Date createDate, Date updateDate,
-	              ArrayList< Comment > commentList, boolean available ) {
+	              ArrayList< Comment > commentList, boolean available, User user ) {
 		super( name, createDate, updateDate, commentList );
 		this.available = available;
+		this.user = user;
 	}
 
 
@@ -86,5 +89,13 @@ public class Atlas extends Element {
 
 	public void setCrags( Collection< Crag > crags ) {
 		this.crags = crags;
+	}
+
+	public User getUser( ) {
+		return user;
+	}
+
+	public void setUser( User user ) {
+		this.user = user;
 	}
 }

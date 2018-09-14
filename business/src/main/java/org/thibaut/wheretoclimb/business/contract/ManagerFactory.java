@@ -10,4 +10,7 @@ public interface ManagerFactory {
 
 	void setAtlasManager( AtlasManager atlasManager );
 
+	RoleManager getRoleManager( );
+
+	void setRoleManager( RoleManager roleManager );
 }

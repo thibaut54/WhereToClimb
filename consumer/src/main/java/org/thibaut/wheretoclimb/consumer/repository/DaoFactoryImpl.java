@@ -2,7 +2,6 @@ package org.thibaut.wheretoclimb.consumer.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.thibaut.wheretoclimb.consumer.contract.DaoFactory;
 
 @Component
@@ -10,7 +9,7 @@ public class DaoFactoryImpl implements DaoFactory {
 
 	private UserRepository userRepository;
 
-	private UserRoleRepository userRoleRepository;
+	private RoleRepository roleRepository;
 
 	private AtlasRepository atlasRepository;
 
@@ -29,14 +28,14 @@ public class DaoFactoryImpl implements DaoFactory {
 	}
 
 	@Override
-	public UserRoleRepository getUserRoleRepository( ) {
-		return userRoleRepository;
+	public RoleRepository getRoleRepository( ) {
+		return roleRepository;
 	}
 
 	@Override
 	@Autowired
-	public void setUserRoleRepository( UserRoleRepository userRoleRepository ) {
-		this.userRoleRepository = userRoleRepository;
+	public void setRoleRepository( RoleRepository roleRepository ) {
+		this.roleRepository = roleRepository;
 	}
 
 	@Override

@@ -7,4 +7,7 @@ import java.util.List;
 public interface UserManager {
 
 	public List< User > getUsers();
+
+	//	@Autowired --> pourquoi cette injection ne fonctionne pas ?
+	User findByUserName( String username );
 }
