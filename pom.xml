@@ -44,7 +44,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<!--<java.version>1.8</java.version>-->
 	</properties>
 
 
@@ -77,29 +77,17 @@
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
-			<!--<dependency>-->
-				<!--<groupId>javax</groupId>-->
-				<!--<artifactId>javaee-api</artifactId>-->
-				<!--<version>8.0</version>-->
-				<!--<scope>provided</scope>-->
-			<!--</dependency>-->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-crypto</artifactId>
+				<version>5.0.7.RELEASE</version>
+			</dependency>
 
-			<!--<dependency>-->
-				<!--<groupId>org.springframework.boot</groupId>-->
-				<!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
-			<!--</dependency>-->
-
-			<!--<dependency>-->
-				<!--<groupId>org.springframework.boot</groupId>-->
-				<!--<artifactId>spring-boot-starter-web</artifactId>-->
-				<!--<version>2.0.4.RELEASE</version>-->
-			<!--</dependency>-->
-
-			<!--<dependency>-->
-				<!--<groupId>org.postgresql</groupId>-->
-				<!--<artifactId>postgresql</artifactId>-->
-				<!--<scope>runtime</scope>-->
-			<!--</dependency>-->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>5.0.7.RELEASE</version>
+			</dependency>
 
 		</dependencies>
 
