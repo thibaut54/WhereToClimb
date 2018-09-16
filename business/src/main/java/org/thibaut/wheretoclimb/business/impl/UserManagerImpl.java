@@ -42,4 +42,16 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 	}
 
 
+	@Override
+	public  User findByEmail( String email ){
+		User user = null;
+		try {
+			user = userRepository.findByEmail(email);
+		} catch (Exception e) {
+			throw e;
+		}
+		return user;
+	}
+
+
 }

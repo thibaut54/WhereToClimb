@@ -2,8 +2,72 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4960940-0ede-4e03-82c6-8be56b14b232" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/uml/wtc_spring_security_v2.ldb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/main/resources/templates/logoutSuccessfulPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/main/resources/templates/logoutSuccessfulPage.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/service/UserValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/form/UserForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/config/WebConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/src/main/resources/validation.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/webapp_war.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/webapp_war.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/webapp_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/webapp_war_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/batch/batch.iml" beforeDir="false" afterPath="$PROJECT_DIR$/batch/batch.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/business.iml" beforeDir="false" afterPath="$PROJECT_DIR$/business/business.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/business/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/contract/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/contract/UserManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/UserManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/UserManagerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/contract/AtlasManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/contract/ManagerFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/contract/PasswordManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/contract/RoleManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/contract/UserManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/impl/AbstractManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/impl/AtlasManagerImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/impl/ManagerFactoryImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/impl/PasswordManagerImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/impl/RoleManagerImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/impl/UserManagerImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/target/classes/org/thibaut/wheretoclimb/business/service/WebUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/consumer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/consumer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/target/classes/org/thibaut/wheretoclimb/consumer/contract/DaoFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/target/classes/org/thibaut/wheretoclimb/consumer/repository/AreaRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/target/classes/org/thibaut/wheretoclimb/consumer/repository/AtlasRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/target/classes/org/thibaut/wheretoclimb/consumer/repository/DaoFactoryImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/target/classes/org/thibaut/wheretoclimb/consumer/repository/ElementRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/target/classes/org/thibaut/wheretoclimb/consumer/repository/RoleRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/target/classes/org/thibaut/wheretoclimb/consumer/repository/UserRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/model.iml" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/Area.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/Atlas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/Comment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/Crag.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/Element.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/GpsCoordinates.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/Parking.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/Pitch.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/Role.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/Route.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/target/classes/org/thibaut/wheretoclimb/model/beans/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uml/wtc_spring_security_v2.EAP" beforeDir="false" afterPath="$PROJECT_DIR$/uml/wtc_spring_security_v2.EAP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/org/thibaut/wheretoclimb/webapp/TestApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/org/thibaut/wheretoclimb/webapp/config/WebSecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/org/thibaut/wheretoclimb/webapp/controller/WelcomeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/org/thibaut/wheretoclimb/webapp/demo/DemoApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/org/thibaut/wheretoclimb/webapp/security/UserDetailsServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/templates/403Page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/templates/admin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/templates/atlasPage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/templates/logoutSuccessfulPage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/target/classes/templates/userInfoPage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/webapp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/webapp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wheretoclimb.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wheretoclimb.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -12,6 +76,12 @@
     <ignored path="$PROJECT_DIR$/business/target/" />
     <ignored path="$PROJECT_DIR$/batch/target/" />
     <ignored path="$PROJECT_DIR$/webapp/target/" />
+    <ignored path="$PROJECT_DIR$/model/output/" />
+    <ignored path="$PROJECT_DIR$/business/output/" />
+    <ignored path="$PROJECT_DIR$/output/" />
+    <ignored path="$PROJECT_DIR$/batch/output/" />
+    <ignored path="$PROJECT_DIR$/webapp/output/" />
+    <ignored path="$PROJECT_DIR$/consumer/output/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,6 +181,7 @@
           <entry key="project.open.time.0" value="3" />
           <entry key="project.open.time.1" value="4" />
           <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="2" />
           <entry key="project.open.time.16" value="1" />
@@ -122,7 +193,7 @@
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="23" />
+          <entry key="project.opened" value="24" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -135,17 +206,17 @@
           <entry key="element" value="5" />
           <entry key="html" value="15" />
           <entry key="iml" value="3" />
-          <entry key="java" value="288" />
+          <entry key="java" value="297" />
           <entry key="jsp" value="11" />
           <entry key="log" value="1" />
-          <entry key="properties" value="8" />
+          <entry key="properties" value="10" />
           <entry key="repository" value="1" />
           <entry key="role" value="9" />
           <entry key="roles_of_users" value="9" />
           <entry key="sql" value="3" />
           <entry key="user_role" value="2" />
           <entry key="users" value="12" />
-          <entry key="xml" value="42" />
+          <entry key="xml" value="47" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -154,37 +225,37 @@
           <entry key="Database Element" value="68" />
           <entry key="HTML" value="15" />
           <entry key="IDEA_MODULE" value="3" />
-          <entry key="JAVA" value="288" />
+          <entry key="JAVA" value="297" />
           <entry key="JSP" value="11" />
           <entry key="Log" value="1" />
-          <entry key="Properties" value="8" />
+          <entry key="Properties" value="10" />
           <entry key="Scratch" value="3" />
           <entry key="UML" value="1" />
-          <entry key="XML" value="42" />
+          <entry key="XML" value="47" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="114" />
           <entry key="html" value="434" />
-          <entry key="java" value="11174" />
+          <entry key="java" value="11495" />
           <entry key="jsp" value="70" />
-          <entry key="properties" value="305" />
+          <entry key="properties" value="308" />
           <entry key="sql" value="210" />
           <entry key="txt" value="20" />
-          <entry key="xml" value="245" />
+          <entry key="xml" value="283" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="436" />
-          <entry key="JAVA" value="11172" />
+          <entry key="JAVA" value="11493" />
           <entry key="JSP" value="68" />
           <entry key="PLAIN_TEXT" value="134" />
-          <entry key="Properties" value="305" />
+          <entry key="Properties" value="308" />
           <entry key="Scratch" value="210" />
           <entry key="Spring Data QL" value="2" />
-          <entry key="XML" value="245" />
+          <entry key="XML" value="283" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.spring.boot.run.usages">
@@ -195,133 +266,176 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.56346154">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/security/UserDetailsServiceImpl.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="8" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/User.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/Area.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/TestApplication.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1921">
-                  <caret line="124" column="48" selection-start-line="124" selection-start-column="48" selection-end-line="124" selection-end-column="48" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="das://a16138cc-d3a2-4399-8b6a-6dc35187aab8/database/db_wtc2/schema/public/table/atlas">
-              <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-                <state>
-                  <filtering enabled="true" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/controller/WelcomeController.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="36" column="32" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="method#userInfo#0;class#WelcomeController#0" />
-                    <element signature="method#admin#0;class#WelcomeController#0" />
-                    <element signature="method#logoutSuccessfulPage#0;class#WelcomeController#0" />
-                    <element signature="method#accessDenied#0;class#WelcomeController#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/webapp/src/main/resources/templates/atlasPage.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
-                  <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/config/WebSecurityConfig.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="850">
-                  <caret line="64" column="16" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/webapp/src/main/resources/templates/logoutSuccessfulPage.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
-                  <caret line="13" column="7" lean-forward="true" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/Atlas.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="294">
-                  <caret line="47" column="25" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="16" selection-start-line="16" selection-end-line="16" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/service/WebUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/PasswordManagerImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/form/UserForm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="284">
+              <caret line="84" column="43" selection-start-line="84" selection-start-column="43" selection-end-line="84" selection-end-column="43" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1501#1502#0" expanded="true" />
+                <element signature="e#1517#1518#0" expanded="true" />
+                <element signature="e#1553#1554#0" expanded="true" />
+                <element signature="e#1572#1573#0" expanded="true" />
+                <element signature="e#1602#1603#0" expanded="true" />
+                <element signature="e#1621#1622#0" expanded="true" />
+                <element signature="e#1662#1663#0" expanded="true" />
+                <element signature="e#1687#1688#0" expanded="true" />
+                <element signature="e#1720#1721#0" expanded="true" />
+                <element signature="e#1742#1743#0" expanded="true" />
+                <element signature="e#1789#1790#0" expanded="true" />
+                <element signature="e#1820#1821#0" expanded="true" />
+                <element signature="e#2109#2110#0" expanded="true" />
+                <element signature="e#2174#2175#0" expanded="true" />
+                <element signature="e#2223#2224#0" expanded="true" />
+                <element signature="e#1854#1855#0" expanded="true" />
+                <element signature="e#1877#1878#0" expanded="true" />
+                <element signature="e#1926#1927#0" expanded="true" />
+                <element signature="e#1959#1960#0" expanded="true" />
+                <element signature="e#1992#1993#0" expanded="true" />
+                <element signature="e#2014#2015#0" expanded="true" />
+                <element signature="e#2061#2062#0" expanded="true" />
+                <element signature="e#2092#2093#0" expanded="true" />
+                <element signature="e#2125#2126#0" expanded="true" />
+                <element signature="e#2147#2148#0" expanded="true" />
+                <element signature="e#2194#2195#0" expanded="true" />
+                <element signature="e#2225#2226#0" expanded="true" />
+                <element signature="e#2256#2257#0" expanded="true" />
+                <element signature="e#2276#2277#0" expanded="true" />
+                <element signature="e#2319#2320#0" expanded="true" />
+                <element signature="e#2346#2347#0" expanded="true" />
+                <element signature="e#2385#2386#0" expanded="true" />
+                <element signature="e#2413#2414#0" expanded="true" />
+                <element signature="e#2473#2474#0" expanded="true" />
+                <element signature="e#2516#2517#0" expanded="true" />
+                <element signature="e#2553#2554#0" expanded="true" />
+                <element signature="e#2579#2580#0" expanded="true" />
+                <element signature="e#2635#2636#0" expanded="true" />
+                <element signature="e#2674#2675#0" expanded="true" />
+                <element signature="e#2714#2715#0" expanded="true" />
+                <element signature="e#2745#2746#0" expanded="true" />
+                <element signature="e#2808#2809#0" expanded="true" />
+                <element signature="e#2857#2858#0" expanded="true" />
+                <element signature="e#2891#2892#0" expanded="true" />
+                <element signature="e#2916#2917#0" expanded="true" />
+                <element signature="e#2967#2968#0" expanded="true" />
+                <element signature="e#3004#3005#0" expanded="true" />
+                <element signature="e#3037#3038#0" expanded="true" />
+                <element signature="e#3059#3060#0" expanded="true" />
+                <element signature="e#3106#3107#0" expanded="true" />
+                <element signature="e#3137#3138#0" expanded="true" />
+                <element signature="e#3179#3180#0" expanded="true" />
+                <element signature="e#3210#3211#0" expanded="true" />
+                <element signature="e#3275#3276#0" expanded="true" />
+                <element signature="e#3324#3325#0" expanded="true" />
+                <element signature="e#3361#3362#0" expanded="true" />
+                <element signature="e#3387#3388#0" expanded="true" />
+                <element signature="e#3442#3443#0" expanded="true" />
+                <element signature="e#3481#3482#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/service/UserValidator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="777">
+              <caret line="95" column="4" lean-forward="true" selection-start-line="95" selection-start-column="4" selection-end-line="95" selection-end-column="4" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#964#965#0" expanded="true" />
+                <element signature="e#983#984#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/UserRepository.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="23" column="44" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/UserManagerImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="233">
+              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/business/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="369">
+              <caret line="52" column="21" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webapp/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="83" column="8" selection-start-line="83" selection-start-column="8" selection-end-line="86" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/config/WebConfiguration.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Jsp File" />
-        <option value="Class" />
         <option value="HTML File" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -339,10 +453,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/webapp/src/main/webapp/WEB-INF/jsp/index.jsp" />
-        <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/index.jsp" />
-        <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/index.html" />
-        <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/secured.html" />
         <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/admin.html" />
         <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/user.html" />
         <option value="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/UserRole.java" />
@@ -350,7 +460,6 @@
         <option value="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/Element.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/Comment.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/Parking.java" />
-        <option value="$PROJECT_DIR$/webapp/src/main/resources/application.properties" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/a16138cc-d3a2-4399-8b6a-6dc35187aab8/console.sql" />
         <option value="$PROJECT_DIR$/batch/src/main/java/org/thibaut/wheretoclimb/batch/demo/BatchApplication.java" />
         <option value="$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/DbSeeder.java" />
@@ -359,13 +468,10 @@
         <option value="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/contract/UserManager.java" />
         <option value="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/contract/PasswordManager.java" />
         <option value="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/BatchApplication.java" />
-        <option value="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/UserManagerImpl.java" />
         <option value="$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/security/CustomUserDetailsService.java" />
         <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/login.html" />
         <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/403Page.html" />
         <option value="$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/service/WebUtils.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/business/pom.xml" />
         <option value="$PROJECT_DIR$/consumer/pom.xml" />
         <option value="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/RoleManagerImpl.java" />
         <option value="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/ManagerFactoryImpl.java" />
@@ -376,12 +482,9 @@
         <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/userInfoPage.html" />
         <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/logoutSuccessfullPage.html" />
         <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/atlas.html" />
-        <option value="$PROJECT_DIR$/webapp/pom.xml" />
         <option value="$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/ElementRepository.java" />
-        <option value="$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/UserRepository.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/Role.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/Area.java" />
-        <option value="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/User.java" />
         <option value="$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/controller/WelcomeController.java" />
         <option value="$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/RoleRepository.java" />
         <option value="$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/AtlasRepository.java" />
@@ -390,6 +493,17 @@
         <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/atlasPage.html" />
         <option value="$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/config/WebSecurityConfig.java" />
         <option value="$PROJECT_DIR$/webapp/src/main/resources/templates/logoutSuccessfulPage.html" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/webapp/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/webapp/src/main/resources/validation.properties" />
+        <option value="$PROJECT_DIR$/webapp/pom.xml" />
+        <option value="$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/config/WebConfiguration.java" />
+        <option value="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/User.java" />
+        <option value="$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/form/UserForm.java" />
+        <option value="$PROJECT_DIR$/business/pom.xml" />
+        <option value="$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/UserRepository.java" />
+        <option value="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/UserManagerImpl.java" />
+        <option value="$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/service/UserValidator.java" />
       </list>
     </option>
   </component>
@@ -448,8 +562,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1912" />
-    <option name="y" value="-8" />
+    <option name="x" value="10" />
+    <option name="y" value="1" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
@@ -626,6 +740,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -859,88 +975,11 @@
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="WhereToClimb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WhereToClimb" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WhereToClimb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WhereToClimb" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="demo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WhereToClimb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WhereToClimb" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="security" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WhereToClimb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WhereToClimb" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WhereToClimb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WhereToClimb" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WhereToClimb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WhereToClimb" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WhereToClimb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WhereToClimb" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WhereToClimb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WhereToClimb" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WhereToClimb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WhereToClimb" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
-              <item name="generated-sources" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -955,7 +994,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536887803980" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537103196326" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/webapp/src/main/webapp" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -1050,14 +1089,16 @@
       <workItem from="1536757188702" duration="24900000" />
       <workItem from="1536860134168" duration="21337000" />
       <workItem from="1536913195426" duration="1111000" />
+      <workItem from="1537094294938" duration="6197000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="258013000" />
+    <option name="totallyTimeSpent" value="264210000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="UI Designer" order="1" />
@@ -1066,7 +1107,7 @@
       <window_info id="Learn" order="4" />
       <window_info id="Web" order="5" side_tool="true" />
       <window_info id="Designer" order="6" />
-      <window_info active="true" content_ui="combo" id="Project" order="7" visible="true" weight="0.23720682" />
+      <window_info active="true" content_ui="combo" id="Project" order="7" visible="true" weight="0.23987207" />
       <window_info id="Structure" order="8" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Spring" order="0" sideWeight="0.6076759" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.5021322" side_tool="true" weight="0.29934925" />
@@ -1077,7 +1118,7 @@
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.329718" />
       <window_info anchor="bottom" id="Find" order="8" sideWeight="0.4978678" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.7265459" weight="0.3449024" />
+      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.7265459" visible="true" weight="0.3449024" />
       <window_info anchor="bottom" id="Debug" order="10" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
@@ -1085,7 +1126,7 @@
       <window_info anchor="bottom" id="Dependency Viewer" order="14" weight="0.329718" />
       <window_info anchor="bottom" id="Database Console" order="15" weight="0.061822128" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
-      <window_info anchor="right" id="Maven Projects" order="1" weight="0.14605543" />
+      <window_info anchor="right" id="Maven Projects" order="1" visible="true" weight="0.14605543" />
       <window_info anchor="right" id="Database" order="2" weight="0.21108742" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info anchor="right" id="Theme Preview" order="4" />
@@ -1170,65 +1211,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/BatchApplication.java" />
-    <entry file="file://$PROJECT_DIR$/webapp/src/main/resources/templates/user.html" />
-    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/contract/RoleManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/RoleManagerImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/AbstractManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/contract/UserManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/UserManagerImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="40" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/PasswordManagerImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webapp/src/main/resources/templates/userInfoPage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/security/CustomUserDetailsImpl.java" />
-    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/ManagerFactoryImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webapp/src/main/resources/templates/admin.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -1243,13 +1225,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webapp/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1280">
-          <caret line="87" selection-start-line="87" selection-end-line="87" />
         </state>
       </provider>
     </entry>
@@ -1324,13 +1299,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/UserRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
         </state>
       </provider>
     </entry>
@@ -1421,13 +1389,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/Area.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1473,19 +1434,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/config/WebSecurityConfig.java">
+    <entry file="file://$PROJECT_DIR$/webapp/src/main/resources/templates/logoutSuccessfulPage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="64" column="16" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="221">
+          <caret line="13" column="7" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/Atlas.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
+        <state relative-caret-position="277">
           <caret line="47" column="25" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1493,10 +1451,177 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webapp/src/main/resources/templates/logoutSuccessfulPage.html">
+    <entry file="file://$PROJECT_DIR$/model/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapp/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="7" lean-forward="true" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapp/src/main/resources/validation.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="96" column="12" selection-start-line="96" selection-start-column="12" selection-end-line="100" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/config/WebSecurityConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="64" column="16" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapp/src/main/java/org/thibaut/wheretoclimb/webapp/config/WebConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="16" selection-start-line="16" selection-end-line="16" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/src/main/java/org/thibaut/wheretoclimb/model/beans/form/UserForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="84" column="43" selection-start-line="84" selection-start-column="43" selection-end-line="84" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1501#1502#0" expanded="true" />
+            <element signature="e#1517#1518#0" expanded="true" />
+            <element signature="e#1553#1554#0" expanded="true" />
+            <element signature="e#1572#1573#0" expanded="true" />
+            <element signature="e#1602#1603#0" expanded="true" />
+            <element signature="e#1621#1622#0" expanded="true" />
+            <element signature="e#1662#1663#0" expanded="true" />
+            <element signature="e#1687#1688#0" expanded="true" />
+            <element signature="e#1720#1721#0" expanded="true" />
+            <element signature="e#1742#1743#0" expanded="true" />
+            <element signature="e#1789#1790#0" expanded="true" />
+            <element signature="e#1820#1821#0" expanded="true" />
+            <element signature="e#2109#2110#0" expanded="true" />
+            <element signature="e#2174#2175#0" expanded="true" />
+            <element signature="e#2223#2224#0" expanded="true" />
+            <element signature="e#1854#1855#0" expanded="true" />
+            <element signature="e#1877#1878#0" expanded="true" />
+            <element signature="e#1926#1927#0" expanded="true" />
+            <element signature="e#1959#1960#0" expanded="true" />
+            <element signature="e#1992#1993#0" expanded="true" />
+            <element signature="e#2014#2015#0" expanded="true" />
+            <element signature="e#2061#2062#0" expanded="true" />
+            <element signature="e#2092#2093#0" expanded="true" />
+            <element signature="e#2125#2126#0" expanded="true" />
+            <element signature="e#2147#2148#0" expanded="true" />
+            <element signature="e#2194#2195#0" expanded="true" />
+            <element signature="e#2225#2226#0" expanded="true" />
+            <element signature="e#2256#2257#0" expanded="true" />
+            <element signature="e#2276#2277#0" expanded="true" />
+            <element signature="e#2319#2320#0" expanded="true" />
+            <element signature="e#2346#2347#0" expanded="true" />
+            <element signature="e#2385#2386#0" expanded="true" />
+            <element signature="e#2413#2414#0" expanded="true" />
+            <element signature="e#2473#2474#0" expanded="true" />
+            <element signature="e#2516#2517#0" expanded="true" />
+            <element signature="e#2553#2554#0" expanded="true" />
+            <element signature="e#2579#2580#0" expanded="true" />
+            <element signature="e#2635#2636#0" expanded="true" />
+            <element signature="e#2674#2675#0" expanded="true" />
+            <element signature="e#2714#2715#0" expanded="true" />
+            <element signature="e#2745#2746#0" expanded="true" />
+            <element signature="e#2808#2809#0" expanded="true" />
+            <element signature="e#2857#2858#0" expanded="true" />
+            <element signature="e#2891#2892#0" expanded="true" />
+            <element signature="e#2916#2917#0" expanded="true" />
+            <element signature="e#2967#2968#0" expanded="true" />
+            <element signature="e#3004#3005#0" expanded="true" />
+            <element signature="e#3037#3038#0" expanded="true" />
+            <element signature="e#3059#3060#0" expanded="true" />
+            <element signature="e#3106#3107#0" expanded="true" />
+            <element signature="e#3137#3138#0" expanded="true" />
+            <element signature="e#3179#3180#0" expanded="true" />
+            <element signature="e#3210#3211#0" expanded="true" />
+            <element signature="e#3275#3276#0" expanded="true" />
+            <element signature="e#3324#3325#0" expanded="true" />
+            <element signature="e#3361#3362#0" expanded="true" />
+            <element signature="e#3387#3388#0" expanded="true" />
+            <element signature="e#3442#3443#0" expanded="true" />
+            <element signature="e#3481#3482#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapp/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="83" column="8" selection-start-line="83" selection-start-column="8" selection-end-line="86" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/business/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="52" column="21" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/PasswordManagerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/service/WebUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/src/main/java/org/thibaut/wheretoclimb/consumer/repository/UserRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="23" column="44" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/impl/UserManagerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/business/src/main/java/org/thibaut/wheretoclimb/business/service/UserValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="777">
+          <caret line="95" column="4" lean-forward="true" selection-start-line="95" selection-start-column="4" selection-end-line="95" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#964#965#0" expanded="true" />
+            <element signature="e#983#984#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

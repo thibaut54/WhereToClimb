@@ -10,4 +10,6 @@ public interface UserManager {
 
 	//	@Autowired --> pourquoi cette injection ne fonctionne pas ?
 	User findByUserName( String username );
+
+	User findByEmail( String email );
 }
