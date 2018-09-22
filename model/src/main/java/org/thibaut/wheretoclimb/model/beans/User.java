@@ -53,8 +53,12 @@ public class User {
 
 	}
 
-	public User( String gender, String firstName, String lastName,
-	             String userName, String email, Date createAccountDate ) {
+	public User( String gender,
+	             String firstName,
+	             String lastName,
+	             String userName,
+	             String email,
+	             Date createAccountDate ) {
 		this.gender = gender;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -63,15 +67,32 @@ public class User {
 		this.createAccountDate = createAccountDate;
 	}
 
-//	public User( User user ) {
-//		this.gender = user.getGender();
-//		this.firstName = user.getFirstName();
-//		this.lastName = user.getLastName();
-//		this.userName = user.getUserName();
-//		this.password = user.getPassword();
-//		this.email = user.getEmail();
-//		this.createAccountDate = user.getCreateAccountDate();
-//	}
+	public User( String email,
+	             String password,
+	             String firstName,
+	             String lastName,
+	             String userName,
+	             String gender,
+	             boolean emailVisible,
+	             Date createAccountDate/*,
+	             Date dateOfBirth,
+	             String gradeMax,
+	             String gradeFirstAttempt,
+	             String gradeAverage*/ ) {
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.gender = gender;
+		this.accountEnabled = accountEnabled;
+		this.emailVisible = emailVisible;
+		this.createAccountDate = createAccountDate;
+//		this.dateOfBirth = dateOfBirth;
+//		this.gradeMax = gradeMax;
+//		this.gradeFirstAttempt = gradeFirstAttempt;
+//		this.gradeAverage = gradeAverage;
+	}
 
 
 //----------TOSTRING----------

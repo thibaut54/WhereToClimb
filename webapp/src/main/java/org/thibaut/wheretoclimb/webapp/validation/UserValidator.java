@@ -1,4 +1,4 @@
-package org.thibaut.wheretoclimb.business.service;
+package org.thibaut.wheretoclimb.webapp.validation;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.business.contract.UserManager;
 import org.thibaut.wheretoclimb.model.beans.User;
-import org.thibaut.wheretoclimb.model.beans.form.UserForm;
 
 @Component
 public class UserValidator implements Validator {
@@ -17,8 +15,6 @@ public class UserValidator implements Validator {
 	// common-validator library.
 	private EmailValidator emailValidator = EmailValidator.getInstance();
 
-	@Autowired
-	private UserManager userManager;
 	@Autowired
 	private ManagerFactory managerFactory;
 
@@ -56,7 +52,13 @@ public class UserValidator implements Validator {
 	 */
 	@Override
 	public void validate( Object target, Errors errors ) {
+
 		UserForm userForm = (UserForm) target;
+
+		if( ! (userForm.getUserName().matches("[a-zA-Z ]*$")))
+		{
+			errors.rejectValue("userName", "symbolsPresent",new Object[]{"'name'"},"Username can't be symbols");
+		}
 
 		// Check the fields of AppUserForm.
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "NotEmpty.userForm.userName");
@@ -66,9 +68,8 @@ public class UserValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.userForm.password");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "NotEmpty.userForm.confirmPassword");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "NotEmpty.userForm.gender");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "countryCode", "NotEmpty.userForm.countryCode");
 
-		if (!this.emailValidator.isValid(userForm.getEmail())) {
+		if ( ! this.emailValidator.isValid(userForm.getEmail())) {
 			// Invalid email.
 			errors.rejectValue("email", "Pattern.userForm.email");
 		} else if (userForm.getId() == null) {
@@ -88,10 +89,10 @@ public class UserValidator implements Validator {
 		}
 
 		if (!errors.hasErrors()) {
-			if (!userForm.getConfirmedPassword().equals(userForm.getPassword())) {
+			if (!userForm.getConfirmPassword().equals(userForm.getPassword())) {
 				errors.rejectValue("confirmPassword", "Match.userForm.confirmPassword");
 			}
 		}
 	}
-	
+
 }

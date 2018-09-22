@@ -91,18 +91,6 @@
 			<artifactId>postgresql</artifactId>
 		</dependency>
 
-		<!--&lt;!&ndash; JSTL for JSP &ndash;&gt;-->
-		<!--<dependency>-->
-			<!--<groupId>javax.servlet</groupId>-->
-			<!--<artifactId>jstl</artifactId>-->
-		<!--</dependency>-->
-
-		<!--&lt;!&ndash; Need this to compile JSP &ndash;&gt;-->
-		<!--<dependency>-->
-			<!--<groupId>org.apache.tomcat.embed</groupId>-->
-			<!--<artifactId>tomcat-embed-jasper</artifactId>-->
-		<!--</dependency>-->
-
 	</dependencies>
 
 

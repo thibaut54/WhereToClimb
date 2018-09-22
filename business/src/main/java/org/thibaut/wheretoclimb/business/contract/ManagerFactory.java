@@ -1,5 +1,7 @@
 package org.thibaut.wheretoclimb.business.contract;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public interface ManagerFactory {
 
 	abstract UserManager getUserManager();
@@ -13,4 +15,9 @@ public interface ManagerFactory {
 	RoleManager getRoleManager( );
 
 	void setRoleManager( RoleManager roleManager );
+
+	PasswordManager getPasswordManager( );
+
+	void setPasswordManager( PasswordManager passwordManager );
+
 }

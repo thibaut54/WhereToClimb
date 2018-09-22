@@ -1,12 +1,12 @@
-package org.thibaut.wheretoclimb.model.beans.form;
+package org.thibaut.wheretoclimb.webapp.validation;
 
-import org.thibaut.wheretoclimb.model.beans.Atlas;
+import org.springframework.stereotype.Component;
+import org.thibaut.wheretoclimb.model.beans.Role;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import java.util.Collection;
 import java.util.Date;
 
+@Component
 public class UserForm {
 
 //----------ATTRIBUTES----------
@@ -14,7 +14,7 @@ public class UserForm {
 	private Integer id;
 	private String email;
 	private String password;
-	private String confirmedPassword;
+	private String confirmPassword;
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -26,6 +26,7 @@ public class UserForm {
 	private String gradeMax;
 	private String gradeFirstAttempt;
 	private String gradeAverage;
+	private Collection< Role > roles;
 
 
 //----------CONSTRUCTORS----------
@@ -33,15 +34,26 @@ public class UserForm {
 	public UserForm( ) {
 	}
 
-	public UserForm( Integer id, String email, String password, String confirmedPassword,
-	                 String firstName, String lastName, String userName,
-	                 String gender, boolean accountEnabled, boolean emailVisible,
-	                 Date createAccountDate, Date dateOfBirth, String gradeMax,
-	                 String gradeFirstAttempt, String gradeAverage ) {
+	public UserForm( Integer id,
+	                 String email,
+	                 String password,
+	                 String confirmPassword,
+	                 String firstName,
+	                 String lastName,
+	                 String userName,
+	                 String gender,
+	                 boolean accountEnabled,
+	                 boolean emailVisible,
+	                 Date createAccountDate,
+	                 Date dateOfBirth,
+	                 String gradeMax,
+	                 String gradeFirstAttempt,
+	                 String gradeAverage,
+	                 Collection< Role > roles ) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
-		this.confirmedPassword = confirmedPassword;
+		this.confirmPassword = confirmPassword;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
@@ -53,7 +65,9 @@ public class UserForm {
 		this.gradeMax = gradeMax;
 		this.gradeFirstAttempt = gradeFirstAttempt;
 		this.gradeAverage = gradeAverage;
+		this.roles = roles;
 	}
+
 
 
 //----------GETTERS & SETTERS----------
@@ -82,12 +96,12 @@ public class UserForm {
 		this.password = password;
 	}
 
-	public String getConfirmedPassword( ) {
-		return confirmedPassword;
+	public String getConfirmPassword( ) {
+		return confirmPassword;
 	}
 
-	public void setConfirmedPassword( String confirmedPassword ) {
-		this.confirmedPassword = confirmedPassword;
+	public void setConfirmPassword( String confirmPassword ) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public String getFirstName( ) {
@@ -176,5 +190,13 @@ public class UserForm {
 
 	public void setGradeAverage( String gradeAverage ) {
 		this.gradeAverage = gradeAverage;
+	}
+
+	public Collection< Role > getRoles( ) {
+		return roles;
+	}
+
+	public void setRoles( Collection< Role > roles ) {
+		this.roles = roles;
 	}
 }
