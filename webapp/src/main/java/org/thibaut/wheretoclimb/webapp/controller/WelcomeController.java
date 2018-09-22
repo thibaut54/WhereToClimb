@@ -6,17 +6,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.business.service.WebUtils;
+import org.thibaut.wheretoclimb.webapp.validation.WebUtils;
 import org.springframework.security.core.userdetails.User;
-import org.thibaut.wheretoclimb.consumer.repository.AtlasRepository;
-import org.thibaut.wheretoclimb.consumer.repository.RoleRepository;
 import org.thibaut.wheretoclimb.model.beans.Atlas;
-import org.thibaut.wheretoclimb.model.beans.Role;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,6 +29,18 @@ public class WelcomeController {
 //	public List< Role > testeDeRequetes( @PathVariable String recherche) {
 //		return this.roleRepository.findByRoleLike("%"+recherche+"%");
 //	}
+
+
+	@RequestMapping(value = { "/", "/indexJSP" }, method = RequestMethod.GET)
+	public String indexJSP( Model model ) {
+
+		String message = "Hello Spring Boot + JSP";
+
+		model.addAttribute("message", message);
+
+		return "index";
+	}
+
 
 	// Injectez (inject) via application.properties.
 	@Value("${welcome.message}")
@@ -68,9 +77,9 @@ public class WelcomeController {
 
 		System.out.println("User Name: " + userName);
 
-		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		User connectedUser = (User) ((Authentication) principal).getPrincipal();
 
-		String userInfo = WebUtils.toString(loginedUser);
+		String userInfo = WebUtils.toString(connectedUser);
 		model.addAttribute("userInfo", userInfo);
 
 		return "userInfoPage";

@@ -1,32 +1,20 @@
-package org.thibaut.wheretoclimb.model.beans;
+package org.thibaut.wheretoclimb.webapp.validation;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.stereotype.Component;
+import org.thibaut.wheretoclimb.model.beans.Role;
 
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
-/**
- * Bean used to define a user/climber account
- */
-@Entity
-@Table(name = "users")
-public class User {
+@Component
+public class UserForm {
 
 //----------ATTRIBUTES----------
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String email;
-	@OneToMany(mappedBy = "user")
-//	@JoinColumn(name = "user_id")
-	private Collection< Atlas > atlases;
-	@OneToMany/*(mappedBy = "climber", fetch = FetchType.LAZY)*/
-	@JoinColumn(name = "user_id")
-	private Collection< Comment > comments;
 	private String password;
+	private String confirmPassword;
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -38,49 +26,34 @@ public class User {
 	private String gradeMax;
 	private String gradeFirstAttempt;
 	private String gradeAverage;
-	@ManyToMany
-	@JoinTable(
-			name = "roles_of_users",
-			joinColumns = { @JoinColumn(name = "user_id") },
-			inverseJoinColumns = { @JoinColumn(name = "role_id") } )
 	private Collection< Role > roles;
-
 
 
 //----------CONSTRUCTORS----------
 
-	public User( ) {
-
+	public UserForm( ) {
 	}
 
-	public User( String gender,
-	             String firstName,
-	             String lastName,
-	             String userName,
-	             String email,
-	             Date createAccountDate ) {
-		this.gender = gender;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.email = email;
-		this.createAccountDate = createAccountDate;
-	}
-
-	public User( String email,
-	             String password,
-	             String firstName,
-	             String lastName,
-	             String userName,
-	             String gender,
-	             boolean emailVisible,
-	             Date createAccountDate/*,
-	             Date dateOfBirth,
-	             String gradeMax,
-	             String gradeFirstAttempt,
-	             String gradeAverage*/ ) {
+	public UserForm( Integer id,
+	                 String email,
+	                 String password,
+	                 String confirmPassword,
+	                 String firstName,
+	                 String lastName,
+	                 String userName,
+	                 String gender,
+	                 boolean accountEnabled,
+	                 boolean emailVisible,
+	                 Date createAccountDate,
+	                 Date dateOfBirth,
+	                 String gradeMax,
+	                 String gradeFirstAttempt,
+	                 String gradeAverage,
+	                 Collection< Role > roles ) {
+		this.id = id;
 		this.email = email;
 		this.password = password;
+		this.confirmPassword = confirmPassword;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
@@ -88,32 +61,16 @@ public class User {
 		this.accountEnabled = accountEnabled;
 		this.emailVisible = emailVisible;
 		this.createAccountDate = createAccountDate;
-//		this.dateOfBirth = dateOfBirth;
-//		this.gradeMax = gradeMax;
-//		this.gradeFirstAttempt = gradeFirstAttempt;
-//		this.gradeAverage = gradeAverage;
+		this.dateOfBirth = dateOfBirth;
+		this.gradeMax = gradeMax;
+		this.gradeFirstAttempt = gradeFirstAttempt;
+		this.gradeAverage = gradeAverage;
+		this.roles = roles;
 	}
 
 
-//----------TOSTRING----------
 
-	@Override
-	public String toString( ) {
-		return "User{" +
-				       "id=" + id +
-				       ", gender='" + gender + '\'' +
-				       ", firstName='" + firstName + '\'' +
-				       ", lastName='" + lastName + '\'' +
-				       ", userName='" + userName + '\'' +
-				       ", password='" + password + '\'' +
-				       ", email='" + email + '\'' +
-				       ", createAccountDate='" + createAccountDate + '\'' +
-				       '}';
-	}
-
-
-//----------GETTERS & SETTERS
-
+//----------GETTERS & SETTERS----------
 
 	public Integer getId( ) {
 		return id;
@@ -131,28 +88,20 @@ public class User {
 		this.email = email;
 	}
 
-	public Collection< Atlas > getAtlases( ) {
-		return atlases;
-	}
-
-	public void setAtlases( Collection< Atlas > atlases ) {
-		this.atlases = atlases;
-	}
-
-	public Collection< Comment > getComments( ) {
-		return comments;
-	}
-
-	public void setComments( Collection< Comment > comments ) {
-		this.comments = comments;
-	}
-
 	public String getPassword( ) {
 		return password;
 	}
 
 	public void setPassword( String password ) {
 		this.password = password;
+	}
+
+	public String getConfirmPassword( ) {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword( String confirmPassword ) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public String getFirstName( ) {
@@ -185,6 +134,14 @@ public class User {
 
 	public void setGender( String gender ) {
 		this.gender = gender;
+	}
+
+	public boolean isAccountEnabled( ) {
+		return accountEnabled;
+	}
+
+	public void setAccountEnabled( boolean accountEnabled ) {
+		this.accountEnabled = accountEnabled;
 	}
 
 	public boolean isEmailVisible( ) {
@@ -235,12 +192,11 @@ public class User {
 		this.gradeAverage = gradeAverage;
 	}
 
-	public Collection< Role > getUserRoles( ) {
+	public Collection< Role > getRoles( ) {
 		return roles;
 	}
 
-	public void setUserRoles( List< Role > userRoles ) {
-		this.roles = userRoles;
+	public void setRoles( Collection< Role > roles ) {
+		this.roles = roles;
 	}
 }
-

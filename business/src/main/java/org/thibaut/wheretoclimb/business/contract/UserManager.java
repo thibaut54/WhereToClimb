@@ -8,6 +8,9 @@ public interface UserManager {
 
 	public List< User > getUsers();
 
-	//	@Autowired --> pourquoi cette injection ne fonctionne pas ?
 	User findByUserName( String username );
+
+	User findByEmail( String email );
+
+	User createUser( User user );
 }
