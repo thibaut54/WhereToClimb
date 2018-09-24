@@ -31,16 +31,6 @@ public class WelcomeController {
 //	}
 
 
-	@RequestMapping(value = { "/", "/indexJSP" }, method = RequestMethod.GET)
-	public String indexJSP( Model model ) {
-
-		String message = "Hello Spring Boot + JSP";
-
-		model.addAttribute("message", message);
-
-		return "index";
-	}
-
 
 	// Injectez (inject) via application.properties.
 	@Value("${welcome.message}")
@@ -48,6 +38,7 @@ public class WelcomeController {
 
 	@Value("${error.message}")
 	private String errorMessage;
+
 
 	@GetMapping("/index")
 	public String index(Model model) {
