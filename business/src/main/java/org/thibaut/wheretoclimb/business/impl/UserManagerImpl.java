@@ -35,13 +35,14 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 
 
 	@Override
-	public User findByUserName( String username ){
+	public User findByUserName( String username){
 		User user = null;
 		try {
 			user = getDaoFactory().getUserRepository().findByUserName(username);
 		} catch (Exception e) {
 			throw e;
 		}
+
 		return user;
 	}
 
