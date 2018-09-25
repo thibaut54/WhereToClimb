@@ -49,15 +49,7 @@ public class WelcomeController {
 	}
 
 
-	@GetMapping("/atlas")
-	public String atlas(Model model){
 
-		List< Atlas > atlases = this.managerFactory.getAtlasManager().getAtlases();
-
-		model.addAttribute( "atlases", atlases );
-
-		return "atlasPage";
-	}
 
 
 	@GetMapping("/userInfo")

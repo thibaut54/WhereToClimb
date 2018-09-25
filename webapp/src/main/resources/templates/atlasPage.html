@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
+    <head th:replace="bootstrapCDN :: head">
+
+        <link rel="stylesheet" type="text/css" media="all"
+              th:href="@{/css/atlas.css}" href="../static/css/atlas.css" />
+
+        <title>Atlases list</title>
+        <!--<style type="text/css">-->
+            <!--h3 {-->
+                <!--color: darkorange;-->
+            <!--}-->
+        <!--</style>-->
     </head>
 
     <body>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>NAME</th><th>AVAILABLE</th><th>CREATION_DATE</th><th>OWNER</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="atlas:${atlases}">
-                    <td th:text="${atlas.name}"></td>
-                    <td th:text="${atlas.available}"></td>
-                    <td th:text="${atlas.createDate}"></td>
-                    <td th:text="${atlas.user.userName}"></td>
-                </tr>
-            </tbody>
-        </table>
+
+    <div class="container">
+            <table class="table table-bordered table-striped table-condensed">
+                <caption>
+                    <h3>LIST OF ALL ATLASES</h3>
+                </caption>
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>AVAILABLE</th>
+                        <th>CREATION DATE</th>
+                        <th>OWNER</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="atlas:${atlases}">
+                        <td th:text="${atlas.name}"></td>
+                        <td th:text="${atlas.available}"></td>
+                        <td th:text="${atlas.createDate}"></td>
+                        <td th:text="${atlas.user.userName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
 
 </html>
