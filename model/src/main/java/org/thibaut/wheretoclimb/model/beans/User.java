@@ -21,7 +21,6 @@ public class User {
 	private Integer id;
 	private String email;
 	@OneToMany(mappedBy = "user")
-//	@JoinColumn(name = "user_id")
 	private Collection< Atlas > atlases;
 	@OneToMany/*(mappedBy = "climber", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "user_id")

@@ -1,4 +1,25 @@
+caption {
+    padding: 10px;
+    caption-side: top;
+}
 
+
+h3{
+    color: darkorange;
+}
+
+body {
+    padding-top: 10px;
+    background: red;
+}
+
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
 
 @media (min-width: 768px) {
     .container {
@@ -16,26 +37,4 @@
     .container {
         width: 1170px;
     }
-}
-
-caption {
-    padding: 10px;
-    caption-side: top;
-}
-
-
-h3{
-    color: darkorange;
-}
-
-body {
-padding-top: 10px;
-}
-
-
-.container {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
 }

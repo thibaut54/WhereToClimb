@@ -18,7 +18,7 @@ public class AtlasController {
 
 
 	@GetMapping("/atlas")
-	public String atlas( Model model){
+	public String atlas( Model model ){
 
 		List< Atlas > atlases = this.managerFactory.getAtlasManager().getAtlases();
 
