@@ -20,20 +20,29 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private ManagerFactory managerFactory;
 
+
 	/**
 	 * The authentication method uses the user email, since it is easier to remember for most users
-	 * @param email
+	 * @param input
 	 * @return a UserDetails object
 	 * @throws UsernameNotFoundException
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername( String input ) throws UsernameNotFoundException {
 
-		User user =  this.managerFactory.getUserManager().findByEmail( email );
+		User user = new User();
+
+		if( input.contains( "@" )){
+			user =  this.managerFactory.getUserManager().findByEmail( input );
+		}
+		else {
+			user =  this.managerFactory.getUserManager().findByUserName( input );
+		}
+
 
 		if (user == null) {
-			System.out.println("User email not found! " + email);
-			throw new UsernameNotFoundException("User with email " + email + " was not found in the database");
+			System.out.println( "User email not found! " + input );
+			throw new UsernameNotFoundException( "User with email " + input + " was not found in the database" );
 		}
 
 		System.out.println("Found User: " + user);
@@ -55,6 +64,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		return userDetails;
 	}
-
 
 }

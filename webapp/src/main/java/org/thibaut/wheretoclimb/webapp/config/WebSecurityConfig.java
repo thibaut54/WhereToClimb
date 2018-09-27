@@ -45,12 +45,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 
-	@Override
-	public void configure( WebSecurity webSecurity) throws Exception {
-		webSecurity.ignoring()
-				// ignore all URLs that start with /resources/ or /static/
-				.antMatchers("/resources/**", "/css/**");
-	}
+//	@Override
+//	public void configure( WebSecurity webSecurity) throws Exception {
+//		webSecurity.ignoring()
+//				// ignore all URLs that start with /resources/ or /static/
+//				.antMatchers("/resources/**", "/css/**");
+//	}
 
 	@Override
 	protected void configure( HttpSecurity http ) throws Exception {
@@ -90,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(
 				"/",
 				"/login",
-				"/css/**",
+//				"/css/**",
 				"/register",
 				"/registerSuccessful",
 				"/index",

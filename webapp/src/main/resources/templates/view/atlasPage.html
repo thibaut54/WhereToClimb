@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <!--<head th:replace="bootstrapCDN :: head">-->
+    <!--<head th:insert="bootstrapCDN :: head">-->
+    <head>
+        <div th:insert="fragment/bootstrapCDN :: head"></div>
+        <!--<link rel="stylesheet"-->
+        <!--href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css" />-->
+        <!--<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>-->
+        <!--<script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>-->
+
+        <link rel="stylesheet" type="text/css" media="all"
+              th:href="@{/static/css/atlas.css}" href="../static/css/atlas.css"/>
+
+        <!--href="../static/css/atlas.css"-->
+
+    </head>
+
+    <!--<head>-->
+        <!--<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"/>-->
+        <!--<link rel="stylesheet" type="text/css" href="../static/css/atlas.css"/>-->
+        <!--<link rel="stylesheet" type="text/css" media="all" -->
+              <!--th:href="@{css/atlas.css}" href="css/atlas.css"/>-->
+    <!--</head>-->
+
+    <body>
+
+        <div class="container">
+            <form th:action="@{atlas}" method="get">
+                <label><h5>Search atlas</h5></label>
+                <!--<input type="text" name="keyword"/>-->
+                <div class="input-group">
+                    <input class="form-control border-secondary py-2" type="search" value="search" name="keyword"/>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" >
+                            <!--<span class="glyphicon glyphicon-search"></span>-->
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+                <table class="table table-bordered table-striped table-condensed">
+                    <caption>
+                        <h3>LIST OF ALL ATLASES</h3>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>AVAILABLE</th>
+                            <th>CREATION DATE</th>
+                            <th>OWNER</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="atlas:${atlases}">
+                            <td th:text="${atlas.name}"></td>
+                            <td th:text="${atlas.available}"></td>
+                            <td th:text="${atlas.createDate}"></td>
+                            <td th:text="${atlas.user.userName}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        <div class="container">
+            <!--<ul class="nav nav-pills">-->
+            <ul class="pagination">
+                <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
+                    <!--<a class="nav-link" th:href="@{atlas(page=${status.index}, size=${size})}" th:text="${status.index}" >-->
+                    <a class="page-link" th:href="@{atlas(page=${status.index}, size=${size}, keyword=${keyword})}" th:text="${status.index}+1" >
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </body>
+
+</html>

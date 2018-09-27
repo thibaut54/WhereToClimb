@@ -1,6 +1,7 @@
 package org.thibaut.wheretoclimb.model.beans;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Collection;

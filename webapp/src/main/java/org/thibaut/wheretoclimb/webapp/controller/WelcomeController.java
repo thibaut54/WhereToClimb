@@ -6,21 +6,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
 import org.thibaut.wheretoclimb.webapp.validation.WebUtils;
 import org.springframework.security.core.userdetails.User;
-import org.thibaut.wheretoclimb.model.beans.Atlas;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class WelcomeController {
 
 	@Autowired
 	private ManagerFactory managerFactory;
+
 
 //	@Autowired
 //	private RoleRepository roleRepository;
@@ -29,7 +26,6 @@ public class WelcomeController {
 //	public List< Role > testeDeRequetes( @PathVariable String recherche) {
 //		return this.roleRepository.findByRoleLike("%"+recherche+"%");
 //	}
-
 
 
 	// Injectez (inject) via application.properties.
@@ -45,11 +41,8 @@ public class WelcomeController {
 
 		model.addAttribute("message", message);
 
-		return "index";
+		return "view/index";
 	}
-
-
-
 
 
 	@GetMapping("/userInfo")
@@ -65,7 +58,7 @@ public class WelcomeController {
 		String userInfo = WebUtils.toString(connectedUser);
 		model.addAttribute("userInfo", userInfo);
 
-		return "userInfoPage";
+		return "view/userInfoPage";
 	}
 
 
@@ -76,20 +69,20 @@ public class WelcomeController {
 
 		model.addAttribute("message", msg);
 
-		return "admin";
+		return "view/admin";
 	}
 
 
 	@GetMapping("/login")
 	public String login(Model model){
-		return "login";
+		return "view/login";
 	}
 
 
-	@GetMapping("/logout")
+	@GetMapping("/logoutt")
 	public String logoutSuccessfulPage(Model model) {
-		model.addAttribute("title", "Logout");
-		return "logoutSuccessfulPage";
+		model.addAttribute("title", "Logout" );
+		return "view/logoutSuccessfulPage";
 	}
 
 
@@ -109,8 +102,7 @@ public class WelcomeController {
 
 		}
 
-		return "403Page";
+		return "error/403Page";
 	}
-
 
 }

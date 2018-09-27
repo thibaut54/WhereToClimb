@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-    <head th:replace="bootstrapCDN :: head">
+    <head>
+        <div th:insert="fragment/bootstrapCDN :: head"></div>
         <title>Login</title>
-        <link rel="stylesheet" type="text/css" media="all"
-              th:href="@{/css/atlas.css}" href="../static/css/atlas.css"/>
+
     </head>
 
     <body>
