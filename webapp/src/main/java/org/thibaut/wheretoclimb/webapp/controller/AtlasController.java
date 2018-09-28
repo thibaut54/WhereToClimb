@@ -24,8 +24,6 @@ public class AtlasController {
 	                     @RequestParam(name = "size", defaultValue = "5") int size,
 	                     @RequestParam(name = "keyword", defaultValue = "") String keyword){
 
-//		List< Atlas > atlases = this.managerFactory.getAtlasManager().getAtlases();
-//		Page< Atlas > atlases = this.managerFactory.getAtlasManager().getAtlases(page, size);
 		Page< Atlas > atlases = this.managerFactory.getAtlasManager().searchAtlas(page, size, keyword);
 
 //		model.addAttribute( "atlases", atlases );
@@ -35,7 +33,20 @@ public class AtlasController {
 		model.addAttribute( "pages", pages );
 		model.addAttribute( "size", size );
 		model.addAttribute( "currentPage", page );
+		model.addAttribute( "keyword", keyword );
 
 		return "view/atlasPage";
 	}
+
+	@GetMapping("/delete")
+	public String delete(Integer id, String keyword, int page, int size){
+		this.managerFactory.getAtlasManager().deleteAtlas( id );
+		return "redirect:/atlas?page=" + page + "&size=" + size + "&keyword=" + keyword;
+	}
+
+	@GetMapping("createAtlas")
+	public String  createAtlas(){
+		return "createAtlasPage";
+	}
+
 }

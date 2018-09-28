@@ -45,8 +45,6 @@ public class TestApplication implements CommandLineRunner {
 
 		//-----CLEAN DB
 		this.elementRepository.deleteAll();
-//		this.atlasRepository.deleteAll();
-//		this.areaRepository.deleteAll();
 		this.userRepository.deleteAll();
 		this.roleRepository.deleteAll();
 

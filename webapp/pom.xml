@@ -92,7 +92,15 @@
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>popper.js</artifactId>
 		</dependency>
 
 
@@ -101,10 +109,10 @@
 			<artifactId>commons-validator</artifactId>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-		</dependency>
+		</dependency>-->
 
 	</dependencies>
 

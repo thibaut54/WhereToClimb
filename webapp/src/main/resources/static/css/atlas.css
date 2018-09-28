@@ -8,6 +8,17 @@ h3{
     color: darkorange;
 }
 
+#search-btn{
+    width: 150px;
+    /*background-color: #1F7AF9;*/
+}
+
+#trash-ic{
+    align-items: center;
+    align-content: center;
+    alignment: center;
+}
+
 /*.container {*/
     /*padding-right: 15px;*/
     /*padding-left: 15px;*/

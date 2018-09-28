@@ -12,4 +12,6 @@ public interface AtlasManager {
 	Page< Atlas > getAtlases( int page, int size );
 
 	Page <Atlas> searchAtlas( int page, int size, String keyword );
+
+	void deleteAtlas( Integer id );
 }
