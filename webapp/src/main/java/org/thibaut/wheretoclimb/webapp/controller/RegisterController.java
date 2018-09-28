@@ -47,7 +47,7 @@ public class RegisterController {
 
 		model.addAttribute("userForm", userForm);
 
-		return "registerPage";
+		return "view/registerPage";
 	}
 
 	// This method is called to save the registration information.
@@ -63,7 +63,7 @@ public class RegisterController {
 		if (result.hasErrors()) {
 //			List<Country> countries = countryDAO.getCountries();
 //			model.addAttribute("countries", countries);
-			return "registerPage";
+			return "view/registerPage";
 		}
 		User newUser = null;
 
@@ -87,17 +87,17 @@ public class RegisterController {
 		// Other error!!
 		catch (Exception e) {
 			model.addAttribute("errorMessage", "Error: " + e.getMessage());
-			return "registerPage";
+			return "view/registerPage";
 		}
 
 		redirectAttributes.addFlashAttribute("flashUser", newUser);
 
-		return "redirect:/registerSuccessful";
+		return "redirect:/view/registerSuccessful";
 	}
 
 	@RequestMapping("/registerSuccessful")
 	public String viewRegisterSuccessful(Model model) {
 
-		return "registerSuccessfulPage";
+		return "view/registerSuccessfulPage";
 	}
 }

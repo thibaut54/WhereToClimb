@@ -1,0 +1,45 @@
+
+caption {
+    padding: 10px;
+    caption-side: top;
+}
+
+h3{
+    color: darkorange;
+}
+
+#search-btn{
+    width: 150px;
+    /*background-color: #1F7AF9;*/
+}
+
+#trash-ic{
+    align-items: center;
+    align-content: center;
+    alignment: center;
+}
+
+/*.container {*/
+    /*padding-right: 15px;*/
+    /*padding-left: 15px;*/
+    /*margin-right: auto;*/
+    /*margin-left: auto;*/
+/*}*/
+
+/*@media (min-width: 768px) {*/
+    /*.container {*/
+        /*width: 750px;*/
+    /*}*/
+/*}*/
+
+/*@media (min-width: 992px) {*/
+    /*.container {*/
+        /*width: 970px;*/
+    /*}*/
+/*}*/
+
+/*@media (min-width: 1200px) {*/
+    /*.container {*/
+        /*width: 1170px;*/
+    /*}*/
+/*}*/

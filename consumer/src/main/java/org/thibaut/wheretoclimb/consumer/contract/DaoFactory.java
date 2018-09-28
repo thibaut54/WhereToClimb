@@ -13,7 +13,7 @@ public interface DaoFactory {
 	public AreaRepository getAreaRepository();
 
 	void setUserRepository(UserRepository userRepository);
-	void setRoleRepository( RoleRepository roleRepository );
+	void setRoleRepository(RoleRepository roleRepository);
 	void setAtlasRepository(AtlasRepository atlasRepository);
 	void serAreaRepository(AreaRepository areaRepository);
 }

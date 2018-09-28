@@ -6,7 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +20,7 @@ import org.thibaut.wheretoclimb.webapp.security.UserDetailsServiceImpl;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -39,21 +42,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// And Setting PassswordEncoder
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 
+
 	}
+
+//	@Override
+//	public void configure( WebSecurity webSecurity) throws Exception {
+//		webSecurity.ignoring()
+//				// ignore all URLs that start with /resources/ or /static/
+//				.antMatchers("/resources/**", "/css/**");
+//	}
 
 	@Override
 	protected void configure( HttpSecurity http ) throws Exception {
 
 		http.csrf().disable();
 
-		// The pages does not require login
-		http.authorizeRequests().antMatchers(
-				"/",
-				"/login",
-				"/register",
-				"registerSuccessful",
-				"/index",
-				"/atlas").permitAll();
 
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
@@ -83,6 +86,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				//Config for Logout Page
 				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
 
+		// The pages does not require login
+		http.authorizeRequests().antMatchers(
+				"/",
+				"/login",
+//				"/css/**",
+				"/register",
+				"/registerSuccessful",
+				"/index",
+				"/atlas").permitAll();
 	}
 
 }

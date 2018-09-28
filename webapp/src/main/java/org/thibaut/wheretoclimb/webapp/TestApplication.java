@@ -45,8 +45,6 @@ public class TestApplication implements CommandLineRunner {
 
 		//-----CLEAN DB
 		this.elementRepository.deleteAll();
-//		this.atlasRepository.deleteAll();
-//		this.areaRepository.deleteAll();
 		this.userRepository.deleteAll();
 		this.roleRepository.deleteAll();
 
@@ -116,11 +114,35 @@ public class TestApplication implements CommandLineRunner {
 		//-----POPULATE ATLAS
 		Atlas atlas1 = new Atlas( "Grimper en Lorraine", getDate(),
 				null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas2 = new Atlas( "Grimper en Ile-de-France", getDate(),
+						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas3 = new Atlas( "Grimper en PACA", getDate(),
+						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas4 = new Atlas( "Grimper en Rhône-Alpes", getDate(),
+						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas5 = new Atlas( "Grimper en Bourgogne", getDate(),
+						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas6 = new Atlas( "Grimper en Bretagne", getDate(),
+						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas7 = new Atlas( "Grimper dans le Languedoc", getDate(),
+						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas8 = new Atlas( "Grimper dans le Centre", getDate(),
+						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas9 = new Atlas( "Grimper en ailleurs", getDate(),
+				null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
 
 		Collection< Atlas > atlases = new ArrayList<Atlas>();
 
 		atlas1.setAreas( ( ArrayList< Area > ) areas );
 		atlases.add( atlas1 );
+		atlases.add( atlas2 );
+		atlases.add( atlas3 );
+		atlases.add( atlas4 );
+		atlases.add( atlas5 );
+		atlases.add( atlas6 );
+		atlases.add( atlas7 );
+		atlases.add( atlas8 );
+		atlases.add( atlas9 );
 
 //		this.atlasRepository.saveAll( atlases );
 

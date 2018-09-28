@@ -31,37 +31,11 @@
 			<groupId>org.thibaut</groupId>
 			<artifactId>model</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.jetbrains</groupId>
-			<artifactId>annotations</artifactId>
-			<version>RELEASE</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jetbrains</groupId>
-			<artifactId>annotations</artifactId>
-			<version>RELEASE</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jetbrains</groupId>
-			<artifactId>annotations</artifactId>
-			<version>RELEASE</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jetbrains</groupId>
-			<artifactId>annotations</artifactId>
-			<version>RELEASE</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jetbrains</groupId>
-			<artifactId>annotations</artifactId>
-			<version>RELEASE</version>
-			<scope>compile</scope>
-		</dependency>
 
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
 
 	</dependencies>
 
