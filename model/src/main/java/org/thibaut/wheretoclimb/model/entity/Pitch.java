@@ -1,11 +1,10 @@
-package org.thibaut.wheretoclimb.model.beans;
+package org.thibaut.wheretoclimb.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Used to define a part of a route, when this one is made up of
@@ -30,7 +29,7 @@ public class Pitch extends Element {
 	public Pitch(  ){
 	}
 
-	public Pitch( String name, Date createDate, Date updateDate,
+	public Pitch( String name, LocalDateTime createDate, LocalDateTime updateDate,
 	              ArrayList< Comment > comments, String grade,
 	              int length, int nbAnchor, double distanceMeterBetweenAnchors,
 	              String style ) {

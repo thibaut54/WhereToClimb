@@ -1,14 +1,12 @@
 package org.thibaut.wheretoclimb.business.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-//import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.business.contract.AtlasManager;
-import org.thibaut.wheretoclimb.model.beans.Atlas;
+import org.thibaut.wheretoclimb.model.entity.Atlas;
 
-import java.util.List;
+//import org.springframework.data.repository.query.Param;
 
 @Component
 public class AtlasManagerImpl extends AbstractManager implements AtlasManager {

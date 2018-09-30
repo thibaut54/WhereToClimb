@@ -9,16 +9,18 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.webapp.validation.DateFormatterCustom;
-import org.thibaut.wheretoclimb.webapp.validation.UserValidator;
+import org.thibaut.wheretoclimb.model.entity.User;
 import org.thibaut.wheretoclimb.webapp.validation.UserForm;
-import org.thibaut.wheretoclimb.model.beans.User;
+import org.thibaut.wheretoclimb.webapp.validation.UserValidator;
+
+import java.time.LocalDateTime;
 
 @Controller
 public class RegisterController {
 
 	@Autowired
 	private UserValidator userValidator;
+
 	@Autowired
 	private ManagerFactory managerFactory;
 
@@ -65,7 +67,7 @@ public class RegisterController {
 		}
 		User newUser = null;
 
-		User user = new User(/*userId,*/
+		User user = new User(
 				userForm.getEmail(),
 				userForm.getPassword(),
 				userForm.getFirstName(),
@@ -73,7 +75,7 @@ public class RegisterController {
 				userForm.getUserName(),
 				userForm.getGender(),
 				userForm.isEmailVisible(),
-				DateFormatterCustom.getCurrentDate()/*,
+				LocalDateTime.now()/*,
 				form.getDateOfBirth(),
 				form.getGradeMax(),
 				form.getGradeFirstAttempt(),
@@ -90,12 +92,11 @@ public class RegisterController {
 
 		redirectAttributes.addFlashAttribute("flashUser", newUser);
 
-		return "redirect:/view/registerSuccessful";
+		return "redirect:/registerSuccessful";
 	}
 
-	@RequestMapping("/registerSuccessful")
+	@GetMapping("/registerSuccessful")
 	public String viewRegisterSuccessful(Model model) {
-
 		return "view/registerSuccessfulPage";
 	}
 }

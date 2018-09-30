@@ -1,12 +1,9 @@
-package org.thibaut.wheretoclimb.model.beans;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+package org.thibaut.wheretoclimb.model.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 /**
  * Bean used to define an area with one or many climbing crag
@@ -38,7 +35,7 @@ public class Area extends Element {
 	public Area( ) {
 	}
 
-	public Area( String name, Date createDate, Date updateDate,
+	public Area( String name, LocalDateTime createDate, LocalDateTime updateDate,
 	             ArrayList< Comment > comments, Collection< Atlas > atlases,
 	             Collection< Crag > crags, int approachDuration, String locality,
 	             Collection< Parking > parking ) {

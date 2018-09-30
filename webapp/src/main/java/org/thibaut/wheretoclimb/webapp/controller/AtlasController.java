@@ -1,7 +1,6 @@
 package org.thibaut.wheretoclimb.webapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -11,12 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.model.beans.Atlas;
-import org.thibaut.wheretoclimb.model.beans.User;
-import org.thibaut.wheretoclimb.webapp.validation.DateFormatterCustom;
+import org.thibaut.wheretoclimb.model.entity.Atlas;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Controller
 public class AtlasController {
@@ -64,9 +61,8 @@ public class AtlasController {
 		if(result.hasErrors()){
 			return "view/createAtlasPage";
 		}
-		atlas.setUpdateDate( null );
-		atlas.setComments( null );
-		atlas.setCreateDate( DateFormatterCustom.getCurrentDate() );
+		atlas.setCreateDate( LocalDateTime.now() );
+		//Warnging : vérifier si ok avec plusieurs utilisateurs connecté en mm temps
 		atlas.setUser( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()));
 		this.managerFactory.getAtlasManager().saveAtlas( atlas );
 		return "view/confirmationPage";

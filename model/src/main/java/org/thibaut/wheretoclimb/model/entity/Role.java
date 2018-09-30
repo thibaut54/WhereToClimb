@@ -1,9 +1,11 @@
-package org.thibaut.wheretoclimb.model.beans;
+package org.thibaut.wheretoclimb.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -11,6 +13,10 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "role")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class Role {
 
 //----------ATTRIBUTES----------
@@ -19,16 +25,12 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String role;
-
 	@ManyToMany(mappedBy = "roles")
 	private Collection< User > users;
 
 
-
 //----------CONSTRUCTORS----------
 
-	public Role( ) {
-	}
 
 	public Role( String role ) {
 		this.role = role;
@@ -37,27 +39,4 @@ public class Role {
 
 //----------GETTERS & SETTERS----------
 
-	public Integer getId( ) {
-		return id;
-	}
-
-	public void setId( Integer id ) {
-		this.id = id;
-	}
-
-	public String getRole( ) {
-		return role;
-	}
-
-	public void setRole( String role ) {
-		this.role = role;
-	}
-
-	public Collection< User > getUsers( ) {
-		return users;
-	}
-
-	public void setUsers( Collection< User > users ) {
-		this.users = users;
-	}
 }

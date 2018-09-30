@@ -25,6 +25,7 @@
 		<module>business</module>
 		<module>batch</module>
 		<module>webapp</module>
+		<module>util</module>
 	</modules>
 
 	<packaging>pom</packaging>
@@ -44,7 +45,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<!--<java.version>1.8</java.version>-->
+		<java.version>1.8</java.version>
 	</properties>
 
 
@@ -76,6 +77,11 @@
 			<dependency>
 				<groupId>org.thibaut</groupId>
 				<artifactId>business</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.thibaut</groupId>
+				<artifactId>util</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
@@ -125,6 +131,20 @@
 				<artifactId>popper.js</artifactId>
 				<version>1.14.4</version>
 			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.18.2</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!--<dependency>-->
+				<!--<groupId>org.springframework.boot</groupId>-->
+				<!--<artifactId>spring-boot-starter-test</artifactId>-->
+				<!--<scope>test</scope>-->
+			<!--</dependency>-->
 
 		</dependencies>
 

@@ -1,9 +1,7 @@
 package org.thibaut.wheretoclimb.business.contract;
 
 import org.springframework.data.domain.Page;
-import org.thibaut.wheretoclimb.model.beans.Atlas;
-
-import java.util.List;
+import org.thibaut.wheretoclimb.model.entity.Atlas;
 
 public interface AtlasManager {
 

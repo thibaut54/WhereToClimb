@@ -1,9 +1,9 @@
 package org.thibaut.wheretoclimb.webapp.validation;
 
-import java.util.Collection;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+
+import java.util.Collection;
 
 public class WebUtils {
 

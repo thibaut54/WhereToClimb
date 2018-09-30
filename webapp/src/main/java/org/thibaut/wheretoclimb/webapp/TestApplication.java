@@ -4,14 +4,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.business.contract.PasswordManager;
 import org.thibaut.wheretoclimb.consumer.repository.*;
-import org.thibaut.wheretoclimb.model.beans.Area;
-import org.thibaut.wheretoclimb.model.beans.Atlas;
-import org.thibaut.wheretoclimb.model.beans.Role;
-import org.thibaut.wheretoclimb.model.beans.User;
+import org.thibaut.wheretoclimb.model.entity.Area;
+import org.thibaut.wheretoclimb.model.entity.Atlas;
+import org.thibaut.wheretoclimb.model.entity.Role;
+import org.thibaut.wheretoclimb.model.entity.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Component
 public class TestApplication implements CommandLineRunner {
@@ -33,7 +36,7 @@ public class TestApplication implements CommandLineRunner {
 	}
 
 	/**
-	 * Callback used to run the beans.
+	 * Callback used to run the entity.
 	 *
 	 * @param args incoming main method arguments
 	 * @throws Exception on error
@@ -62,7 +65,7 @@ public class TestApplication implements CommandLineRunner {
 		//-----POPULATE AREA
 		Collection< Area > areas = new ArrayList<Area>();
 
-		areas.add( new Area("Maron", getDate(), null, null,
+		areas.add( new Area("Maron", LocalDateTime.now(), null, null,
 				null, null, 12,
 				"au bord de la moselle, en amont de la ville de Maron", null));
 
@@ -75,19 +78,19 @@ public class TestApplication implements CommandLineRunner {
 		//pwd = 1235
 		users.add( new User( "male", "John",
 				"Doe", "Another",
-				"john@gmail.com", getDate()));
+				"john@gmail.com", LocalDateTime.now()));
 		( ( ArrayList< User> ) users ).get( 0 ).setPassword( passwordManager.crypt( "1235" ) );
 
 		//pwd = 1265
 		users.add( new User( "female", "Lea",
 				"Corvoisier", "Lele",
-				"lea@gmail.com", getDate() ));
+				"lea@gmail.com", LocalDateTime.now() ));
 		( ( ArrayList< User> ) users ).get( 1 ).setPassword( passwordManager.crypt( "1265" ) );
 
 		//pwd = 123
 		users.add( new User( "male", "Admin",
 				"Admin", "Admin",
-				"admin@gmail.com", getDate()));
+				"admin@gmail.com", LocalDateTime.now()));
 		( ( ArrayList< User> ) users ).get( 2 ).setPassword( passwordManager.crypt( "123" ) );
 //
 //			//-----SET ROLE
@@ -95,13 +98,13 @@ public class TestApplication implements CommandLineRunner {
 		List< Role > rolesUser1 = new ArrayList<>();
 		rolesUser1.add( this.roleRepository.findByRoleLike( "%USER" ) );
 
-		( ( ArrayList< User> ) users ).get( 0 ).setUserRoles( rolesUser1 );
-		( ( ArrayList< User> ) users ).get( 1 ).setUserRoles( rolesUser1 );
+		( ( ArrayList< User> ) users ).get( 0 ).setRoles( rolesUser1 );
+		( ( ArrayList< User> ) users ).get( 1 ).setRoles( rolesUser1 );
 
 		List< Role > rolesUser3 = new ArrayList<>();
 		rolesUser3.add( this.roleRepository.findByRoleLike( "%USER" ) );
 		rolesUser3.add( this.roleRepository.findByRoleLike( "%ADMIN" ) );
-		( ( ArrayList< User> ) users ).get( 2).setUserRoles( rolesUser3 );
+		( ( ArrayList< User> ) users ).get( 2).setRoles( rolesUser3 );
 
 
 		//-----SAVE ALL USERS
@@ -112,24 +115,25 @@ public class TestApplication implements CommandLineRunner {
 
 
 		//-----POPULATE ATLAS
-		Atlas atlas1 = new Atlas( "Grimper en Lorraine", "France", getDate(),
-				null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas2 = new Atlas( "Grimper en Ile-de-France", "France", getDate(),
-						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas3 = new Atlas( "Grimper en PACA", "France", getDate(),
-						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas4 = new Atlas( "Grimper en Rhône-Alpes", "France", getDate(),
-						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas5 = new Atlas( "Grimper en Bourgogne", "France", getDate(),
-						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas6 = new Atlas( "Grimper en Bretagne", "France", getDate(),
-						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas7 = new Atlas( "Grimper dans le Languedoc", "France", getDate(),
-						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas8 = new Atlas( "Grimper dans le Centre", "France", getDate(),
-						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas9 = new Atlas( "Grimper en ailleurs", "France", getDate(),
-				null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas1 = new Atlas( "Grimper en Lorraine", LocalDateTime.now(),
+					null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas2 = new Atlas( "Grimper en Region1", LocalDateTime.now(),
+						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas3 = new Atlas( "Grimper en Region2", LocalDateTime.now(),
+						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas4 = new Atlas( "Grimper en Region3", LocalDateTime.now(),
+						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas5 = new Atlas( "Grimper en Region4", LocalDateTime.now(),
+						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas6 = new Atlas( "Grimper en Region5", LocalDateTime.now(),
+						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas7 = new Atlas( "Grimper en Region6", LocalDateTime.now(),
+						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas8 = new Atlas( "Grimper en Region7", LocalDateTime.now(),
+						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
+		Atlas atlas9 = new Atlas( "Grimper en Region8", LocalDateTime.now(),
+						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
+
 
 		Collection< Atlas > atlases = new ArrayList<Atlas>();
 
@@ -163,12 +167,6 @@ public class TestApplication implements CommandLineRunner {
 
 	}
 
-	public Date getDate(){
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-		LocalDateTime now = LocalDateTime.now();
-		Date date = new Date (dtf.format(now));
-		return date;
-	}
 }
 
 

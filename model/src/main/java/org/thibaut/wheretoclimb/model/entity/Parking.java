@@ -1,7 +1,6 @@
-package org.thibaut.wheretoclimb.model.beans;
+package org.thibaut.wheretoclimb.model.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "parking")

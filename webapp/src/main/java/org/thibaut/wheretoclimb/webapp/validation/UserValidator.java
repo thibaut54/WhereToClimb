@@ -7,7 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.model.beans.User;
+import org.thibaut.wheretoclimb.model.entity.User;
 
 @Component
 public class UserValidator implements Validator {

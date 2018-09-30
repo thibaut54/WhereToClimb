@@ -1,22 +1,14 @@
-package org.thibaut.wheretoclimb.model.beans;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
+package org.thibaut.wheretoclimb.model.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Bean used to define a user/climber account
  */
 @Entity
 @Table(name = "users")
-//@Component
-//@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class User {
 
 //----------ATTRIBUTES----------
@@ -35,10 +27,11 @@ public class User {
 	private String lastName;
 	private String userName;
 	private String gender;
-	private boolean accountEnabled;
+	private boolean enabled;
+	private String confirmationToken;
 	private boolean emailVisible;
-	private Date createAccountDate;
-	private Date dateOfBirth;
+	private LocalDateTime createAccountDate;
+	private LocalDateTime dateOfBirth;
 	private String gradeMax;
 	private String gradeFirstAttempt;
 	private String gradeAverage;
@@ -53,8 +46,9 @@ public class User {
 
 //----------CONSTRUCTORS----------
 
-	public User( ) {
-
+	public User() {
+		super();
+		this.enabled=false;
 	}
 
 	public User( String gender,
@@ -62,7 +56,7 @@ public class User {
 	             String lastName,
 	             String userName,
 	             String email,
-	             Date createAccountDate ) {
+	             LocalDateTime createAccountDate ) {
 		this.gender = gender;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -78,7 +72,7 @@ public class User {
 	             String userName,
 	             String gender,
 	             boolean emailVisible,
-	             Date createAccountDate/*,
+	             LocalDateTime createAccountDate/*,
 	             Date dateOfBirth,
 	             String gradeMax,
 	             String gradeFirstAttempt,
@@ -89,7 +83,7 @@ public class User {
 		this.lastName = lastName;
 		this.userName = userName;
 		this.gender = gender;
-		this.accountEnabled = accountEnabled;
+		this.enabled = enabled;
 		this.emailVisible = emailVisible;
 		this.createAccountDate = createAccountDate;
 //		this.dateOfBirth = dateOfBirth;
@@ -191,6 +185,22 @@ public class User {
 		this.gender = gender;
 	}
 
+	public boolean isEnabled( ) {
+		return enabled;
+	}
+
+	public void setEnabled( boolean enabled ) {
+		this.enabled = enabled;
+	}
+
+	public String getConfirmationToken( ) {
+		return confirmationToken;
+	}
+
+	public void setConfirmationToken( String confirmationToken ) {
+		this.confirmationToken = confirmationToken;
+	}
+
 	public boolean isEmailVisible( ) {
 		return emailVisible;
 	}
@@ -199,19 +209,19 @@ public class User {
 		this.emailVisible = emailVisible;
 	}
 
-	public Date getCreateAccountDate( ) {
+	public LocalDateTime getCreateAccountDate( ) {
 		return createAccountDate;
 	}
 
-	public void setCreateAccountDate( Date createAccountDate ) {
+	public void setCreateAccountDate( LocalDateTime createAccountDate ) {
 		this.createAccountDate = createAccountDate;
 	}
 
-	public Date getDateOfBirth( ) {
+	public LocalDateTime getDateOfBirth( ) {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth( Date dateOfBirth ) {
+	public void setDateOfBirth( LocalDateTime dateOfBirth ) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -239,12 +249,12 @@ public class User {
 		this.gradeAverage = gradeAverage;
 	}
 
-	public Collection< Role > getUserRoles( ) {
+	public Collection< Role > getRoles( ) {
 		return roles;
 	}
 
-	public void setUserRoles( List< Role > userRoles ) {
-		this.roles = userRoles;
+	public void setRoles( Collection< Role > roles ) {
+		this.roles = roles;
 	}
 }
 

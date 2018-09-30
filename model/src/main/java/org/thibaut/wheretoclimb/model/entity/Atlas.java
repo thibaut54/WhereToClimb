@@ -1,13 +1,9 @@
-package org.thibaut.wheretoclimb.model.beans;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+package org.thibaut.wheretoclimb.model.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 /**
  * Bean used to define a book or a document that contains one or many climbing areas
@@ -32,6 +28,7 @@ public class Atlas extends Element {
 			inverseJoinColumns = { @JoinColumn(name = "crag_id") } )
 	private Collection< Crag > crags;
 //	@NotNull
+	private String scale;
 	private String country;
 	private String region;
 	private String department;
@@ -44,13 +41,17 @@ public class Atlas extends Element {
 //----------CONSTRUCTORS----------
 
 	public Atlas( ) {
+		//ajouter la date de création à la date du jour
 	}
 
-	public Atlas( String name, String region, Date createDate, Date updateDate,
-	              ArrayList< Comment > commentList, boolean available, User user ) {
+	public Atlas( String name, LocalDateTime createDate, LocalDateTime updateDate,
+	              ArrayList< Comment > commentList, boolean available, String country, String scale, String region, User user) {
 		super( name, createDate, updateDate, commentList );
 		this.available = available;
+		this.country = country;
 		this.user = user;
+		this.region = region;
+		this.scale = scale;
 	}
 
 
@@ -83,6 +84,14 @@ public class Atlas extends Element {
 
 	public void setCrags( Collection< Crag > crags ) {
 		this.crags = crags;
+	}
+
+	public String getScale( ) {
+		return scale;
+	}
+
+	public void setScale( String scale ) {
+		this.scale = scale;
 	}
 
 	public String getCountry( ) {

@@ -1,10 +1,9 @@
-package org.thibaut.wheretoclimb.model.beans;
+package org.thibaut.wheretoclimb.model.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 /**
  * Bean used to define a precise itinerary that the climber must follow
@@ -32,7 +31,7 @@ public class Route extends Element {
 	public Route( ) {
 	}
 
-	public Route( String name, Date createDate, Date updateDate,
+	public Route( String name, LocalDateTime createDate, LocalDateTime updateDate,
 	              ArrayList< Comment > comments, Collection< Pitch > pitchList,
 	              String grade, int length, int nbAnchor, boolean multiPitch ) {
 		super( name, createDate, updateDate, comments );

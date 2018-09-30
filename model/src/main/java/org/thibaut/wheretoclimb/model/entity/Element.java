@@ -1,11 +1,11 @@
-package org.thibaut.wheretoclimb.model.beans;
+package org.thibaut.wheretoclimb.model.entity;
 
-import javax.validation.constraints.*;
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 
 @Entity
@@ -21,8 +21,8 @@ public abstract class Element {
 	@NotNull
 	@Size(min=4,max=50)
 	private String name;
-	private Date createDate;
-	private Date updateDate;
+	private LocalDateTime createDate;
+	private LocalDateTime updateDate;
 	@OneToMany/*(mappedBy = "element", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "element_id")
 	private Collection< Comment > comments;
@@ -33,7 +33,7 @@ public abstract class Element {
 	public Element( ) {
 	}
 
-	public Element( String name, Date createDate, Date updateDate,
+	public Element( String name, LocalDateTime createDate, LocalDateTime updateDate,
 	                ArrayList< Comment > comments ) {
 		this.name = name;
 		this.createDate = createDate;
@@ -60,19 +60,19 @@ public abstract class Element {
 		this.name = name;
 	}
 
-	public Date getCreateDate( ) {
+	public LocalDateTime getCreateDate( ) {
 		return createDate;
 	}
 
-	public void setCreateDate( Date createDate ) {
+	public void setCreateDate( LocalDateTime createDate ) {
 		this.createDate = createDate;
 	}
 
-	public Date getUpdateDate( ) {
+	public LocalDateTime getUpdateDate( ) {
 		return updateDate;
 	}
 
-	public void setUpdateDate( Date updateDate ) {
+	public void setUpdateDate( LocalDateTime updateDate ) {
 		this.updateDate = updateDate;
 	}
 
