@@ -35,4 +35,9 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 	public void deleteAtlas( Integer id ){
 		getDaoFactory().getAtlasRepository().deleteById( id );
 	}
+
+	@Override
+	public void saveAtlas( Atlas atlas ){
+		getDaoFactory().getAtlasRepository().save( atlas );
+	}
 }

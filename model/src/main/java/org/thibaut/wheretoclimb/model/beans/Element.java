@@ -1,10 +1,12 @@
 package org.thibaut.wheretoclimb.model.beans;
 
+import javax.validation.constraints.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
 
 @Entity
 @Table(name="element")
@@ -16,6 +18,8 @@ public abstract class Element {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@NotNull
+	@Size(min=4,max=50)
 	private String name;
 	private Date createDate;
 	private Date updateDate;

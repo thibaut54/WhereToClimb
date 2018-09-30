@@ -1,6 +1,8 @@
 package org.thibaut.wheretoclimb.model.beans;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -13,6 +15,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "users")
+//@Component
+//@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class User {
 
 //----------ATTRIBUTES----------
