@@ -14,7 +14,6 @@ public interface AtlasRepository  extends JpaRepository< Atlas, Integer > {
 
 	public Atlas findByName(String name);
 
-	@Query("SELECT atlas FROM Atlas atlas WHERE lower(atlas.name) like :keyword")
+	@Query("SELECT atlas FROM Atlas atlas WHERE LOWER(atlas.name) LIKE :keyword")
 	public Page<Atlas> searchAtlas( @Param( "keyword" ) String keyword, Pageable pageable );
-	//j'ai l'impression que le mini traitement lower relève de la couche business, mais pas sur...
 }
