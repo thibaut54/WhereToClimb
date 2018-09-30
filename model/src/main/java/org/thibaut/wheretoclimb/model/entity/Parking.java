@@ -1,9 +1,16 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "parking")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class Parking {
 
 //----------ATTRIBUTES----------
@@ -19,8 +26,6 @@ public class Parking {
 
 //----------CONSTRUCTORS----------
 
-	public Parking( ) {
-	}
 
 	public Parking( GpsCoordinates parkingGps, String indication ) {
 		this.parkingGps = parkingGps;
@@ -28,29 +33,4 @@ public class Parking {
 	}
 
 
-//----------GETTERS & SETTERS----------
-
-	public Integer getId( ) {
-		return id;
-	}
-
-	public void setId( Integer id ) {
-		this.id = id;
-	}
-
-	public GpsCoordinates getParkingGps( ) {
-		return parkingGps;
-	}
-
-	public void setParkingGps( GpsCoordinates parkingGps ) {
-		this.parkingGps = parkingGps;
-	}
-
-	public String getIndication( ) {
-		return indication;
-	}
-
-	public void setIndication( String indication ) {
-		this.indication = indication;
-	}
 }

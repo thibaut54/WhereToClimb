@@ -1,5 +1,7 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -13,6 +15,11 @@ import java.util.ArrayList;
 @Entity
 @Table(name = "pitch")
 @PrimaryKeyJoinColumn(name = "element_id")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+//@EqualsAndHashCode( callSuper = false )
 public class Pitch extends Element {
 
 //----------ATTRIBUTES----------
@@ -26,8 +33,6 @@ public class Pitch extends Element {
 
 //----------CONSTRUCTORS----------
 
-	public Pitch(  ){
-	}
 
 	public Pitch( String name, LocalDateTime createDate, LocalDateTime updateDate,
 	              ArrayList< Comment > comments, String grade,
@@ -42,45 +47,4 @@ public class Pitch extends Element {
 	}
 
 
-//----------GETTERS & SETTERS----------
-
-	public String getGrade( ) {
-		return grade;
-	}
-
-	public void setGrade( String grade ) {
-		this.grade = grade;
-	}
-
-	public int getLength( ) {
-		return length;
-	}
-
-	public void setLength( int length ) {
-		this.length = length;
-	}
-
-	public int getNbAnchor( ) {
-		return nbAnchor;
-	}
-
-	public void setNbAnchor( int nbAnchor ) {
-		this.nbAnchor = nbAnchor;
-	}
-
-	public double getDistanceMeterBetweenAnchors( ) {
-		return distanceMeterBetweenAnchors;
-	}
-
-	public void setDistanceMeterBetweenAnchors( double distanceMeterBetweenAnchors ) {
-		this.distanceMeterBetweenAnchors = distanceMeterBetweenAnchors;
-	}
-
-	public String getStyle( ) {
-		return style;
-	}
-
-	public void setStyle( String style ) {
-		this.style = style;
-	}
 }

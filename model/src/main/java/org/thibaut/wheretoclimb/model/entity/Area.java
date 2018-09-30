@@ -1,5 +1,7 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +13,11 @@ import java.util.Collection;
 @Entity
 @Table(name="area")
 @PrimaryKeyJoinColumn(name = "elementId")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode( callSuper = true )
 public class Area extends Element {
 
 //----------ATTRIBUTES----------
@@ -32,8 +39,6 @@ public class Area extends Element {
 
 //----------CONSTRUCTORS----------
 
-	public Area( ) {
-	}
 
 	public Area( String name, LocalDateTime createDate, LocalDateTime updateDate,
 	             ArrayList< Comment > comments, Collection< Atlas > atlases,
@@ -47,45 +52,5 @@ public class Area extends Element {
 		this.parking = parking;
 	}
 
-	//----------GETTERS & SETTERS----------
 
-	public Collection< Atlas > getAtlases( ) {
-		return atlases;
-	}
-
-	public void setAtlases( ArrayList< Atlas > atlases ) {
-		this.atlases = atlases;
-	}
-
-	public Collection< Crag > getCrags( ) {
-		return crags;
-	}
-
-	public void setCrags( ArrayList< Crag > crags ) {
-		this.crags = crags;
-	}
-
-	public int getApproachDuration( ) {
-		return approachDuration;
-	}
-
-	public void setApproachDuration( int approachDuration ) {
-		this.approachDuration = approachDuration;
-	}
-
-	public String getLocality( ) {
-		return locality;
-	}
-
-	public void setLocality( String locality ) {
-		this.locality = locality;
-	}
-
-	public Collection< Parking > getParking( ) {
-		return parking;
-	}
-
-	public void setParking( Collection< Parking > parking ) {
-		this.parking = parking;
-	}
 }

@@ -1,9 +1,16 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "gps_coordinates")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class GpsCoordinates {
 
 //----------ATTRIBUTES----------
@@ -22,8 +29,6 @@ public class GpsCoordinates {
 
 //----------CONSTRUCTORS----------
 
-	public GpsCoordinates( ) {
-	}
 
 	public GpsCoordinates( int altitude, double latitude, double longitude,
 	                       Crag crag, Parking parking ) {
@@ -34,54 +39,4 @@ public class GpsCoordinates {
 		this.parking = parking;
 	}
 
-
-//----------GETTERS & SETTERS----------
-
-	public Integer getId( ) {
-		return id;
-	}
-
-	public void setId( Integer id ) {
-		this.id = id;
-	}
-
-	public int getAltitude( ) {
-		return altitude;
-	}
-
-	public void setAltitude( int altitude ) {
-		this.altitude = altitude;
-	}
-
-	public double getLatitude( ) {
-		return latitude;
-	}
-
-	public void setLatitude( double latitude ) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude( ) {
-		return longitude;
-	}
-
-	public void setLongitude( double longitude ) {
-		this.longitude = longitude;
-	}
-
-	public Crag getCrag( ) {
-		return crag;
-	}
-
-	public void setCrag( Crag crag ) {
-		this.crag = crag;
-	}
-
-	public Parking getParking( ) {
-		return parking;
-	}
-
-	public void setParking( Parking parking ) {
-		this.parking = parking;
-	}
 }

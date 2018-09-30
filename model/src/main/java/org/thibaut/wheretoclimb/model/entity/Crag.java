@@ -1,5 +1,7 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -10,6 +12,11 @@ import java.util.Collection;
 @Entity
 @Table(name = "crag")
 @PrimaryKeyJoinColumn(name = "element_id")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+//@EqualsAndHashCode( callSuper = true )
 public class Crag extends Element {
 
 //----------ATTRIBUTES----------
@@ -31,8 +38,6 @@ public class Crag extends Element {
 
 //----------CONSTRUCTORS----------
 
-	public Crag( ) {
-	}
 
 	public Crag( Collection< Atlas > atlases, Collection< Route > routes, Collection<Parking> parkings,
 	             GpsCoordinates cragGps, String mapUrl, String rockType ) {
@@ -45,53 +50,4 @@ public class Crag extends Element {
 	}
 
 
-//----------GETTERS & SETTERS----------
-
-	public Collection< Atlas > getAtlases( ) {
-		return atlases;
-	}
-
-	public void setAtlases( Collection< Atlas > atlases ) {
-		this.atlases = atlases;
-	}
-
-	public Collection< Route > getRoutes( ) {
-		return routes;
-	}
-
-	public void setRoutes( Collection< Route > routes ) {
-		this.routes = routes;
-	}
-
-	public Collection< Parking > getParkings( ) {
-		return parkings;
-	}
-
-	public void setParkings( Collection< Parking > parkings ) {
-		this.parkings = parkings;
-	}
-
-	public GpsCoordinates getCragGps( ) {
-		return cragGps;
-	}
-
-	public void setCragGps( GpsCoordinates cragGps ) {
-		this.cragGps = cragGps;
-	}
-
-	public String getMapUrl( ) {
-		return mapUrl;
-	}
-
-	public void setMapUrl( String mapUrl ) {
-		this.mapUrl = mapUrl;
-	}
-
-	public String getRockType( ) {
-		return rockType;
-	}
-
-	public void setRockType( String rockType ) {
-		this.rockType = rockType;
-	}
 }

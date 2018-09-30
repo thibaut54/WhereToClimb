@@ -1,5 +1,7 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -9,6 +11,9 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@EqualsAndHashCode
 public class User {
 
 //----------ATTRIBUTES----------
@@ -110,151 +115,5 @@ public class User {
 	}
 
 
-//----------GETTERS & SETTERS
-
-
-	public Integer getId( ) {
-		return id;
-	}
-
-	public void setId( Integer id ) {
-		this.id = id;
-	}
-
-	public String getEmail( ) {
-		return email;
-	}
-
-	public void setEmail( String email ) {
-		this.email = email;
-	}
-
-	public Collection< Atlas > getAtlases( ) {
-		return atlases;
-	}
-
-	public void setAtlases( Collection< Atlas > atlases ) {
-		this.atlases = atlases;
-	}
-
-	public Collection< Comment > getComments( ) {
-		return comments;
-	}
-
-	public void setComments( Collection< Comment > comments ) {
-		this.comments = comments;
-	}
-
-	public String getPassword( ) {
-		return password;
-	}
-
-	public void setPassword( String password ) {
-		this.password = password;
-	}
-
-	public String getFirstName( ) {
-		return firstName;
-	}
-
-	public void setFirstName( String firstName ) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName( ) {
-		return lastName;
-	}
-
-	public void setLastName( String lastName ) {
-		this.lastName = lastName;
-	}
-
-	public String getUserName( ) {
-		return userName;
-	}
-
-	public void setUserName( String userName ) {
-		this.userName = userName;
-	}
-
-	public String getGender( ) {
-		return gender;
-	}
-
-	public void setGender( String gender ) {
-		this.gender = gender;
-	}
-
-	public boolean isEnabled( ) {
-		return enabled;
-	}
-
-	public void setEnabled( boolean enabled ) {
-		this.enabled = enabled;
-	}
-
-	public String getConfirmationToken( ) {
-		return confirmationToken;
-	}
-
-	public void setConfirmationToken( String confirmationToken ) {
-		this.confirmationToken = confirmationToken;
-	}
-
-	public boolean isEmailVisible( ) {
-		return emailVisible;
-	}
-
-	public void setEmailVisible( boolean emailVisible ) {
-		this.emailVisible = emailVisible;
-	}
-
-	public LocalDateTime getCreateAccountDate( ) {
-		return createAccountDate;
-	}
-
-	public void setCreateAccountDate( LocalDateTime createAccountDate ) {
-		this.createAccountDate = createAccountDate;
-	}
-
-	public LocalDateTime getDateOfBirth( ) {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth( LocalDateTime dateOfBirth ) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public String getGradeMax( ) {
-		return gradeMax;
-	}
-
-	public void setGradeMax( String gradeMax ) {
-		this.gradeMax = gradeMax;
-	}
-
-	public String getGradeFirstAttempt( ) {
-		return gradeFirstAttempt;
-	}
-
-	public void setGradeFirstAttempt( String gradeFirstAttempt ) {
-		this.gradeFirstAttempt = gradeFirstAttempt;
-	}
-
-	public String getGradeAverage( ) {
-		return gradeAverage;
-	}
-
-	public void setGradeAverage( String gradeAverage ) {
-		this.gradeAverage = gradeAverage;
-	}
-
-	public Collection< Role > getRoles( ) {
-		return roles;
-	}
-
-	public void setRoles( Collection< Role > roles ) {
-		this.roles = roles;
-	}
 }
 

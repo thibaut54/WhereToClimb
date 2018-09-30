@@ -1,9 +1,6 @@
 package org.thibaut.wheretoclimb.model.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -17,6 +14,7 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class Role {
 
 //----------ATTRIBUTES----------

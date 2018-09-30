@@ -1,5 +1,7 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +15,11 @@ import java.util.Collection;
 @Entity
 @Table(name = "route")
 @PrimaryKeyJoinColumn(name = "element_id")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class Route extends Element {
 
 //----------ATTRIBUTES----------
@@ -28,8 +35,6 @@ public class Route extends Element {
 
 //----------CONSTRUCTORS----------
 
-	public Route( ) {
-	}
 
 	public Route( String name, LocalDateTime createDate, LocalDateTime updateDate,
 	              ArrayList< Comment > comments, Collection< Pitch > pitchList,
@@ -42,46 +47,4 @@ public class Route extends Element {
 		this.multiPitch = multiPitch;
 	}
 
-
-//----------GETTERS & SETTERS----------
-
-	public Collection< Pitch > getPitchList( ) {
-		return pitchList;
-	}
-
-	public void setPitchList( Collection< Pitch > pitchList ) {
-		this.pitchList = pitchList;
-	}
-
-	public String getGrade( ) {
-		return grade;
-	}
-
-	public void setGrade( String grade ) {
-		this.grade = grade;
-	}
-
-	public int getLength( ) {
-		return length;
-	}
-
-	public void setLength( int length ) {
-		this.length = length;
-	}
-
-	public int getNbAnchor( ) {
-		return nbAnchor;
-	}
-
-	public void setNbAnchor( int nbAnchor ) {
-		this.nbAnchor = nbAnchor;
-	}
-
-	public boolean isMultiPitch( ) {
-		return multiPitch;
-	}
-
-	public void setMultiPitch( boolean multiPitch ) {
-		this.multiPitch = multiPitch;
-	}
 }

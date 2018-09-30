@@ -1,5 +1,7 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,6 +13,11 @@ import java.util.Collection;
 @Entity
 @Table(name="element")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public abstract class Element {
 
 //----------ATTRIBUTES----------
@@ -30,8 +37,6 @@ public abstract class Element {
 
 //----------CONSTRUCTORS----------
 
-	public Element( ) {
-	}
 
 	public Element( String name, LocalDateTime createDate, LocalDateTime updateDate,
 	                ArrayList< Comment > comments ) {
@@ -41,46 +46,4 @@ public abstract class Element {
 		this.comments = comments;
 	}
 
-
-//----------GETTERS & SETTERS----------
-
-	public Integer getId( ) {
-		return id;
-	}
-
-	public void setId( Integer id ) {
-		this.id = id;
-	}
-
-	public String getName( ) {
-		return name;
-	}
-
-	public void setName( String name ) {
-		this.name = name;
-	}
-
-	public LocalDateTime getCreateDate( ) {
-		return createDate;
-	}
-
-	public void setCreateDate( LocalDateTime createDate ) {
-		this.createDate = createDate;
-	}
-
-	public LocalDateTime getUpdateDate( ) {
-		return updateDate;
-	}
-
-	public void setUpdateDate( LocalDateTime updateDate ) {
-		this.updateDate = updateDate;
-	}
-
-	public Collection< Comment > getComments( ) {
-		return comments;
-	}
-
-	public void setComments( ArrayList< Comment > comments ) {
-		this.comments = comments;
-	}
 }
