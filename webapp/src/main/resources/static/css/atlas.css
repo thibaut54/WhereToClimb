@@ -19,6 +19,14 @@ h3{
     alignment: center;
 }
 
+.error-field{
+    color: red;
+}
+
+.spacer{
+    margin-top: 40px;
+}
+
 /*.container {*/
     /*padding-right: 15px;*/
     /*padding-left: 15px;*/

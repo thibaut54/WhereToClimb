@@ -17,16 +17,8 @@ public class WelcomeController {
 
 	@Autowired
 	private ManagerFactory managerFactory;
-
-
 //	@Autowired
-//	private RoleRepository roleRepository;
-//
-//	@GetMapping(value = "/test/role/{recherche}")
-//	public List< Role > testeDeRequetes( @PathVariable String recherche) {
-//		return this.roleRepository.findByRoleLike("%"+recherche+"%");
-//	}
-
+//	private org.thibaut.wheretoclimb.model.beans.User user;
 
 	// Injectez (inject) via application.properties.
 	@Value("${welcome.message}")

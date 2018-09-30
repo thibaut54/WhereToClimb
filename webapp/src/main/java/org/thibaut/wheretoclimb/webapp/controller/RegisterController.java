@@ -61,8 +61,6 @@ public class RegisterController {
 
 		// Validate result
 		if (result.hasErrors()) {
-//			List<Country> countries = countryDAO.getCountries();
-//			model.addAttribute("countries", countries);
 			return "view/registerPage";
 		}
 		User newUser = null;

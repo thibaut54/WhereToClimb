@@ -112,23 +112,23 @@ public class TestApplication implements CommandLineRunner {
 
 
 		//-----POPULATE ATLAS
-		Atlas atlas1 = new Atlas( "Grimper en Lorraine", getDate(),
+		Atlas atlas1 = new Atlas( "Grimper en Lorraine", "France", getDate(),
 				null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas2 = new Atlas( "Grimper en Ile-de-France", getDate(),
+		Atlas atlas2 = new Atlas( "Grimper en Ile-de-France", "France", getDate(),
 						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas3 = new Atlas( "Grimper en PACA", getDate(),
+		Atlas atlas3 = new Atlas( "Grimper en PACA", "France", getDate(),
 						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas4 = new Atlas( "Grimper en Rhône-Alpes", getDate(),
+		Atlas atlas4 = new Atlas( "Grimper en Rhône-Alpes", "France", getDate(),
 						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas5 = new Atlas( "Grimper en Bourgogne", getDate(),
+		Atlas atlas5 = new Atlas( "Grimper en Bourgogne", "France", getDate(),
 						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas6 = new Atlas( "Grimper en Bretagne", getDate(),
+		Atlas atlas6 = new Atlas( "Grimper en Bretagne", "France", getDate(),
 						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas7 = new Atlas( "Grimper dans le Languedoc", getDate(),
+		Atlas atlas7 = new Atlas( "Grimper dans le Languedoc", "France", getDate(),
 						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas8 = new Atlas( "Grimper dans le Centre", getDate(),
+		Atlas atlas8 = new Atlas( "Grimper dans le Centre", "France", getDate(),
 						null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas9 = new Atlas( "Grimper en ailleurs", getDate(),
+		Atlas atlas9 = new Atlas( "Grimper en ailleurs", "France", getDate(),
 				null, null, true, ( ( ArrayList< User> ) users ).get( 0 ));
 
 		Collection< Atlas > atlases = new ArrayList<Atlas>();

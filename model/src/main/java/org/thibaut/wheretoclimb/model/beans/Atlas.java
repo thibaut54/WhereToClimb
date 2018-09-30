@@ -3,6 +3,7 @@ package org.thibaut.wheretoclimb.model.beans;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,6 +31,10 @@ public class Atlas extends Element {
 			joinColumns = { @JoinColumn(name = "atlas_id") },
 			inverseJoinColumns = { @JoinColumn(name = "crag_id") } )
 	private Collection< Crag > crags;
+//	@NotNull
+	private String country;
+	private String region;
+	private String department;
 	private boolean available;
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -41,7 +46,7 @@ public class Atlas extends Element {
 	public Atlas( ) {
 	}
 
-	public Atlas( String name, Date createDate, Date updateDate,
+	public Atlas( String name, String region, Date createDate, Date updateDate,
 	              ArrayList< Comment > commentList, boolean available, User user ) {
 		super( name, createDate, updateDate, commentList );
 		this.available = available;
@@ -63,20 +68,9 @@ public class Atlas extends Element {
 
 //----------GETTERS & SETTERS----------
 
+
 	public Collection< Area > getAreas( ) {
 		return areas;
-	}
-
-	public void setAreas( ArrayList< Area > areas ) {
-		this.areas = areas;
-	}
-
-	public boolean isAvailable( ) {
-		return available;
-	}
-
-	public void setAvailable( boolean available ) {
-		this.available = available;
 	}
 
 	public void setAreas( Collection< Area > areas ) {
@@ -89,6 +83,38 @@ public class Atlas extends Element {
 
 	public void setCrags( Collection< Crag > crags ) {
 		this.crags = crags;
+	}
+
+	public String getCountry( ) {
+		return country;
+	}
+
+	public void setCountry( String country ) {
+		this.country = country;
+	}
+
+	public String getRegion( ) {
+		return region;
+	}
+
+	public void setRegion( String region ) {
+		this.region = region;
+	}
+
+	public String getDepartment( ) {
+		return department;
+	}
+
+	public void setDepartment( String department ) {
+		this.department = department;
+	}
+
+	public boolean isAvailable( ) {
+		return available;
+	}
+
+	public void setAvailable( boolean available ) {
+		this.available = available;
 	}
 
 	public User getUser( ) {
