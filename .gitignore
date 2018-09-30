@@ -79,4 +79,8 @@ fabric.properties
 .idea/sonarlint
 
 
+# UML files
+uml/**
+
+
 # End of https://www.gitignore.io/api/intellij
