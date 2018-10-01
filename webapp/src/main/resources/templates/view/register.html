@@ -5,109 +5,103 @@
 
     <head>
         <div th:insert="fragment/bootstrapCDN :: head"></div>
+
+        <link rel="stylesheet" type="text/css" media="all"
+              th:href="@{/static/css/register.css}" />
         <!--<title th:utext="${title}"></title>-->
-        <style>
-            th, td {
-                padding: 5px;
-            }
-            td span  {
-                font-size:90%;
-                font-style: italic;
-                color: red;
-            }
-            .error {
-                color: red;
-                font-style: italic;
-            }
-        </style>
+
     </head>
 
     <body>
-        <!-- Include _menu.html -->
-        <!--<th:block th:include="/_menu"></th:block>-->
 
-        <h2>Register</h2>
+        <div layout:fragment="content" class="container">
 
-        <div th:if="${errorMessage != null}"
-             th:utext="${errorMessage}" class="error">...</div>
+            <h2>Register</h2>
 
-        <form th:action="@{/public/register}" th:object="${userForm}" method="POST">
-            <table>
-                <tr>
-                    <td>Email</td>
-                    <td><input type="text" th:field="*{email}" placeholder="Email"/> </td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">..</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>User Name</td>
-                    <td><input type="text" th:field="*{userName}" /></td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">..</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Password</td>
-                    <td><input type="password" th:field="*{password}" /> </td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">..</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Confirm password</td>
-                    <td><input type="password" th:field="*{confirmPassword}" /> </td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">..</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>First Name</td>
-                    <td><input type="text" th:field="*{firstName}" /> </td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">..</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Last Name</td>
-                    <td><input type="text" th:field="*{lastName}" /> </td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">..</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gender</td>
-                    <td>
-                        <select th:field="*{gender}">
-                            <option value=""> -- </option>
-                            <option value="F">Female</option>
-                            <option value="M">Male</option>
-                        </select>
-                    </td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">..</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Email visible by public</td>
-                    <td>
-                        <select th:field="*{emailVisible}">
-                            <option value="false">No</option>
-                            <option value="true">Yes</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>
-                        <input type="submit" value="Submit" />
-                        <a th:href="@{/}">Cancel</a>
-                    </td>
-                    <td>&nbsp;</td>
-                </tr>
-            </table>
-        </form>
+            <div th:if="${errorMessage != null}"
+                 th:utext="${errorMessage}" class="error">...</div>
 
+            <form th:action="@{/public/register}" th:object="${userForm}" method="POST">
+                <table>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" th:field="*{email}" placeholder="Email"/> </td>
+                        <td>
+                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">..</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>User Name</td>
+                        <td><input type="text" th:field="*{userName}" /></td>
+                        <td>
+                            <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">..</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="password" th:field="*{password}" /> </td>
+                        <td>
+                            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">..</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Confirm password</td>
+                        <td><input type="password" th:field="*{confirmPassword}" /> </td>
+                        <td>
+                            <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">..</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>First Name</td>
+                        <td><input type="text" th:field="*{firstName}" /> </td>
+                        <td>
+                            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">..</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Last Name</td>
+                        <td><input type="text" th:field="*{lastName}" /> </td>
+                        <td>
+                            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">..</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>
+                            <select th:field="*{gender}">
+                                <option value=""> -- </option>
+                                <option value="F">Female</option>
+                                <option value="M">Male</option>
+                            </select>
+                        </td>
+                        <td>
+                            <span th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">..</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email visible by public</td>
+                        <td>
+                            <select th:field="*{emailVisible}">
+                                <option value="false">No</option>
+                                <option value="true">Yes</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <!--<input type="submit" value="Submit" />-->
+                            <button type="submit" class="btn btn-outline-success">Submit</button>
+                            <a th:href="@{/public/showAtlas}">
+                                <button type="button" class="btn btn-outline-danger">Cancel</button>
+                            </a>
+                            <!--<a th:href="@{/}">Cancel</a>-->
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </body>
 
 </html>

@@ -49,7 +49,7 @@ public class RegisterController {
 
 		model.addAttribute("userForm", userForm);
 
-		return "register";
+		return "view/register";
 	}
 
 	// This method is called to save the registration information.
@@ -63,7 +63,7 @@ public class RegisterController {
 
 		// Validate result
 		if (result.hasErrors()) {
-			return "register";
+			return "view/register";
 		}
 		User newUser = null;
 
@@ -87,16 +87,16 @@ public class RegisterController {
 		// Other error!!
 		catch (Exception e) {
 			model.addAttribute("errorMessage", "Error: " + e.getMessage());
-			return "register";
+			return "view/register";
 		}
 
 		redirectAttributes.addFlashAttribute("flashUser", newUser);
 
-		return "redirect:/registerSuccessful";
+		return "redirect:/public/registerSuccessful";
 	}
 
 	@GetMapping("/public/registerSuccessful")
 	public String viewRegisterSuccessful(Model model) {
-		return "registerSuccessful";
+		return "view/registerSuccessful";
 	}
 }

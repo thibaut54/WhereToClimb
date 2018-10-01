@@ -53,16 +53,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
 		http.authorizeRequests().antMatchers(
-				"/user/**"
-				/*,"/createAtlas"
-				,"/confirmation"*/)
+				"/user/**")
 				.access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 
 		// For ADMIN only.
 		http.authorizeRequests().antMatchers(
-				"/admin/**"
-				/*,"/editAtlas"
-				,"/deleteAtlas"*/)
+				"/admin/**")
 				.access("hasRole('ROLE_ADMIN')");
 //		http.exceptionHandling().accessDeniedPage( "/error/403" );
 
@@ -84,11 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logout().logoutUrl("/public/logout").logoutSuccessUrl("/public/logoutSuccessful");
 
 		http.authorizeRequests().antMatchers(
-				"/public/**"
-				/*,"/login"
-				,"/register"
-				,"/registerSuccessful"
-				,"/showAtlas"*/).permitAll();
+				"/public/**").permitAll();
 		// The pages does not require login
 	}
 

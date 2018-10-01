@@ -3,16 +3,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/layout.html">
 
-    <head>
-        <div th:insert="fragment/bootstrapCDN :: head"></div>
+    <!--<head>-->
+        <!--<div th:insert="fragment/bootstrapCDN :: head"></div>-->
 
-        <link rel="stylesheet" type="text/css" media="all"
-              th:href="@{/static/css/atlas.css}" />
-        <!--href="../static/css/atlas.css"-->
+        <div layout:fragment="customCss">
+            <link rel="stylesheet" type="text/css" media="all"
+                  th:href="@{/static/css/atlas.css}" />
+        </div>
 
-    </head>
+    <!--</head>-->
 
-    <body>
+    <!--<body>-->
         <div layout:fragment="content">
             <div class="container" >
                 <form th:action="@{/public/showAtlas}" method="get">
@@ -73,6 +74,6 @@
             </div>
         </div>
 
-    </body>
+    <!--</body>-->
 
 </html>

@@ -4,9 +4,10 @@
 
     <head>
         <div th:insert="fragment/bootstrapCDN :: head"></div>
+        <div layout:fragment="customCss"></div>
 
         <link rel="stylesheet" type="text/css" media="all"
-              th:href="@{/static/css/atlas.css}" />
+              th:href="@{/static/css/layout.css}" />
         <!--si je supprime la décla du CSS ici, il n'est plus appliqué sur Atlas, mais en le laissant il est appliqué partout-->
 
         <title>Atlas administration</title>
@@ -23,6 +24,9 @@
 
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/public/register}">Register</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/public/showAtlas}">Atlas</a>
                         </li>
