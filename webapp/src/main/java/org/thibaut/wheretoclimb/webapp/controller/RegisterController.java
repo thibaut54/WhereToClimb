@@ -42,20 +42,20 @@ public class RegisterController {
 	}
 
 	// Show Register page.
-	@GetMapping("/register")
+	@GetMapping("/public/register")
 	public String viewRegister( Model model) {
 
 		UserForm userForm = new UserForm();
 
 		model.addAttribute("userForm", userForm);
 
-		return "view/registerPage";
+		return "register";
 	}
 
 	// This method is called to save the registration information.
 	// @Validated: To ensure that this Form
 	// has been Validated before this method is invoked.
-	@PostMapping("/register")
+	@PostMapping("/public/register")
 	public String saveRegister( Model model,
 	                            @ModelAttribute("userForm") @Validated UserForm userForm,
 	                            BindingResult result,
@@ -63,7 +63,7 @@ public class RegisterController {
 
 		// Validate result
 		if (result.hasErrors()) {
-			return "view/registerPage";
+			return "register";
 		}
 		User newUser = null;
 
@@ -87,7 +87,7 @@ public class RegisterController {
 		// Other error!!
 		catch (Exception e) {
 			model.addAttribute("errorMessage", "Error: " + e.getMessage());
-			return "view/registerPage";
+			return "register";
 		}
 
 		redirectAttributes.addFlashAttribute("flashUser", newUser);
@@ -95,8 +95,8 @@ public class RegisterController {
 		return "redirect:/registerSuccessful";
 	}
 
-	@GetMapping("/registerSuccessful")
+	@GetMapping("/public/registerSuccessful")
 	public String viewRegisterSuccessful(Model model) {
-		return "view/registerSuccessfulPage";
+		return "registerSuccessful";
 	}
 }

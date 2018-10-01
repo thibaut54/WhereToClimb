@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.business.contract.AtlasManager;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 
+import java.util.Optional;
+
 //import org.springframework.data.repository.query.Param;
 
 @Component
@@ -37,5 +39,13 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 	@Override
 	public void saveAtlas( Atlas atlas ){
 		getDaoFactory().getAtlasRepository().save( atlas );
+	}
+
+	@Override
+	public  Atlas findById( Integer id ){
+
+		Optional< Atlas > atlas =  getDaoFactory().getAtlasRepository().findById( id );
+
+		return atlas.orElse( null );
 	}
 }

@@ -3,6 +3,8 @@ package org.thibaut.wheretoclimb.business.contract;
 import org.springframework.data.domain.Page;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 
+import java.util.Optional;
+
 public interface AtlasManager {
 
 //	public List< Atlas > getAtlases();
@@ -14,4 +16,6 @@ public interface AtlasManager {
 	void deleteAtlas( Integer id );
 
 	void saveAtlas( Atlas atlas );
+
+	Atlas findById( Integer id );
 }

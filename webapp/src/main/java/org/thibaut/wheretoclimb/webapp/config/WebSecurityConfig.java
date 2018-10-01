@@ -53,43 +53,43 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
 		http.authorizeRequests().antMatchers(
-				"/userInfo",
-				"/createAtlas",
-				"/confirmation")
+				"/user/**"
+				/*,"/createAtlas"
+				,"/confirmation"*/)
 				.access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 
 		// For ADMIN only.
 		http.authorizeRequests().antMatchers(
-				"/admin")
+				"/admin/**"
+				/*,"/editAtlas"
+				,"/deleteAtlas"*/)
 				.access("hasRole('ROLE_ADMIN')");
+//		http.exceptionHandling().accessDeniedPage( "/error/403" );
 
 		// When the user has logged in as XX.
 		// But access a page that requires role YY,
 		// AccessDeniedException will be thrown.
-		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/public/403");
 
 		// Config for Login Form
 		http.authorizeRequests().and().formLogin()//
 				// Submit URL of login page.
 				.loginProcessingUrl("/j_spring_security_check") // Submit URL
-				.loginPage("/login")//
-				.defaultSuccessUrl("/userInfo")//
-				.failureUrl("/login?error=true")//
+				.loginPage("/public/login").defaultSuccessUrl("/public/showAtlas")//
+				.failureUrl("/public/login?error=true")//
 				.usernameParameter("username")//
 				.passwordParameter("password")
 				//Config for Logout Page
-				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
+				.and()
+				.logout().logoutUrl("/public/logout").logoutSuccessUrl("/public/logoutSuccessful");
 
-		// The pages does not require login
 		http.authorizeRequests().antMatchers(
-				"/",
-				"/login",
-//				"/css/**",
-				"/register",
-				"/registerSuccessful",
-				"/index",
-
-				"/atlas").permitAll();
+				"/public/**"
+				/*,"/login"
+				,"/register"
+				,"/registerSuccessful"
+				,"/showAtlas"*/).permitAll();
+		// The pages does not require login
 	}
 
 }

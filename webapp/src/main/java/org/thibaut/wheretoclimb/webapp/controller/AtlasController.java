@@ -21,11 +21,8 @@ public class AtlasController {
 	@Autowired
 	private ManagerFactory managerFactory;
 
-//	@Autowired
-//	private User user;
 
-
-	@GetMapping("/atlas")
+	@GetMapping( "/public/showAtlas" )
 	public String atlas( Model model,
 	                     @RequestParam(name = "page", defaultValue = "0") int page,
 	                     @RequestParam(name = "size", defaultValue = "5") int size,
@@ -41,31 +38,44 @@ public class AtlasController {
 		model.addAttribute( "currentPage", page );
 		model.addAttribute( "keyword", keyword );
 
-		return "view/atlasPage";
+		return "view/atlas";
 	}
 
-	@GetMapping("/delete")
-	public String delete(Integer id, String keyword, int page, int size){
+	@GetMapping( "/admin/deleteAtlas" )
+	public String deleteAtlas(Integer id, String keyword, int page, int size){
 		this.managerFactory.getAtlasManager().deleteAtlas( id );
-		return "redirect:/atlas?page=" + page + "&size=" + size + "&keyword=" + keyword;
+		return "redirect:/public/showAtlas?page=" + page + "&size=" + size + "&keyword=" + keyword;
 	}
 
-	@GetMapping("/createAtlas")
+	@GetMapping( "/user/createAtlas" )
 	public String  createAtlas(Model model){
 		model.addAttribute( "atlas", new Atlas() );
-		return "view/createAtlasPage";
+		return "view/createAtlas";
 	}
 
-	@PostMapping("/save")
+	@PostMapping( "/user/saveAtlas" )
 	public String  saveAtlas( Model model, @Valid Atlas atlas, BindingResult result ){
 		if(result.hasErrors()){
-			return "view/createAtlasPage";
+			return "view/createAtlas";
 		}
 		atlas.setCreateDate( LocalDateTime.now() );
 		//Warnging : vérifier si ok avec plusieurs utilisateurs connecté en mm temps
 		atlas.setUser( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()));
 		this.managerFactory.getAtlasManager().saveAtlas( atlas );
-		return "view/confirmationPage";
+		return "view/confirmation";
 	}
+
+	@GetMapping( "/admin/editAtlas" )
+	public String editAtlas( Model model, Integer id){
+		Atlas atlas = this.managerFactory.getAtlasManager().findById( id );
+		model.addAttribute( "atlas", atlas );
+		return "view/editAtlas";
+	}
+
+	@GetMapping( "/public/403" )
+	public String accessDenied(){
+		return"error/403";
+	}
+
 
 }
