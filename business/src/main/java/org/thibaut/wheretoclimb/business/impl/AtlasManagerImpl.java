@@ -1,14 +1,15 @@
 package org.thibaut.wheretoclimb.business.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-//import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.business.contract.AtlasManager;
-import org.thibaut.wheretoclimb.model.beans.Atlas;
+import org.thibaut.wheretoclimb.model.entity.Area;
+import org.thibaut.wheretoclimb.model.entity.Atlas;
 
-import java.util.List;
+import java.util.Optional;
+
+//import org.springframework.data.repository.query.Param;
 
 @Component
 public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
@@ -16,16 +17,14 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 	@Override
 	public Page< Atlas > getAtlases( int page , int size ) {
 
-		System.out.println( "In ATLASMANAGER, getAtlas() method" );
-
 		Page<Atlas> atlases = getDaoFactory().getAtlasRepository().findAll( PageRequest.of( page, size ) );
 
 		return atlases;
 	}
 
 	@Override
-	public Page <Atlas> searchAtlas( int page, int size, String keyword ){
-		Page<Atlas> atlases =
+	public Page< Atlas > searchAtlas( int page, int size, String keyword ){
+		Page< Atlas > atlases =
 				getDaoFactory().getAtlasRepository().searchAtlas(
 						"%"+keyword.toLowerCase()+"%",PageRequest.of( page, size ) );
 		return atlases;
@@ -39,5 +38,17 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 	@Override
 	public void saveAtlas( Atlas atlas ){
 		getDaoFactory().getAtlasRepository().save( atlas );
+	}
+
+	@Override
+	public  Atlas findById( Integer id ){
+
+		if(id != null){
+			Optional< Atlas > atlas =  getDaoFactory().getAtlasRepository().findById( id );
+			if(atlas.isPresent()){
+				return atlas.get();
+			}
+		}
+		return null;
 	}
 }

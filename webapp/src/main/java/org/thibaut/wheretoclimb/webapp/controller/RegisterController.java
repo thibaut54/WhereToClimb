@@ -6,19 +6,24 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.webapp.validation.DateFormatterCustom;
-import org.thibaut.wheretoclimb.webapp.validation.UserValidator;
+import org.thibaut.wheretoclimb.model.entity.User;
 import org.thibaut.wheretoclimb.webapp.validation.UserForm;
-import org.thibaut.wheretoclimb.model.beans.User;
+import org.thibaut.wheretoclimb.webapp.validation.UserValidator;
+
+import java.time.LocalDateTime;
 
 @Controller
 public class RegisterController {
 
 	@Autowired
 	private UserValidator userValidator;
+
 	@Autowired
 	private ManagerFactory managerFactory;
 
@@ -40,20 +45,20 @@ public class RegisterController {
 	}
 
 	// Show Register page.
-	@GetMapping("/register")
+	@GetMapping("/public/register")
 	public String viewRegister( Model model) {
 
 		UserForm userForm = new UserForm();
 
 		model.addAttribute("userForm", userForm);
 
-		return "view/registerPage";
+		return "view/register";
 	}
 
 	// This method is called to save the registration information.
 	// @Validated: To ensure that this Form
 	// has been Validated before this method is invoked.
-	@PostMapping("/register")
+	@PostMapping("/public/register")
 	public String saveRegister( Model model,
 	                            @ModelAttribute("userForm") @Validated UserForm userForm,
 	                            BindingResult result,
@@ -61,11 +66,11 @@ public class RegisterController {
 
 		// Validate result
 		if (result.hasErrors()) {
-			return "view/registerPage";
+			return "view/register";
 		}
 		User newUser = null;
 
-		User user = new User(/*userId,*/
+		User user = new User(
 				userForm.getEmail(),
 				userForm.getPassword(),
 				userForm.getFirstName(),
@@ -73,7 +78,7 @@ public class RegisterController {
 				userForm.getUserName(),
 				userForm.getGender(),
 				userForm.isEmailVisible(),
-				DateFormatterCustom.getCurrentDate()/*,
+				LocalDateTime.now()/*,
 				form.getDateOfBirth(),
 				form.getGradeMax(),
 				form.getGradeFirstAttempt(),
@@ -85,17 +90,17 @@ public class RegisterController {
 		// Other error!!
 		catch (Exception e) {
 			model.addAttribute("errorMessage", "Error: " + e.getMessage());
-			return "view/registerPage";
+			return "view/register";
 		}
 
 		redirectAttributes.addFlashAttribute("flashUser", newUser);
 
-		return "redirect:/view/registerSuccessful";
+		return "redirect:/public/registerSuccessful";
 	}
 
-	@RequestMapping("/registerSuccessful")
-	public String viewRegisterSuccessful(Model model) {
 
-		return "view/registerSuccessfulPage";
+	@GetMapping("/public/registerSuccessful")
+	public String viewRegisterSuccessful(Model model) {
+		return "view/registerSuccessful";
 	}
 }

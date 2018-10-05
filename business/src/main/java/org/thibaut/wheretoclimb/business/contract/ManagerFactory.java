@@ -20,4 +20,8 @@ public interface ManagerFactory {
 
 	void setPasswordManager( PasswordManager passwordManager );
 
+	AreaManager getAreaManager( );
+
+	@Autowired
+	void setAreaManager( AreaManager areaManager );
 }

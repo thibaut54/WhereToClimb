@@ -1,9 +1,8 @@
 package org.thibaut.wheretoclimb.business.contract;
 
 import org.springframework.data.domain.Page;
-import org.thibaut.wheretoclimb.model.beans.Atlas;
-
-import java.util.List;
+import org.thibaut.wheretoclimb.model.entity.Area;
+import org.thibaut.wheretoclimb.model.entity.Atlas;
 
 public interface AtlasManager {
 
@@ -11,9 +10,11 @@ public interface AtlasManager {
 
 	Page< Atlas > getAtlases( int page, int size );
 
-	Page <Atlas> searchAtlas( int page, int size, String keyword );
+	Page< Atlas > searchAtlas( int page, int size, String keyword );
 
 	void deleteAtlas( Integer id );
 
 	void saveAtlas( Atlas atlas );
+
+	Atlas findById( Integer id );
 }

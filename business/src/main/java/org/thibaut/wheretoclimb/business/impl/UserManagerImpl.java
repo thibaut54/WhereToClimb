@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.business.contract.PasswordManager;
 import org.thibaut.wheretoclimb.business.contract.UserManager;
 import org.thibaut.wheretoclimb.consumer.repository.UserRepository;
-import org.thibaut.wheretoclimb.model.beans.Role;
-import org.thibaut.wheretoclimb.model.beans.User;
+import org.thibaut.wheretoclimb.model.entity.Role;
+import org.thibaut.wheretoclimb.model.entity.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -70,7 +70,8 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 
 		roles.add( getDaoFactory().getRoleRepository().findByRoleLike( "%USER" ) );
 
-		user.setUserRoles( ( List< Role > ) roles );
+//		user.setUserRoles( ( List< Role > ) roles );
+		user.setRoles( ( List< Role > ) roles );
 		this.getDaoFactory().getUserRepository().save( user );
 		return user;
 	}

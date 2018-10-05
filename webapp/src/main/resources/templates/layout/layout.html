@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head>
+        <div th:insert="fragment/bootstrapCDN :: head"></div>
+        <!--<div layout:fragment="bootstrapCDN"></div>-->
+        <div layout:fragment="customCSS"></div>
+
+        <link rel="stylesheet" type="text/css" media="all"
+              th:href="@{/static/css/layout.css}" />
+
+        <title>Where to climb</title>
+    </head>
+
+    <body>
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="#">WhereToClimb</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/public/register}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/public/login}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/public/showAtlas}">Atlas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/public/advancedSearch}">Advanced search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/user/createAtlas}">Create Atlas</a>
+                        </li>
+                        <li th:if="${isConnected}" class="nav-item">
+                            <a class="nav-link" th:href="@{/public/logout}" th:inline="text">
+                                [[${#httpServletRequest.remoteUser}]] : logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <section layout:fragment="content">
+
+        </section>
+
+        <footer class="navbar-fixed-bottom">
+            <hr/>
+            <div class="container">
+                <small>
+                    Copyright @2016
+                </small>
+
+            </div>
+
+        </footer>
+
+    </body>
+
+</html>

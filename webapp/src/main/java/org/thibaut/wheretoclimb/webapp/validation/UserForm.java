@@ -1,7 +1,7 @@
 package org.thibaut.wheretoclimb.webapp.validation;
 
 import org.springframework.stereotype.Component;
-import org.thibaut.wheretoclimb.model.beans.Role;
+import org.thibaut.wheretoclimb.model.entity.Role;
 
 import java.util.Collection;
 import java.util.Date;

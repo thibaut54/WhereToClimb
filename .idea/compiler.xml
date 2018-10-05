@@ -10,6 +10,7 @@
         <module name="business" />
         <module name="consumer" />
         <module name="model" />
+        <module name="util" />
         <module name="webapp" />
       </profile>
     </annotationProcessing>
@@ -18,6 +19,7 @@
       <module name="business" target="1.8" />
       <module name="consumer" target="1.8" />
       <module name="model" target="1.8" />
+      <module name="util" target="1.8" />
       <module name="webapp" target="1.8" />
       <module name="wheretoclimb" target="1.8" />
     </bytecodeTargetLevel>

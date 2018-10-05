@@ -19,12 +19,32 @@ h3{
     alignment: center;
 }
 
-.error-field{
+.error-field {
     color: red;
 }
 
-.spacer{
+/*.spacer{*/
+    /*margin-top: 40px;*/
+/*}*/
+
+
+/*.navbar{*/
+    /*margin-bottom: 40px;*/
+/*}*/
+
+
+/*.navbar-dark{*/
+    /*background-color: darkorange;*/
+/*}*/
+
+
+.listAtlas{
     margin-top: 40px;
+}
+
+.icon{
+    alignment: center;
+    align-items: center;
 }
 
 /*.container {*/

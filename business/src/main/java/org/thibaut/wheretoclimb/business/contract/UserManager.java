@@ -1,6 +1,6 @@
 package org.thibaut.wheretoclimb.business.contract;
 
-import org.thibaut.wheretoclimb.model.beans.User;
+import org.thibaut.wheretoclimb.model.entity.User;
 
 import java.util.List;
 
