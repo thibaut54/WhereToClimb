@@ -8,12 +8,11 @@ import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 import org.thibaut.wheretoclimb.model.entity.Role;
 import org.thibaut.wheretoclimb.model.entity.User;
+import org.thibaut.wheretoclimb.util.GenericBuilder;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -64,36 +63,79 @@ public class TestApplication implements CommandLineRunner {
 
 		//-----POPULATE AREA
 		Collection< Area > areas = new ArrayList<Area>();
+		Collection< Area > areas2 = new ArrayList<Area>();
 
-		areas.add( new Area("Maron", LocalDateTime.now(), null, null,
-				null, null, 12,
-				"au bord de la moselle, en amont de la ville de Maron", null));
+		areas.add( GenericBuilder.of( Area::new )
+							.with( Area::setName, "Maron" )
+							.with( Area::setCreateDate, LocalDateTime.now() )
+							.with( Area::setUpdateDate, LocalDateTime.now() )
+							.with( Area::setApproachDuration, 12 )
+							.with( Area::setLocality, "Au bord de la Moselle, 4 km en amont de la ville de Maron" )
+							.build());
+		areas.add( GenericBuilder.of( Area::new )
+							.with( Area::setName, "Liverdun" )
+							.with( Area::setCreateDate, LocalDateTime.now() )
+							.with( Area::setUpdateDate, LocalDateTime.now() )
+							.with( Area::setApproachDuration, 5 )
+							.with( Area::setLocality, "Vers Liverdun, quelque part, il faut chercher !" )
+							.build());
+		areas2.add( GenericBuilder.of( Area::new )
+				           .with( Area::setName, "Fontainebleau" )
+				           .with( Area::setCreateDate, LocalDateTime.now() )
+				           .with( Area::setUpdateDate, LocalDateTime.now() )
+				           .with( Area::setApproachDuration, 12 )
+				           .with( Area::setLocality, "Dans la forêt de fontainebleau" )
+				           .build());
+		areas2.add( GenericBuilder.of( Area::new )
+				           .with( Area::setName, "SecteurTest" )
+				           .with( Area::setCreateDate, LocalDateTime.now() )
+				           .with( Area::setUpdateDate, LocalDateTime.now() )
+				           .with( Area::setApproachDuration, 5 )
+				           .with( Area::setLocality, "Vers un endroit, quelque part, il faut bien chercher !" )
+				           .build());
 
 		this.areaRepository.saveAll( areas );
+		this.areaRepository.saveAll( areas2 );
 
 
 		//-----POPULATE USERS
 		Collection< User > users = new ArrayList<>(  );
 
 		//pwd = 1235
-		users.add( new User( "male", "John",
-				"Doe", "Another",
-				"john@gmail.com", LocalDateTime.now()));
-		( ( ArrayList< User> ) users ).get( 0 ).setPassword( passwordManager.crypt( "1235" ) );
+		users.add( GenericBuilder.of( User::new )
+							.with(User::setGender, "male")
+							.with(User::setFirstName, "John")
+							.with(User::setLastName, "Doe")
+							.with(User::setUserName, "Another")
+							.with(User::setEmail, "john@gmail.com")
+							.with(User::setCreateAccountDate, LocalDateTime.now())
+							.with(User::setPassword, passwordManager.crypt( "1235"))
+							.build());
 
 		//pwd = 1265
-		users.add( new User( "female", "Lea",
-				"Corvoisier", "Lele",
-				"lea@gmail.com", LocalDateTime.now() ));
-		( ( ArrayList< User> ) users ).get( 1 ).setPassword( passwordManager.crypt( "1265" ) );
+		users.add( GenericBuilder.of( User::new )
+				           .with(User::setGender, "female")
+				           .with(User::setFirstName, "Lea")
+				           .with(User::setLastName, "Corvoisier")
+				           .with(User::setUserName, "Lele")
+				           .with(User::setEmail, "lea@gmail.com")
+				           .with(User::setCreateAccountDate, LocalDateTime.now())
+				           .with(User::setPassword, passwordManager.crypt( "1265"))
+				           .build());
 
 		//pwd = 123
-		users.add( new User( "male", "Admin",
-				"Admin", "Admin",
-				"admin@gmail.com", LocalDateTime.now()));
-		( ( ArrayList< User> ) users ).get( 2 ).setPassword( passwordManager.crypt( "123" ) );
-//
-//			//-----SET ROLE
+		users.add( GenericBuilder.of( User::new )
+				           .with(User::setGender, "male")
+				           .with(User::setFirstName, "Admin")
+				           .with(User::setLastName, "Admin")
+				           .with(User::setUserName, "Admin")
+				           .with(User::setEmail, "admin@gmail.com")
+				           .with(User::setCreateAccountDate, LocalDateTime.now())
+				           .with(User::setPassword, passwordManager.crypt( "123"))
+				           .build());
+
+
+		//-----SET ROLE
 
 		List< Role > rolesUser1 = new ArrayList<>();
 		rolesUser1.add( this.roleRepository.findByRoleLike( "%USER" ) );
@@ -115,29 +157,115 @@ public class TestApplication implements CommandLineRunner {
 
 
 		//-----POPULATE ATLAS
-		Atlas atlas1 = new Atlas( "Grimper en Lorraine", LocalDateTime.now(),
-					null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas2 = new Atlas( "Grimper en Region1", LocalDateTime.now(),
-						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas3 = new Atlas( "Grimper en Region2", LocalDateTime.now(),
-						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas4 = new Atlas( "Grimper en Region3", LocalDateTime.now(),
-						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas5 = new Atlas( "Grimper en Region4", LocalDateTime.now(),
-						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas6 = new Atlas( "Grimper en Region5", LocalDateTime.now(),
-						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas7 = new Atlas( "Grimper en Region6", LocalDateTime.now(),
-						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas8 = new Atlas( "Grimper en Region7", LocalDateTime.now(),
-						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
-		Atlas atlas9 = new Atlas( "Grimper en Region8", LocalDateTime.now(),
-						null, null, true, "France", "regional", "Lorraine", ( ( ArrayList< User> ) users ).get( 0 ));
+
+		Atlas atlas1 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Lorraine" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 0 ))
+								.build();
+		Atlas atlas2 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Region1" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 0 ))
+								.build();
+		Atlas atlas3 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Region2" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 0 ))
+								.build();
+		Atlas atlas4 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Region3" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 1 ))
+								.build();
+		Atlas atlas5 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Region4" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 1 ))
+								.build();
+		Atlas atlas6 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Region5" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 1 ))
+								.build();
+		Atlas atlas7 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Region6" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 2 ))
+								.build();
+		Atlas atlas8 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Region7" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 2 ))
+								.build();
+		Atlas atlas9 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Region8" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 2 ))
+								.build();
+		Atlas atlas10 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Region9" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 2 ))
+								.build();
+		Atlas atlas11 = GenericBuilder.of( Atlas::new )
+								.with( Atlas::setName, "Grimper en Region10" )
+								.with( Atlas::setCreateDate, LocalDateTime.now() )
+								.with( Atlas::setAvailable, true)
+								.with( Atlas::setCountry, "France")
+								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 2 ))
+								.build();
+
+
+
 
 
 		Collection< Atlas > atlases = new ArrayList<Atlas>();
 
 		atlas1.setAreas( ( ArrayList< Area > ) areas );
+		atlas2.setAreas( ( ArrayList< Area > ) areas2 );
 		atlases.add( atlas1 );
 		atlases.add( atlas2 );
 		atlases.add( atlas3 );
@@ -147,8 +275,9 @@ public class TestApplication implements CommandLineRunner {
 		atlases.add( atlas7 );
 		atlases.add( atlas8 );
 		atlases.add( atlas9 );
+		atlases.add( atlas10 );
+		atlases.add( atlas11 );
 
-//		this.atlasRepository.saveAll( atlases );
 
 		this.atlasRepository.saveAll( atlases );
 

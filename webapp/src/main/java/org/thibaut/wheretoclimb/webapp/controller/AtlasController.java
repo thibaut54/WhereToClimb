@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
+import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
+import org.thibaut.wheretoclimb.model.entity.User;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Controller
 public class AtlasController {
@@ -30,6 +33,28 @@ public class AtlasController {
 
 		Page< Atlas > atlases = this.managerFactory.getAtlasManager().searchAtlas(page, size, keyword);
 
+//		//Get the connected user
+//		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
+//
+//		boolean isConnected = false;
+//
+//		//If there is a connected user, put a boolean at true in the model
+//		if( userConnectedOpt.isPresent() ){
+//
+//			User userConnected = userConnectedOpt.get();
+//
+//			isConnected = true;
+//			final boolean[] isAdmin = { false };
+//
+//			userConnected.getRoles().forEach( role -> isAdmin[0] = role.getRole( ).equals( "ROLE_ADMIN" ) );
+//
+//			model.addAttribute( "userIsAdmin" , isAdmin[0] );
+//		}
+
+		isUserAdmin( model );
+
+		model.addAttribute( "connectedUser" , this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()));
+//		model.addAttribute( "isConnected", isConnected );
 		model.addAttribute( "atlases", atlases.getContent() );
 
 		int[] pages = new int[atlases.getTotalPages()];
@@ -38,8 +63,81 @@ public class AtlasController {
 		model.addAttribute( "currentPage", page );
 		model.addAttribute( "keyword", keyword );
 
-		return "view/atlas";
+		return "view/showAtlas";
 	}
+
+
+	@GetMapping("/public/showAtlasDetail")
+	public String showAtlasDetail(Model model, Integer atlasId, String atlasName,
+	                              @RequestParam(name = "page", defaultValue = "0") int page,
+	                              @RequestParam(name = "size", defaultValue = "5") int size,
+	                              @RequestParam(name = "keyword", defaultValue = "") String keyword){
+
+		Optional<Atlas> atlasOpt = Optional.ofNullable( this.managerFactory.getAtlasManager().findById( atlasId ) );
+//		Atlas atlas = this.managerFactory.getAtlasManager().findById( atlasId ) ;
+
+		Page< Area > areas = this.managerFactory.getAreaManager().searchArea(page, size, keyword);
+
+		isUserAdmin( model );
+
+//		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
+//
+//		boolean isConnected = false;
+//
+//		//If there is a connected user, put a boolean at true in the model
+//		if( userConnectedOpt.isPresent() ){
+//
+//			User userConnected = userConnectedOpt.get();
+//
+//			isConnected = true;
+//			final boolean[] isAdmin = { false };
+//
+//			userConnected.getRoles().forEach( role -> isAdmin[0] = role.getRole( ).equals( "ROLE_ADMIN" ) );
+//
+//			model.addAttribute( "userIsAdmin" , isAdmin[0] );
+//		}
+
+
+		atlasOpt.ifPresent( atlas -> model.addAttribute( "atlas", atlas ) );
+//			model.addAttribute( "atlas" , atlas );
+			model.addAttribute( "areas" , areas );
+			model.addAttribute( "atlasName", atlasName );
+//			isUserAdmin( model );
+			int[] pages = new int[areas.getTotalPages()];
+			model.addAttribute( "pages", pages );
+			model.addAttribute( "size", size );
+			model.addAttribute( "currentPage", page );
+			model.addAttribute( "keyword", keyword );
+//		} else {
+//			return "error/403";
+//		}
+
+		return "view/showAtlasDetail";
+	}
+
+
+	@GetMapping("/public/layout")
+	public String loyoutBtn(Model model){
+
+		//Get the connected user
+		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
+
+		boolean isConnected = false;
+
+		//If there is a connected user, put a boolean at true in the model
+		if( userConnectedOpt.isPresent() ){
+
+			User userConnected = userConnectedOpt.get();
+
+			isConnected = true;
+
+		}
+
+		model.addAttribute( "isConnected", isConnected );
+
+		return "layout/layout";
+	}
+
 
 	@GetMapping( "/admin/deleteAtlas" )
 	public String deleteAtlas(Integer id, String keyword, int page, int size){
@@ -47,11 +145,13 @@ public class AtlasController {
 		return "redirect:/public/showAtlas?page=" + page + "&size=" + size + "&keyword=" + keyword;
 	}
 
+
 	@GetMapping( "/user/createAtlas" )
 	public String  createAtlas(Model model){
 		model.addAttribute( "atlas", new Atlas() );
 		return "view/createAtlas";
 	}
+
 
 	@PostMapping( "/user/saveAtlas" )
 	public String  saveAtlas( Model model, @Valid Atlas atlas, BindingResult result ){
@@ -65,6 +165,7 @@ public class AtlasController {
 		return "view/confirmation";
 	}
 
+
 	@GetMapping( "/admin/editAtlas" )
 	public String editAtlas( Model model, Integer id){
 		Atlas atlas = this.managerFactory.getAtlasManager().findById( id );
@@ -72,10 +173,34 @@ public class AtlasController {
 		return "view/editAtlas";
 	}
 
+
 	@GetMapping( "/public/403" )
 	public String accessDenied(){
 		return"error/403";
 	}
 
+
+
+	private void isUserAdmin( Model model ){
+		//Get the connected user
+		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
+
+		boolean isConnected = false;
+
+		//If there is a connected user, put a boolean at true in the model
+		if( userConnectedOpt.isPresent() ){
+
+			User userConnected = userConnectedOpt.get();
+
+			isConnected = true;
+			final boolean[] isAdmin = { false };
+
+			userConnected.getRoles().forEach( role -> isAdmin[0] = role.getRole( ).equals( "ROLE_ADMIN" ) );
+
+			model.addAttribute( "userIsAdmin" , isAdmin[0] );
+			model.addAttribute( "isConnected", isConnected );
+
+		}
+	}
 
 }

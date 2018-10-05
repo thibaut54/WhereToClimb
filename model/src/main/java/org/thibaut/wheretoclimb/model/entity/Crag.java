@@ -1,6 +1,9 @@
 package org.thibaut.wheretoclimb.model.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -32,7 +35,7 @@ public class Crag extends Element {
 	@OneToOne(mappedBy = "crag")
 	private GpsCoordinates cragGps;
 	private String mapUrl;
-	private String rockType;
+	private Integer approachDuration;
 	//uploader le file sur le server, et stocker en bdd l'url
 
 
@@ -40,13 +43,12 @@ public class Crag extends Element {
 
 
 	public Crag( Collection< Atlas > atlases, Collection< Route > routes, Collection<Parking> parkings,
-	             GpsCoordinates cragGps, String mapUrl, String rockType ) {
+	             GpsCoordinates cragGps, String mapUrl ) {
 		this.atlases = atlases;
 		this.routes = routes;
 		this.parkings = parkings;
 		this.cragGps = cragGps;
 		this.mapUrl = mapUrl;
-		this.rockType = rockType;
 	}
 
 

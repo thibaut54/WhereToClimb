@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all"
+              th:href="@{/static/css/atlas.css}" />
+    </div>
+
+
+    <div layout:fragment="content">
+        <div class="container" >
+            <form th:action="@{/public/showAtlas}" method="get">
+                <label><h5>Search atlas</h5></label>
+                <div class="input-group">
+                    <input class="form-control border-secondary py-2" type="search" name="keyword" placeholder="search atlas"/>
+                    <div class="input-group-append">
+                        <button id="search-btn" class="btn btn-outline-secondary" type="submit" >
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+            <table class="listAtlas table table-bordered table-striped table-condensed">
+                <caption>
+                    <h3>LIST OF ALL ATLASES</h3>
+                </caption>
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>AVAILABLE</th>
+                        <th>CREATION DATE</th>
+                        <th>OWNER</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="atlas:${atlases}">
+                        <td >
+                            <a th:text="${atlas.name}" th:href="@{/public/showAtlasDetail(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
+                        </td>
+                        <div th:if="${atlas.available}">
+                            <td>Yes</td>
+                        </div>
+                        <div th:if="${!atlas.available}">
+                            <td>No</td>
+                        </div>
+                        <td th:text="${atlas.createDate}"></td>
+                        <td th:text="${atlas.user.userName}"></td>
+                        <td th:if="${userIsAdmin}">
+                            <a th:href="@{/admin/editAtlas(id=${atlas.id})}">
+                                <i class="icon fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <td th:if="${userIsAdmin}">
+                            <a  id="trash-ic" th:href="@{/admin/deleteAtlas(id=${atlas.id}, page=${currentPage}, size=${size}, keyword=${keyword})}"
+                            onclick="return confirm('Do you really want to delete this Atlas?')">
+                                <i class="icon fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <!--<ul class="nav nav-pills">-->
+            <ul class="pagination">
+                <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
+                    <a class="page-link" th:href="@{/public/showAtlas(page=${status.index}, size=${size}, keyword=${keyword})}" th:text="${status.index}+1" >
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</html>

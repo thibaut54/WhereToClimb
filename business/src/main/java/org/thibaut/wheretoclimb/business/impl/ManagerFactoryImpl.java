@@ -12,6 +12,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
 	private AtlasManager atlasManager;
 	private RoleManager roleManager;
 	private PasswordManager passwordManager;
+	private AreaManager areaManager;
 
 	@Override
 	public UserManager getUserManager( ) {
@@ -56,5 +57,17 @@ public class ManagerFactoryImpl implements ManagerFactory {
 	@Autowired
 	public void setPasswordManager( PasswordManager passwordManager ) {
 		this.passwordManager = passwordManager;
+	}
+
+
+	@Override
+	public AreaManager getAreaManager( ) {
+		return areaManager;
+	}
+
+	@Override
+	@Autowired
+	public void setAreaManager( AreaManager areaManager ) {
+		this.areaManager = areaManager;
 	}
 }

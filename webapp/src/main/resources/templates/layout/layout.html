@@ -4,20 +4,20 @@
 
     <head>
         <div th:insert="fragment/bootstrapCDN :: head"></div>
-        <div layout:fragment="customCss"></div>
+        <!--<div layout:fragment="bootstrapCDN"></div>-->
+        <div layout:fragment="customCSS"></div>
 
         <link rel="stylesheet" type="text/css" media="all"
               th:href="@{/static/css/layout.css}" />
-        <!--si je supprime la décla du CSS ici, il n'est plus appliqué sur Atlas, mais en le laissant il est appliqué partout-->
 
-        <title>Atlas administration</title>
+        <title>Where to climb</title>
     </head>
 
     <body>
 
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="#">Navbar</a>
+                <a class="navbar-brand" href="#">WhereToClimb</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -28,13 +28,18 @@
                             <a class="nav-link" th:href="@{/public/register}">Register</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" th:href="@{/public/login}">Login</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" th:href="@{/public/showAtlas}">Atlas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/public/advancedSearch}">Advanced search</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/user/createAtlas}">Create Atlas</a>
                         </li>
-                        <li class="nav-item">
-
+                        <li th:if="${isConnected}" class="nav-item">
                             <a class="nav-link" th:href="@{/public/logout}" th:inline="text">
                                 [[${#httpServletRequest.remoteUser}]] : logout
                             </a>

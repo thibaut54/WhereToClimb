@@ -3,16 +3,18 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/layout.html">
 
-    <head>
-        <div th:insert="fragment/bootstrapCDN :: head"></div>
+    <!--<head>-->
+        <!--<div th:insert="fragment/bootstrapCDN :: head"></div>-->
 
+    <div layout:fragment="customCSS">
         <link rel="stylesheet" type="text/css" media="all"
               th:href="@{/static/css/register.css}" />
         <!--<title th:utext="${title}"></title>-->
+    </div>
 
-    </head>
+    <!--</head>-->
 
-    <body>
+    <!--<body>-->
 
         <div layout:fragment="content" class="container">
 
@@ -102,6 +104,6 @@
                 </table>
             </form>
         </div>
-    </body>
+    <!--</body>-->
 
 </html>

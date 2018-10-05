@@ -21,11 +21,10 @@ import static junit.framework.TestCase.assertTrue;
 @RunWith( SpringRunner.class )
 @SpringBootTest(classes = DemoApplication.class)
 @Transactional
-public class AtlasRepositoryTest {
-
+public class AreaRepositoryTest {
 
 	@Autowired
-	private AtlasRepository atlasRepository;
+	private AreaRepository areaRepository;
 
 
 	@Test
@@ -35,19 +34,17 @@ public class AtlasRepositoryTest {
 
 	@Test
 	public void checkSearchAtlas(){
-		Atlas atlasTest = GenericBuilder.of( Atlas::new )
-				                  .with( Atlas::setName, "AtlasTest" )
-				                  .with( Atlas::setCreateDate, LocalDateTime.now() )
-				                  .with( Atlas::setScale, "ScaleTest" )
-				                  .with( Atlas::setCountry, "CountryTest" )
+		Area areaTest = GenericBuilder.of( Area::new )
+				                  .with( Area::setName, "AreaTest" )
+				                  .with( Area::setLocality, "Locality test." )
+				                  .with( Area::setApproachDuration, 15 )
+				                  .with( Area::setCreateDate, LocalDateTime.now() )
 				                  .build();
-		this.atlasRepository.save( atlasTest );
+		this.areaRepository.save( areaTest );
 
-		Page< Atlas > atlas = this.atlasRepository.searchAtlas(
-				"AtlasTest".toLowerCase(), PageRequest.of( 0, 1 ) );
+		Page< Area > area = this.areaRepository.searchArea(
+				"AreaTest".toLowerCase(), PageRequest.of( 0, 1 ) );
 
-		Assert.assertEquals( atlasTest, atlas.getContent().get( 0 ));
+		Assert.assertEquals( areaTest, area.getContent().get( 0 ));
 	}
-
 }
-

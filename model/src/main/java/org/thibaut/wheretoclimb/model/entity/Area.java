@@ -32,6 +32,8 @@ public class Area extends Element {
 	@OneToMany/*(mappedBy = "area", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "area_id")
 	private Collection< Parking > parking;
+	private String rockType;
+
 
 	//checker les sites existants pour voir comment ils ont divisé les topo..
 	//Division pas claire chez l'existant

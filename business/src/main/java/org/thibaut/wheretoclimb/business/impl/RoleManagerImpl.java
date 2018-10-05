@@ -13,6 +13,7 @@ public class RoleManagerImpl implements RoleManager {
 	@Autowired
 	private RoleRepository roleRepository;
 
+
 	@Override
 	public List<String> findRoleByUserName( String username ){
 
