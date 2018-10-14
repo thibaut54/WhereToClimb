@@ -1,17 +1,20 @@
 package org.thibaut.wheretoclimb.webapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
 import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
+import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 import org.thibaut.wheretoclimb.model.entity.User;
 
 import javax.validation.Valid;
@@ -73,6 +76,8 @@ public class AtlasController {
 	                              @RequestParam(name = "size", defaultValue = "5") int size,
 	                              @RequestParam(name = "keyword", defaultValue = "") String keyword){
 
+		System.out.println( "Run showAtlasDetail method " );
+
 		Optional<Atlas> atlasOpt = Optional.ofNullable( this.managerFactory.getAtlasManager().findById( atlasId ) );
 //		Atlas atlas = this.managerFactory.getAtlasManager().findById( atlasId ) ;
 
@@ -96,7 +101,7 @@ public class AtlasController {
 //
 //			model.addAttribute( "userIsAdmin" , isAdmin[0] );
 //		}
-
+		isCommented( model, atlasOpt.get() );
 
 		atlasOpt.ifPresent( atlas -> model.addAttribute( "atlas", atlas ) );
 //			model.addAttribute( "atlas" , atlas );
@@ -108,11 +113,40 @@ public class AtlasController {
 			model.addAttribute( "size", size );
 			model.addAttribute( "currentPage", page );
 			model.addAttribute( "keyword", keyword );
-//		} else {
+			model.addAttribute( "bookingRequest" , new BookingRequest() );
+
+			//		} else {
 //			return "error/403";
 //		}
 
 		return "view/showAtlasDetail";
+	}
+
+
+//	@GetMapping("/user/bookAtlas")
+//	public String btnBooking(Model model){
+//		model.addAttribute( "bookingRequest" , new BookingRequest() );
+//		return "view/showAtlasDetail";
+//	}
+
+
+	@PostMapping("/user/saveBookingRequest")
+	public String saveBookingRequest(Model model, Integer atlasId, /*@Valid*/ BookingRequest bookingRequest/*, BindingResult result*/){
+
+//		if(result.hasErrors()){
+//			System.out.println( "ERROR" );
+//			return "view/showAtlasDetail";
+//		}
+
+		bookingRequest.setCreateDate( LocalDateTime.now() );
+		bookingRequest.setUserEmitter( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()));
+		bookingRequest.setAtlas( this.managerFactory.getAtlasManager().findById( atlasId ) );
+
+		this.managerFactory.getBookingRequestManager().saveBookingRequest( bookingRequest );
+
+		System.out.println( "SaveBooking" );
+
+		return "view/confirmationBookingDelivery";
 	}
 
 
@@ -201,6 +235,22 @@ public class AtlasController {
 			model.addAttribute( "isConnected", isConnected );
 
 		}
+	}
+
+
+	private void isCommented( Model model, Atlas atlas ){
+
+		boolean atlasIsCommented = false;
+
+//		System.out.println( atlas.getComments().get( 0 ).getTitle());
+
+		if( ! atlas.getComments().isEmpty() ){
+			atlasIsCommented = true;
+			model.addAttribute( "atlasIsCommented", atlasIsCommented );
+		}
+
+		System.out.println( "The atlas " + atlas.getName() + " has been commented: " + atlasIsCommented );
+
 	}
 
 }

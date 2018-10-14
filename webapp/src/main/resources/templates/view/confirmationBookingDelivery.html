@@ -16,12 +16,16 @@
                     <h5>Confirmation</h5>
                     <div class="card-block">
                         <div class="form-group">
-                            <label>Atlas name:</label>
+                            <label>Atlas requested:</label>
                             <label th:text="${atlas.name}"></label>
                         </div>
                         <div class="form-group">
-                            <label>Country:</label>
-                            <label th:text="${atlas.country}"></label>
+                            <label>Start date:</label>
+                            <label th:text="${bookingRequest.startDate}"></label>
+                        </div>
+                        <div class="form-group">
+                            <label>Start date:</label>
+                            <label th:text="${bookingRequest.endDate}"></label>
                         </div>
                     </div>
                 </div>

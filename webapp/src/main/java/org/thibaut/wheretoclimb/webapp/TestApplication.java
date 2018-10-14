@@ -4,12 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.business.contract.PasswordManager;
 import org.thibaut.wheretoclimb.consumer.repository.*;
-import org.thibaut.wheretoclimb.model.entity.Area;
-import org.thibaut.wheretoclimb.model.entity.Atlas;
-import org.thibaut.wheretoclimb.model.entity.Role;
-import org.thibaut.wheretoclimb.model.entity.User;
+import org.thibaut.wheretoclimb.model.entity.*;
 import org.thibaut.wheretoclimb.util.GenericBuilder;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,14 +22,21 @@ public class TestApplication implements CommandLineRunner {
 	private AtlasRepository atlasRepository;
 	private RoleRepository roleRepository;
 	private AreaRepository areaRepository;
+	private MessageRepository messageRepository;
+	private CommentRepository commentRepository;
+	private BookingRequestRepository bookingRequestRepository;
 
-	public TestApplication( PasswordManager passwordManager, UserRepository userRepository, ElementRepository elementRepository, AtlasRepository atlasRepository, RoleRepository roleRepository, AreaRepository areaRepository ) {
+
+	public TestApplication( PasswordManager passwordManager, UserRepository userRepository, ElementRepository elementRepository, AtlasRepository atlasRepository, RoleRepository roleRepository, AreaRepository areaRepository, MessageRepository messageRepository, CommentRepository commentRepository, BookingRequestRepository bookingRequestRepository ) {
 		this.passwordManager = passwordManager;
 		this.userRepository = userRepository;
 		this.elementRepository = elementRepository;
 		this.atlasRepository = atlasRepository;
 		this.roleRepository = roleRepository;
 		this.areaRepository = areaRepository;
+		this.messageRepository = messageRepository;
+		this.commentRepository = commentRepository;
+		this.bookingRequestRepository = bookingRequestRepository;
 	}
 
 	/**
@@ -46,9 +51,21 @@ public class TestApplication implements CommandLineRunner {
 		System.out.println( "CONSUMER APP RUN" );
 
 		//-----CLEAN DB
+		this.atlasRepository.deleteAll();
+		this.areaRepository.deleteAll();
 		this.elementRepository.deleteAll();
+		this.messageRepository.deleteAll();
+		this.commentRepository.deleteAll();
 		this.userRepository.deleteAll();
 		this.roleRepository.deleteAll();
+
+//		this.elementRepository.flush();
+//		this.messageRepository.flush();
+//		this.commentRepository.flush();
+//		this.userRepository.flush();
+//		this.roleRepository.flush();
+//		this.areaRepository.flush();
+//		this.atlasRepository.flush();
 
 
 		//-----POPULATE USER_ROLES
@@ -62,8 +79,9 @@ public class TestApplication implements CommandLineRunner {
 
 
 		//-----POPULATE AREA
-		Collection< Area > areas = new ArrayList<Area>();
-		Collection< Area > areas2 = new ArrayList<Area>();
+
+		ArrayList< Area > areas = new ArrayList<Area>();
+		ArrayList< Area > areas2 = new ArrayList<Area>();
 
 		areas.add( GenericBuilder.of( Area::new )
 							.with( Area::setName, "Maron" )
@@ -99,7 +117,8 @@ public class TestApplication implements CommandLineRunner {
 
 
 		//-----POPULATE USERS
-		Collection< User > users = new ArrayList<>(  );
+
+		List< User> users = new ArrayList<>(  );
 
 		//pwd = 1235
 		users.add( GenericBuilder.of( User::new )
@@ -140,20 +159,18 @@ public class TestApplication implements CommandLineRunner {
 		List< Role > rolesUser1 = new ArrayList<>();
 		rolesUser1.add( this.roleRepository.findByRoleLike( "%USER" ) );
 
-		( ( ArrayList< User> ) users ).get( 0 ).setRoles( rolesUser1 );
-		( ( ArrayList< User> ) users ).get( 1 ).setRoles( rolesUser1 );
+		users.get( 0 ).setRoles( rolesUser1 );
+		users.get( 1 ).setRoles( rolesUser1 );
 
 		List< Role > rolesUser3 = new ArrayList<>();
 		rolesUser3.add( this.roleRepository.findByRoleLike( "%USER" ) );
 		rolesUser3.add( this.roleRepository.findByRoleLike( "%ADMIN" ) );
-		( ( ArrayList< User> ) users ).get( 2).setRoles( rolesUser3 );
+		users.get( 2).setRoles( rolesUser3 );
 
 
 		//-----SAVE ALL USERS
 
 		this.userRepository.saveAll( users );
-
-		//-----SET USER_ID IN ATLAS
 
 
 		//-----POPULATE ATLAS
@@ -161,11 +178,11 @@ public class TestApplication implements CommandLineRunner {
 		Atlas atlas1 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Lorraine" )
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, true)
+								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 0 ))
+								.with( Atlas::setUser, users.get( 0 ))
 								.build();
 		Atlas atlas2 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region1" )
@@ -174,7 +191,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 0 ))
+								.with( Atlas::setUser, users.get( 0 ))
 								.build();
 		Atlas atlas3 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region2" )
@@ -183,16 +200,16 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 0 ))
+								.with( Atlas::setUser, users.get( 0 ))
 								.build();
 		Atlas atlas4 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region3" )
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, true)
+								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 1 ))
+								.with( Atlas::setUser, users.get( 1 ))
 								.build();
 		Atlas atlas5 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region4" )
@@ -201,7 +218,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 1 ))
+								.with( Atlas::setUser, users.get( 1 ))
 								.build();
 		Atlas atlas6 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region5" )
@@ -210,7 +227,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 1 ))
+								.with( Atlas::setUser, users.get( 1 ))
 								.build();
 		Atlas atlas7 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region6" )
@@ -219,16 +236,16 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 2 ))
+								.with( Atlas::setUser, users.get( 2 ))
 								.build();
 		Atlas atlas8 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region7" )
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, true)
+								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 2 ))
+								.with( Atlas::setUser, users.get( 2 ))
 								.build();
 		Atlas atlas9 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region8" )
@@ -237,7 +254,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 2 ))
+								.with( Atlas::setUser, users.get( 2 ))
 								.build();
 		Atlas atlas10 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region9" )
@@ -246,26 +263,26 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 2 ))
+								.with( Atlas::setUser, users.get( 2 ))
 								.build();
 		Atlas atlas11 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region10" )
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, true)
+								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, ((ArrayList< User> ) users ).get( 2 ))
+								.with( Atlas::setUser, users.get( 2 ))
 								.build();
 
 
 
 
 
-		Collection< Atlas > atlases = new ArrayList<Atlas>();
+		List< Atlas > atlases = new ArrayList<Atlas>();
 
-		atlas1.setAreas( ( ArrayList< Area > ) areas );
-		atlas2.setAreas( ( ArrayList< Area > ) areas2 );
+		atlas1.setAreas( areas );
+		atlas2.setAreas( areas2 );
 		atlases.add( atlas1 );
 		atlases.add( atlas2 );
 		atlases.add( atlas3 );
@@ -280,6 +297,55 @@ public class TestApplication implements CommandLineRunner {
 
 
 		this.atlasRepository.saveAll( atlases );
+
+
+		//-----POPULATE MESSAGE
+
+		List< Message > messages = new ArrayList<>();
+
+		Message message1 = GenericBuilder.of( Message::new )
+								.with( Message::setContent, "Salut, qu'a tu pensé de Maron ?" )
+								.with( Message::setCreateDate, LocalDateTime.now())
+								.with( Message::setUserEmitter, this.userRepository.findByUserName( "Lele" ) )
+								.with( Message::setUserRecipient, this.userRepository.findByUserName( "Another" ) )
+								.build();
+
+		messages.add( message1 );
+
+		this.messageRepository.saveAll( messages );
+
+
+		//-----POPULATE COMMENT
+
+		List<Comment> comments = new ArrayList<>();
+
+		Comment comment1 = GenericBuilder.of( Comment::new )
+			                    .with( Comment::setUserEmitter, this.userRepository.findByUserName( "Another" ) )
+								.with( Comment::setElement, this.atlasRepository.findByName( "Grimper en Lorraine" ) )
+			                    .with( Comment::setCreateDate, LocalDateTime.now())
+			                    .with( Comment::setContent, "En Lorraine on peut grimper mine de rien !! Maron c'est top pour apprendre.")
+			                    .with( Comment::setTitle, "Ca grimpe en Lorraine" )
+			                    .build();
+
+		comments.add( comment1 );
+
+		this.commentRepository.saveAll( comments );
+
+
+		//-----POPULATE BOOKINGREQUEST
+
+		List<BookingRequest> bookingRequests = new ArrayList<>();
+
+		BookingRequest bookingRequest = GenericBuilder.of( BookingRequest::new )
+				.with( BookingRequest::setCreateDate, LocalDateTime.now() )
+				.with( BookingRequest::setStartDate, LocalDate.of( 2018, 12, 01 ) )
+				.with( BookingRequest::setEndDate, LocalDate.of( 2018, 12, 10 ) )
+				.with( BookingRequest::setAtlas, atlas2 )
+				.with( BookingRequest::setUserEmitter, users.get( 2 ) )
+				.build();
+
+		this.bookingRequestRepository.saveAll( bookingRequests );
+
 
 		//Pourquoi ça ne fonctionne pas ?
 //		this.atlasRepository.findByName( "Grimper en Lorraine" ).setUser( ( ( ArrayList< User> ) users ).get( 0 ) );

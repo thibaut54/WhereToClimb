@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Bean used to define a book or a document that contains one or many climbing areas
@@ -46,9 +47,12 @@ public class Atlas extends Element {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	@OneToMany
+	@JoinColumn(name = "atlas_id")
+	private List<BookingRequest> bookingRequests;
 
 
-//----------CONSTRUCTORS----------
+/*//----------CONSTRUCTORS----------
 
 
 	public Atlas( String name, LocalDateTime createDate, LocalDateTime updateDate,
@@ -59,7 +63,7 @@ public class Atlas extends Element {
 		this.user = user;
 		this.region = region;
 		this.scale = scale;
-	}
+	}*/
 
 
 //----------METHODS----------

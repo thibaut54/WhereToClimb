@@ -1,12 +1,16 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
 @Entity
 @Table(name = "verification_token")
+@NoArgsConstructor
 public class VerificationToken {
 
 	private static final int EXPIRATION = 60 * 24;
@@ -18,15 +22,14 @@ public class VerificationToken {
 	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(nullable = false, name = "user_id")
 	private User user;
-	private Date expiryDate;
+	private LocalDateTime expiryDate;
 
 
 //----------CONSTRUCTORS----------
 
-	public VerificationToken( ) {
-	}
 
-	public VerificationToken( String token, User user, Date expiryDate ) {
+
+	public VerificationToken( String token, User user, LocalDateTime expiryDate ) {
 		this.token = token;
 		this.user = user;
 		this.expiryDate = expiryDate;
@@ -73,11 +76,11 @@ public class VerificationToken {
 		this.user = user;
 	}
 
-	public Date getExpiryDate( ) {
+	public LocalDateTime getExpiryDate( ) {
 		return expiryDate;
 	}
 
-	public void setExpiryDate( Date expiryDate ) {
+	public void setExpiryDate( LocalDateTime expiryDate ) {
 		this.expiryDate = expiryDate;
 	}
 }

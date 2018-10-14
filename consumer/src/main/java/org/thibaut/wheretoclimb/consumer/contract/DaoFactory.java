@@ -1,9 +1,6 @@
 package org.thibaut.wheretoclimb.consumer.contract;
 
-import org.thibaut.wheretoclimb.consumer.repository.AreaRepository;
-import org.thibaut.wheretoclimb.consumer.repository.AtlasRepository;
-import org.thibaut.wheretoclimb.consumer.repository.RoleRepository;
-import org.thibaut.wheretoclimb.consumer.repository.UserRepository;
+import org.thibaut.wheretoclimb.consumer.repository.*;
 
 public interface DaoFactory {
 
@@ -15,5 +12,17 @@ public interface DaoFactory {
 	void setUserRepository(UserRepository userRepository);
 	void setRoleRepository(RoleRepository roleRepository);
 	void setAtlasRepository(AtlasRepository atlasRepository);
-	void serAreaRepository(AreaRepository areaRepository);
+	void setAreaRepository(AreaRepository areaRepository);
+
+	MessageRepository getMessageRepository( );
+
+	void setMessageRepository( MessageRepository messageRepository );
+
+	CommentRepository getCommentRepository( );
+
+	void setCommentRepository( CommentRepository commentRepository );
+
+	BookingRequestRepository getBookingRequestRepository( );
+
+	void setBookingRequestRepository( BookingRequestRepository bookingRequestRepository );
 }

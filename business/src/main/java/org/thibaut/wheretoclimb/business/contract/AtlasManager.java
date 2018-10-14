@@ -17,4 +17,6 @@ public interface AtlasManager {
 	void saveAtlas( Atlas atlas );
 
 	Atlas findById( Integer id );
+
+	Atlas findByName( String name );
 }

@@ -32,7 +32,7 @@
                 <thead>
                     <tr>
                         <th>NAME</th>
-                        <th>AVAILABLE</th>
+                        <th>CAN BE BORROWED</th>
                         <th>CREATION DATE</th>
                         <th>OWNER</th>
                     </tr>
@@ -43,7 +43,8 @@
                             <a th:text="${atlas.name}" th:href="@{/public/showAtlasDetail(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
                         </td>
                         <div th:if="${atlas.available}">
-                            <td>Yes</td>
+                            <td>Yes </td>
+                            <!--<td>Yes <a><i class="fas fa-hand-holding"></i></a></td>-->
                         </div>
                         <div th:if="${!atlas.available}">
                             <td>No</td>
@@ -66,7 +67,6 @@
             </table>
         </div>
         <div class="container">
-            <!--<ul class="nav nav-pills">-->
             <ul class="pagination">
                 <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
                     <a class="page-link" th:href="@{/public/showAtlas(page=${status.index}, size=${size}, keyword=${keyword})}" th:text="${status.index}+1" >

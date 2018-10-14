@@ -14,5 +14,6 @@ public interface AreaRepository extends JpaRepository< Area, Integer > {
 	@Query("SELECT area FROM Area area WHERE LOWER(area.name) LIKE :keyword")
 	public Page< Area > searchArea( @Param( "keyword" ) String keyword, Pageable pageable );
 
+	public Area findByName(String name);
 
 }

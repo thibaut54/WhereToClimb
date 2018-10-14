@@ -15,6 +15,12 @@ public class DaoFactoryImpl implements DaoFactory {
 
 	private AreaRepository areaRepository;
 
+	private MessageRepository messageRepository;
+
+	private CommentRepository commentRepository;
+
+	private BookingRequestRepository bookingRequestRepository;
+
 
 	@Override
 	public UserRepository getUserRepository( ) {
@@ -56,7 +62,40 @@ public class DaoFactoryImpl implements DaoFactory {
 
 	@Override
 	@Autowired
-	public void serAreaRepository( AreaRepository areaRepository ) {
+	public void setAreaRepository( AreaRepository areaRepository ) {
 		this.areaRepository = areaRepository;
+	}
+
+	@Override
+	public MessageRepository getMessageRepository( ) {
+		return messageRepository;
+	}
+
+	@Override
+	@Autowired
+	public void setMessageRepository( MessageRepository messageRepository ) {
+		this.messageRepository = messageRepository;
+	}
+
+	@Override
+	public CommentRepository getCommentRepository( ) {
+		return commentRepository;
+	}
+
+	@Override
+	@Autowired
+	public void setCommentRepository( CommentRepository commentRepository ) {
+		this.commentRepository = commentRepository;
+	}
+
+	@Override
+	public BookingRequestRepository getBookingRequestRepository( ) {
+		return bookingRequestRepository;
+	}
+
+	@Override
+	@Autowired
+	public void setBookingRequestRepository( BookingRequestRepository bookingRequestRepository ) {
+		this.bookingRequestRepository = bookingRequestRepository;
 	}
 }

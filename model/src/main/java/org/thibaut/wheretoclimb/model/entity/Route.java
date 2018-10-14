@@ -33,7 +33,7 @@ public class Route extends Element {
 	private boolean multiPitch;
 
 
-//----------CONSTRUCTORS----------
+/*//----------CONSTRUCTORS----------
 
 
 	public Route( String name, LocalDateTime createDate, LocalDateTime updateDate,
@@ -45,6 +45,6 @@ public class Route extends Element {
 		this.length = length;
 		this.nbAnchor = nbAnchor;
 		this.multiPitch = multiPitch;
-	}
+	}*/
 
 }

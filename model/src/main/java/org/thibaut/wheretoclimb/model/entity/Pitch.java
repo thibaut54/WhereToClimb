@@ -34,7 +34,7 @@ public class Pitch extends Element {
 	private String style;
 
 
-//----------CONSTRUCTORS----------
+/*//----------CONSTRUCTORS----------
 
 
 	public Pitch( String name, LocalDateTime createDate, LocalDateTime updateDate,
@@ -47,7 +47,7 @@ public class Pitch extends Element {
 		this.nbAnchor = nbAnchor;
 		this.distanceMeterBetweenAnchors = distanceMeterBetweenAnchors;
 		this.style = style;
-	}
+	}*/
 
 
 }

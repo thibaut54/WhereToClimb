@@ -13,6 +13,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
 	private RoleManager roleManager;
 	private PasswordManager passwordManager;
 	private AreaManager areaManager;
+	private BookingRequestManager bookingRequest;
 
 	@Override
 	public UserManager getUserManager( ) {
@@ -69,5 +70,16 @@ public class ManagerFactoryImpl implements ManagerFactory {
 	@Autowired
 	public void setAreaManager( AreaManager areaManager ) {
 		this.areaManager = areaManager;
+	}
+
+	@Override
+	public BookingRequestManager getBookingRequestManager( ) {
+		return bookingRequest;
+	}
+
+	@Override
+	@Autowired
+	public void setBookingRequestManager( BookingRequestManager bookingRequest ) {
+		this.bookingRequest = bookingRequest;
 	}
 }

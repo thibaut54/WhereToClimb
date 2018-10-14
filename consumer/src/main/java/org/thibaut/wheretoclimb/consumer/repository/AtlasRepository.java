@@ -12,7 +12,7 @@ import org.thibaut.wheretoclimb.model.entity.Atlas;
 @Repository
 public interface AtlasRepository  extends JpaRepository< Atlas, Integer > {
 
-	public Atlas findByName( Integer name);
+	public Atlas findByName( String name );
 
 	@Query("SELECT atlas FROM Atlas atlas WHERE LOWER(atlas.name) LIKE :keyword")
 	public Page< Atlas > searchAtlas( @Param( "keyword" ) String keyword, Pageable pageable );

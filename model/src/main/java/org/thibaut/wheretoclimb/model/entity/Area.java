@@ -39,7 +39,7 @@ public class Area extends Element {
 	//Division pas claire chez l'existant
 
 
-//----------CONSTRUCTORS----------
+/*//----------CONSTRUCTORS----------
 
 
 	public Area( String name, LocalDateTime createDate, LocalDateTime updateDate,
@@ -52,7 +52,7 @@ public class Area extends Element {
 		this.approachDuration = approachDuration;
 		this.locality = locality;
 		this.parking = parking;
-	}
+	}*/
 
 
 }

@@ -22,6 +22,7 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 		return atlases;
 	}
 
+
 	@Override
 	public Page< Atlas > searchAtlas( int page, int size, String keyword ){
 		Page< Atlas > atlases =
@@ -30,15 +31,18 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 		return atlases;
 	}
 
+
 	@Override
 	public void deleteAtlas( Integer id ){
 		getDaoFactory().getAtlasRepository().deleteById( id );
 	}
 
+
 	@Override
 	public void saveAtlas( Atlas atlas ){
 		getDaoFactory().getAtlasRepository().save( atlas );
 	}
+
 
 	@Override
 	public  Atlas findById( Integer id ){
@@ -50,5 +54,15 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public  Atlas findByName( String name ){
+		if(name != null){
+			return getDaoFactory().getAtlasRepository().findByName( name );
+		} else {
+			return null;
+		}
+
 	}
 }

@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -30,20 +31,20 @@ public abstract class Element {
 	private String name;
 	private LocalDateTime createDate;
 	private LocalDateTime updateDate;
-	@OneToMany/*(mappedBy = "element", fetch = FetchType.LAZY)*/
+	@OneToMany/*(mappedBy = "element")*/
 	@JoinColumn(name = "element_id")
-	private Collection< Comment > comments;
+	private List< Comment > comments;
 
 
-//----------CONSTRUCTORS----------
-
-
-	public Element( String name, LocalDateTime createDate, LocalDateTime updateDate,
-	                ArrayList< Comment > comments ) {
-		this.name = name;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-		this.comments = comments;
-	}
+////----------CONSTRUCTORS----------
+//
+//
+//	public Element( String name, LocalDateTime createDate, LocalDateTime updateDate,
+//	                ArrayList< Comment > comments ) {
+//		this.name = name;
+//		this.createDate = createDate;
+//		this.updateDate = updateDate;
+//		this.comments = comments;
+//	}
 
 }
