@@ -12,77 +12,104 @@
 
     <div class="advancedSearchBar" layout:fragment="content">
         <div class="container" >
-            <form th:action="@{/public/advacedSearch}" method="get">
-                <label><h5>Advanced search</h5></label>
-                <div class="input-group">
-                    <input class="form-control border-secondary py-2" type="search" name="keyword" placeholder="search atlas"/>
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Search among</a>
-                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
-                            <a class="dropdown-item" href="#">Atlas</a>
-                            <a class="dropdown-item" href="#">Area</a>
-                            <a class="dropdown-item" href="#">Crag</a>
-                            <a class="dropdown-item" href="#">Route</a>
+            <form th:action="@{/public/advancedSearch}" method="get">
+                <div class="row input-group">
+                    <div class="btn-group btn-group-toggle" id="radio-btn" data-toggle="buttons">
+                        <h5>Search in  </h5>
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="searchIn" value="Atlas" id="Atlas" autocomplete="off"> Atlas
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="searchIn" value="Area" id="Area" autocomplete="off"> Area
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="searchIn" value="Crag" id="Crag" autocomplete="off"> Crag
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="searchIn" value="Route" id="Route" autocomplete="off"> Route
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="name">Name</label>
+                            <input id="name" class="form-control border-secondary py-2" type="search" name="name" placeholder="search"/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="country">Country</label>
+                            <input id="country" class="form-control border-secondary py-2" type="search" name="country" placeholder="search"/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="region">Region</label>
+                            <input id="region" class="form-control border-secondary py-2" type="search" name="region" placeholder="search"/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="department">Department</label>
+                            <input id="department" class="form-control border-secondary py-2" type="search" name="department" placeholder="search"/>
                         </div>
                     </div>
-                    <div class="input-group-append">
-                        <button id="search-btn" class="btn btn-outline-secondary" type="submit" >
-                            <i class="fa fa-search"></i>
-                        </button>
+                    <div class="row input-group-append">
+                        <div class="col-lg-3">
+                            <button id="search-btn" class="btn btn-outline-secondary" type="submit" >
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                     </div>
+
                 </div>
             </form>
+            <div th:if="${!searchHasResults}" class="row">No result found</div>
+            <div th:if="${searchHasResults}" class="row">
+                <table class="listAtlas table table-bordered table-striped table-condensed">
+                    <caption>
+                        <h3>RESULTS</h3>
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>CAN BE BORROWED</th>
+                        <th>CREATION DATE</th>
+                        <th>OWNER</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="atlas:${atlases}">
+                        <td >
+                            <a th:text="${atlas.name}" th:href="@{/public/showAtlasDetail(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
+                        </td>
+                        <div th:if="${atlas.available}">
+                            <td>Yes</td>
+                        </div>
+                        <div th:if="${!atlas.available}">
+                            <td>No</td>
+                        </div>
+                        <td th:text="${atlas.createDate}"></td>
+                        <td th:text="${atlas.user.userName}"></td>
+                        <td th:if="${userIsAdmin}">
+                            <a th:href="@{/admin/editAtlas(id=${atlas.id})}">
+                                <i class="icon fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <!--<td th:if="${userIsAdmin}">-->
+                            <!--<a  id="trash-ic" th:href="@{/admin/deleteAtlas(id=${atlas.id}, page=${currentPage}, size=${size}, keyword=${keyword})}"-->
+                                <!--onclick="return confirm('Do you really want to delete this Atlas?')">-->
+                                <!--<i class="icon fas fa-trash"></i>-->
+                            <!--</a>-->
+                        <!--</td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <ul class="pagination">
+                    <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
+                        <a class="page-link" th:href="@{/public/advancedSearch(page=${status.index}, size=${size}, name=${name}, country=${country}, region=${region}, department=${department})}" th:text="${status.index}+1" >
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="container">
-            <!--<table class="listAtlas table table-bordered table-striped table-condensed">-->
-                <!--<caption>-->
-                    <!--<h3>LIST OF ALL ATLASES</h3>-->
-                <!--</caption>-->
-                <!--<thead>-->
-                <!--<tr>-->
-                    <!--<th>NAME</th>-->
-                    <!--<th>AVAILABLE</th>-->
-                    <!--<th>CREATION DATE</th>-->
-                    <!--<th>OWNER</th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <!--<tbody>-->
-                <!--<tr th:each="atlas:${atlases}">-->
-                    <!--<td >-->
-                        <!--<a th:text="${atlas.name}" th:href="@{/public/showAtlasDetail(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>-->
-                    <!--</td>-->
-                    <!--<div th:if="${atlas.available}">-->
-                        <!--<td>Yes</td>-->
-                    <!--</div>-->
-                    <!--<div th:if="${!atlas.available}">-->
-                        <!--<td>No</td>-->
-                    <!--</div>-->
-                    <!--<td th:text="${atlas.createDate}"></td>-->
-                    <!--<td th:text="${atlas.user.userName}"></td>-->
-                    <!--<td th:if="${userIsAdmin}">-->
-                        <!--<a th:href="@{/admin/editAtlas(id=${atlas.id})}">-->
-                            <!--<i class="icon fas fa-pencil-alt"></i>-->
-                        <!--</a>-->
-                    <!--</td>-->
-                    <!--<td th:if="${userIsAdmin}">-->
-                        <!--<a  id="trash-ic" th:href="@{/admin/deleteAtlas(id=${atlas.id}, page=${currentPage}, size=${size}, keyword=${keyword})}"-->
-                            <!--onclick="return confirm('Do you really want to delete this Atlas?')">-->
-                            <!--<i class="icon fas fa-trash"></i>-->
-                        <!--</a>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-            <!--</table>-->
-        <!--</div>-->
-        <!--<div class="container">-->
-            <!--&lt;!&ndash;<ul class="nav nav-pills">&ndash;&gt;-->
-            <!--<ul class="pagination">-->
-                <!--<li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">-->
-                    <!--<a class="page-link" th:href="@{/public/showAtlas(page=${status.index}, size=${size}, keyword=${keyword})}" th:text="${status.index}+1" >-->
-                    <!--</a>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</div>-->
+
+
     </div>
 
 </html>

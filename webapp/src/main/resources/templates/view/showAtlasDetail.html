@@ -12,28 +12,11 @@
 
     <div layout:fragment="content">
         <div class="container">
-            <!--<div class="container">-->
-            <header class="container row col-lg-12">
-                <form th:action="@{/public/showAtlasDetail}" method="get">
-                    <label><h5>Search area</h5></label>
-                    <div class="input-group">
-                        <input class="form-control border-secondary py-2" type="search" name="keyword" placeholder="search area"/>
-                        <div class="input-group-append">
-                            <button id="search-btn" class="btn btn-outline-secondary" type="submit" >
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </header>
-            <!--</div>-->
-            <!--<div class="container col-lg-8">-->
             <section class="row">
                 <article class="col-lg-8">
                     <table class="listArea table table-bordered table-striped table-condensed">
                         <caption>
                             <h3>LIST OF AREAS IN ATLAS: <span th:text="${atlasName}"></span></h3>
-                            <!--<button th:if="${atlas.available}" type="button" class="btn btn-outline-info">Ask for borrow this Atlas</button>-->
                             <button th:if="${atlas.available}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bookModal">Ask for borrow this Atlas</button>
 
                             <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -46,37 +29,6 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <!--<div class="modal-body">-->
-                                            <!--<form th:action="@{/user/saveRequestBooking(atlasId=${atlas.id})}" method="post">-->
-                                                <!--<div class="form-group">-->
-                                                    <!--<label for="datepicker-start" class="col-form-label">Start date:</label>-->
-                                                    <!--<input id="datepicker-start" th:field="${bookingRequest.startDate}" width="276" />-->
-                                                    <!--<script>-->
-                                                        <!--$('#datepicker-start').datepicker({-->
-                                                            <!--uiLibrary: 'bootstrap4'-->
-                                                        <!--});-->
-                                                    <!--</script>-->
-                                                <!--</div>-->
-                                                <!--<div class="form-group">-->
-                                                    <!--<label for="datepicker-end" class="col-form-label">End date:</label>-->
-                                                    <!--<input id="datepicker-end" th:field="${bookingRequest.endDate}" width="276" />-->
-                                                    <!--<script>-->
-                                                        <!--$('#datepicker-end').datepicker({-->
-                                                            <!--uiLibrary: 'bootstrap4'-->
-                                                        <!--});-->
-                                                    <!--</script>-->
-                                                <!--</div>-->
-
-                                                <!--<div class="form-group">-->
-                                                    <!--<label for="message-text" class="col-form-label">Add a message:</label>-->
-                                                    <!--<textarea class="form-control" id="message-text" th:field="${bookingRequest.message}"></textarea>-->
-                                                <!--</div>-->
-                                            <!--</form>-->
-                                        <!--</div>-->
-                                        <!--<div class="modal-footer">-->
-                                            <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-                                            <!--<button type="submit" class="btn btn-primary">Send message</button>-->
-                                        <!--</div>-->
                                         <div class="modal-body">
                                             <form th:action="@{/user/saveBookingRequest(atlasId=${atlas.id})}" method="post">
                                                 <div class="form-group">
@@ -152,7 +104,6 @@
                             <p class="card-text">
                                 <span th:text="${comment.content}"></span>
                             </p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
                     </div>
                 </aside>

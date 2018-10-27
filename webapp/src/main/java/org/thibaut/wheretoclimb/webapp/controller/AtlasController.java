@@ -7,10 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
 import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
@@ -36,32 +33,11 @@ public class AtlasController {
 
 		Page< Atlas > atlases = this.managerFactory.getAtlasManager().searchAtlas(page, size, keyword);
 
-//		//Get the connected user
-//		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
-//
-//		boolean isConnected = false;
-//
-//		//If there is a connected user, put a boolean at true in the model
-//		if( userConnectedOpt.isPresent() ){
-//
-//			User userConnected = userConnectedOpt.get();
-//
-//			isConnected = true;
-//			final boolean[] isAdmin = { false };
-//
-//			userConnected.getRoles().forEach( role -> isAdmin[0] = role.getRole( ).equals( "ROLE_ADMIN" ) );
-//
-//			model.addAttribute( "userIsAdmin" , isAdmin[0] );
-//		}
-
 		isUserAdmin( model );
 
 		model.addAttribute( "connectedUser" , this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()));
-//		model.addAttribute( "isConnected", isConnected );
 		model.addAttribute( "atlases", atlases.getContent() );
-
-		int[] pages = new int[atlases.getTotalPages()];
-		model.addAttribute( "pages", pages );
+		model.addAttribute( "pages", new int[atlases.getTotalPages()] );
 		model.addAttribute( "size", size );
 		model.addAttribute( "currentPage", page );
 		model.addAttribute( "keyword", keyword );
@@ -85,22 +61,6 @@ public class AtlasController {
 
 		isUserAdmin( model );
 
-//		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
-//
-//		boolean isConnected = false;
-//
-//		//If there is a connected user, put a boolean at true in the model
-//		if( userConnectedOpt.isPresent() ){
-//
-//			User userConnected = userConnectedOpt.get();
-//
-//			isConnected = true;
-//			final boolean[] isAdmin = { false };
-//
-//			userConnected.getRoles().forEach( role -> isAdmin[0] = role.getRole( ).equals( "ROLE_ADMIN" ) );
-//
-//			model.addAttribute( "userIsAdmin" , isAdmin[0] );
-//		}
 		isCommented( model, atlasOpt.get() );
 
 		atlasOpt.ifPresent( atlas -> model.addAttribute( "atlas", atlas ) );
@@ -140,9 +100,15 @@ public class AtlasController {
 
 		bookingRequest.setCreateDate( LocalDateTime.now() );
 		bookingRequest.setUserEmitter( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()));
-		bookingRequest.setAtlas( this.managerFactory.getAtlasManager().findById( atlasId ) );
+		Atlas atlas = this.managerFactory.getAtlasManager().findById( atlasId ) ;
+		bookingRequest.setAtlas( atlas );
 
-		this.managerFactory.getBookingRequestManager().saveBookingRequest( bookingRequest );
+//		this.managerFactory.getBookingRequestManager().saveBookingRequest( bookingRequest );
+
+		this.managerFactory.getAtlasManager().saveBookingRequest( atlasId, bookingRequest );
+
+		model.addAttribute( "atlas" , atlas );
+		model.addAttribute( "bookingRequest" , bookingRequest );
 
 		System.out.println( "SaveBooking" );
 

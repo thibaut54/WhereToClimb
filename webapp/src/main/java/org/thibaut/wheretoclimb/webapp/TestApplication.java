@@ -1,7 +1,9 @@
 package org.thibaut.wheretoclimb.webapp;
 
+import groovy.util.logging.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.thibaut.wheretoclimb.business.contract.AtlasManager;
 import org.thibaut.wheretoclimb.business.contract.PasswordManager;
 import org.thibaut.wheretoclimb.consumer.repository.*;
 import org.thibaut.wheretoclimb.model.entity.*;
@@ -10,13 +12,16 @@ import org.thibaut.wheretoclimb.util.GenericBuilder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 @Component
+@Slf4j
 public class TestApplication implements CommandLineRunner {
 
 	private PasswordManager passwordManager;
+	private AtlasManager atlasManager;
 	private UserRepository userRepository;
 	private ElementRepository elementRepository;
 	private AtlasRepository atlasRepository;
@@ -27,8 +32,9 @@ public class TestApplication implements CommandLineRunner {
 	private BookingRequestRepository bookingRequestRepository;
 
 
-	public TestApplication( PasswordManager passwordManager, UserRepository userRepository, ElementRepository elementRepository, AtlasRepository atlasRepository, RoleRepository roleRepository, AreaRepository areaRepository, MessageRepository messageRepository, CommentRepository commentRepository, BookingRequestRepository bookingRequestRepository ) {
+	public TestApplication( PasswordManager passwordManager, AtlasManager atlasManager, UserRepository userRepository, ElementRepository elementRepository, AtlasRepository atlasRepository, RoleRepository roleRepository, AreaRepository areaRepository, MessageRepository messageRepository, CommentRepository commentRepository, BookingRequestRepository bookingRequestRepository ) {
 		this.passwordManager = passwordManager;
+		this.atlasManager = atlasManager;
 		this.userRepository = userRepository;
 		this.elementRepository = elementRepository;
 		this.atlasRepository = atlasRepository;
@@ -188,17 +194,17 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setName, "Grimper en Region1" )
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
-								.with( Atlas::setCountry, "France")
+								.with( Atlas::setCountry, "USA")
 								.with( Atlas::setScale, "Regional")
-								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setRegion, "Rhône-Alpes")
 								.with( Atlas::setUser, users.get( 0 ))
 								.build();
 		Atlas atlas3 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Region2" )
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
-								.with( Atlas::setCountry, "France")
-								.with( Atlas::setScale, "Regional")
+								.with( Atlas::setCountry, "MOON")
+								.with( Atlas::setScale, "Rhône-Alpes")
 								.with( Atlas::setRegion, "Lorraine")
 								.with( Atlas::setUser, users.get( 0 ))
 								.build();
@@ -208,7 +214,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
-								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setRegion, "PACA")
 								.with( Atlas::setUser, users.get( 1 ))
 								.build();
 		Atlas atlas5 = GenericBuilder.of( Atlas::new )
@@ -217,7 +223,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
-								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setRegion, "PACA")
 								.with( Atlas::setUser, users.get( 1 ))
 								.build();
 		Atlas atlas6 = GenericBuilder.of( Atlas::new )
@@ -226,7 +232,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
-								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setRegion, "Languedoc-Roussillon")
 								.with( Atlas::setUser, users.get( 1 ))
 								.build();
 		Atlas atlas7 = GenericBuilder.of( Atlas::new )
@@ -235,7 +241,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
-								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setRegion, "Languedoc-Roussillon")
 								.with( Atlas::setUser, users.get( 2 ))
 								.build();
 		Atlas atlas8 = GenericBuilder.of( Atlas::new )
@@ -244,7 +250,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
-								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setRegion, "Midi-Pyrénées")
 								.with( Atlas::setUser, users.get( 2 ))
 								.build();
 		Atlas atlas9 = GenericBuilder.of( Atlas::new )
@@ -253,7 +259,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
-								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setRegion, "Midi-Pyrénées")
 								.with( Atlas::setUser, users.get( 2 ))
 								.build();
 		Atlas atlas10 = GenericBuilder.of( Atlas::new )
@@ -262,7 +268,7 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
-								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setRegion, "Midi-Pyrénées")
 								.with( Atlas::setUser, users.get( 2 ))
 								.build();
 		Atlas atlas11 = GenericBuilder.of( Atlas::new )
@@ -271,11 +277,9 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setScale, "Regional")
-								.with( Atlas::setRegion, "Lorraine")
+								.with( Atlas::setRegion, "PACA")
 								.with( Atlas::setUser, users.get( 2 ))
 								.build();
-
-
 
 
 
@@ -298,6 +302,14 @@ public class TestApplication implements CommandLineRunner {
 
 		this.atlasRepository.saveAll( atlases );
 
+//		QAtlas qAtlas = QAtlas.atlas;
+//
+//		List <Atlas> atlases1 = (this.atlasManager.searchAtlasByNameAndCountryAndRegionAndDepartment( 0 , 5 , "Grimper" , "France" , null, null  )).getContent();
+//
+//		System.out.println( " TEST REQUETE QUERYDSL" );
+//		System.out.println( "Taille de la liste :" + atlases1.size() );
+//		atlases1.forEach( System.out::println );
+//		System.out.println( " FIN DU TEST REQUETE QUERYDSL" );
 
 		//-----POPULATE MESSAGE
 

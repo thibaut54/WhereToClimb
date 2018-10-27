@@ -33,7 +33,7 @@ public class BookingRequest {
 	private LocalDateTime createDate;
 	private String message;
 	@ManyToOne
-	@JoinColumn(name = "atlas_id")
+//	@JoinColumn(name = "atlas_id")
 	private Atlas atlas;
 	@ManyToOne
 	@JoinColumn(name = "user_emitter_id")

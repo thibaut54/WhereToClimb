@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
+import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 import org.thibaut.wheretoclimb.model.entity.User;
 
@@ -24,21 +25,41 @@ public class AdvancedSearchController {
 	public String search(  Model model,
 	                       @RequestParam(name = "page", defaultValue = "0") int page,
 	                       @RequestParam(name = "size", defaultValue = "5") int size,
-	                       @RequestParam(name = "keyword", defaultValue = "") String keyword){
+	                       @RequestParam(name = "name", defaultValue = "") String name,
+	                       @RequestParam(name = "country", defaultValue = "") String country,
+	                       @RequestParam(name = "region", defaultValue = "") String region,
+	                       @RequestParam(name = "department", defaultValue = "") String department,
+	                       @RequestParam(name = "searchIn", defaultValue = "") String searchIn){
 
-//		Page< Atlas > atlases = this.managerFactory.getAtlasManager().searchAtlas(page, size, keyword);
+		model.addAttribute( "searchIn", searchIn );
+
+//		switch ( searchIn ){
+//			case "Atlas" :
+//				Page< Atlas > atlases = this.managerFactory.getAtlasManager().searchAtlasByNameAndCountryAndRegionAndDepartment(page, size, name, country, region, department);
+//				model.addAttribute( "searchHasResults" , !atlases.getContent().isEmpty() );
+//				model.addAttribute( "atlases", atlases.getContent() );
+//				model.addAttribute( "pages", new int[atlases.getTotalPages()] );
+//				break;
+//			case "Area" :
+//				Page< Area > areas = this.managerFactory.getAtlasManager().searchAtlasByNameAndCountryAndRegionAndDepartment(page, size, name, country, region, department);
+//				model.addAttribute( "searchHasResults" , !atlases.getContent().isEmpty() );
+//				model.addAttribute( "atlases", atlases.getContent() );
+//				model.addAttribute( "pages", new int[atlases.getTotalPages()] );
+//				break;
+//		}
+
 
 		isUserAdmin( model );
 
 		model.addAttribute( "connectedUser" , this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()));
-//		model.addAttribute( "isConnected", isConnected );
-//		model.addAttribute( "atlases", atlases.getContent() );
-
-//		int[] pages = new int[atlases.getTotalPages()];
-//		model.addAttribute( "pages", pages );
 		model.addAttribute( "size", size );
 		model.addAttribute( "currentPage", page );
-		model.addAttribute( "keyword", keyword );
+		model.addAttribute( "name", name );
+		model.addAttribute( "country", country );
+		model.addAttribute( "region", region );
+		model.addAttribute( "department", department );
+
+		System.out.println( "Search in: " + searchIn );
 
 		return "view/advancedSearch";
 	}
@@ -65,4 +86,5 @@ public class AdvancedSearchController {
 
 		}
 	}
+
 }

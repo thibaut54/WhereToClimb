@@ -20,7 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString( exclude = {"areas" , "crags" , "bookingRequests" , "user"})
 //@EqualsAndHashCode( callSuper = true )
 public class Atlas extends Element {
 
@@ -47,8 +47,8 @@ public class Atlas extends Element {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	@OneToMany
-	@JoinColumn(name = "atlas_id")
+	@OneToMany(mappedBy = "atlas", cascade = CascadeType.ALL)
+//	@JoinColumn(name = "atlas_id")
 	private List<BookingRequest> bookingRequests;
 
 
