@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+
+<div layout:fragment="customCSS">
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/static/css/route.css}" />
+</div>
+
+
+<div layout:fragment="content">
+    <div class="container">
+        <section class="row">
+            <article class="col-lg-8">
+                <table class="listArea table table-bordered table-striped table-condensed">
+                    <caption>
+                        <h3>LIST OF ROUTES IN CRAG: <span th:text="${crag.name}"></span></h3>
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>GRADE</th>
+                        <th>LENGTH</th>
+                        <th>METERS BETWEEN ANCHORS</th>
+                        <th>VERTICALITY</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="route:${routes}">
+                        <td >
+                            <a th:if="${route.multiPitch}" th:text="${route.name}" th:href="@{/public/showPitch(routeId=${route.id})}"></a>
+                            <a th:if="${!route.multiPitch}" th:text="${route.name}"></a>
+                        </td>
+                        <td th:text="${route.grade}"></td>
+                        <td th:text="${route.length}"></td>
+                        <td th:text="${(route.length)/(route.nbAnchor+1)}"></td>
+                        <td th:text="${route.verticality}"></td>
+                        <td th:if="${userIsAdmin}">
+                            <a th:href="@{/admin/editRoute(routeId=${route.id})}">
+                                <i class="icon fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <td th:if="${userIsAdmin}">
+                            <a  id="trash-ic" th:href="@{/admin/deleteRoute(routeId=${route.id}, page=${currentPage}, size=${size})}"
+                                onclick="return confirm('Do you really want to delete this Route?')">
+                                <i class="icon fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </article>
+            <aside th:if="${elementIsCommented}">
+                <div th:each="comment:${route.comments}" class="card">
+                    <div class="card-header">
+                        <span th:text="${comment.title}"></span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <span th:text="${comment.content}"></span>
+                        </p>
+                    </div>
+                </div>
+            </aside>
+            <!--</div>-->
+        </section>
+        <!--<div class="container col-lg-8">-->
+        <footer class="row">
+            <!--<ul class="nav nav-pills">-->
+            <ul class="pagination">
+                <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
+                    <!--<a class="page-link" th:href="@{/public/showCrag(cragId=${crag.id}, page=${status.index}, size=${size})}" th:text="${status.index}+1" >-->
+                    <!--</a>-->
+                    <a class="page-link" th:href="@{/public/showRoute(cragId=${crag.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
+                    </a>
+                </li>
+            </ul>
+            <!--</div>-->
+        </footer>
+    </div>
+</div>
+
+</html>

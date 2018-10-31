@@ -3,37 +3,31 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+/**
+ * Bean used to define a commentary that a user can attache to any element of the site
+ */
 @Entity
 @Table(name = "comments") // **** CHECK IF THIS NAME WORKS WITH SQL!!!
+@PrimaryKeyJoinColumn(name = "com_id")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class Comment {
+public class Comment extends Communication{
 
 //----------ATTRIBUTES----------
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
 	private String title;
-	private String content;
-	private Date createDate;
-	private Date updateDate;
+	@ManyToOne
+	@JoinColumn(name = "element_id")
+	private Element element;
 
 
 //----------CONSTRUCTORS----------
-
-
-	public Comment( String title, String content, Date createDate, Date updateDate ) {
-		this.title = title;
-		this.content = content;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
 
 
 }

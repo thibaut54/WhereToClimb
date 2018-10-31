@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Bean used to define a user/climber account
@@ -24,11 +25,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String email;
-	@OneToMany(mappedBy = "user")
-	private Collection< Atlas > atlases;
-	@OneToMany/*(mappedBy = "climber", fetch = FetchType.LAZY)*/
+	@OneToMany/*(mappedBy = "user")*/
 	@JoinColumn(name = "user_id")
-	private Collection< Comment > comments;
+	private List< Atlas > atlases;
+	@OneToMany/*(mappedBy = "user")*/
+	@JoinColumn(name = "user_emitter_id")
+	private List< Communication > communications;
+//	@OneToMany
+//	@JoinColumn/*(name = "user_emitter_id")*/
+//	private Collection<Comment> comments;
 	private String password;
 	private String firstName;
 	private String lastName;
@@ -47,8 +52,13 @@ public class User {
 			name = "roles_of_users",
 			joinColumns = { @JoinColumn(name = "user_id") },
 			inverseJoinColumns = { @JoinColumn(name = "role_id") } )
-	private Collection< Role > roles;
-
+	private List< Role > roles;
+	@OneToMany/*(mappedBy = "user")*/
+	@JoinColumn(name = "user_recipient_id")
+	private List<Message> messages;
+	@OneToMany/*(mappedBy = "user")*/
+	@JoinColumn(name = "user_emitter_id")
+	private List<BookingRequest> bookingRequests;
 
 
 //----------CONSTRUCTORS----------

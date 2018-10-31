@@ -3,38 +3,31 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/layout.html">
 
-    <head>
-        <div th:insert="fragment/bootstrapCDN :: head"></div>
-
-        <link rel="stylesheet" type="text/css" media="all"
-              th:href="@{/static/css/atlas.css}" href="../static/css/atlas.css"/>
-
-    </head>
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/atlas.css}" />
+    </div>
 
 
-    <body>
-        <div layout:fragment="content">
-            <div class="container">
+    <div layout:fragment="content">
+        <div class="container">
 
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Confirmation</h5>
-                        <div class="card-block">
-                            <div class="form-group">
-                                <label>Atlas name:</label>
-                                <label th:text="${atlas.name}"></label>
-                            </div>
-                            <div class="form-group">
-                                <label>Country:</label>
-                                <label th:text="${atlas.country}"></label>
-                            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5>Confirmation</h5>
+                    <div class="card-block">
+                        <div class="form-group">
+                            <label>Atlas name:</label>
+                            <label th:text="${atlas.name}"></label>
+                        </div>
+                        <div class="form-group">
+                            <label>Country:</label>
+                            <label th:text="${atlas.country}"></label>
                         </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
-
-    </body>
+    </div>
 
 </html>

@@ -6,9 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Bean used to define a book or a document that contains one or many climbing areas
@@ -19,7 +17,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString( exclude = {"areas" , "bookingRequests" , "user"})
 //@EqualsAndHashCode( callSuper = true )
 public class Atlas extends Element {
 
@@ -30,13 +28,7 @@ public class Atlas extends Element {
 		name = "areas_in_atlases",
 		joinColumns = { @JoinColumn(name = "atlas_id") },
 		inverseJoinColumns = { @JoinColumn(name = "area_id") } )
-	private Collection< Area > areas;
-	@ManyToMany
-	@JoinTable(
-			name = "crags_in_atlases",
-			joinColumns = { @JoinColumn(name = "atlas_id") },
-			inverseJoinColumns = { @JoinColumn(name = "crag_id") } )
-	private Collection< Crag > crags;
+	private List< Area > areas;
 //	@NotNull
 	private String scale;
 	private String country;
@@ -46,9 +38,12 @@ public class Atlas extends Element {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	@OneToMany(mappedBy = "atlas", cascade = CascadeType.ALL)
+//	@JoinColumn(name = "atlas_id")
+	private List<BookingRequest> bookingRequests;
 
 
-//----------CONSTRUCTORS----------
+/*//----------CONSTRUCTORS----------
 
 
 	public Atlas( String name, LocalDateTime createDate, LocalDateTime updateDate,
@@ -59,7 +54,7 @@ public class Atlas extends Element {
 		this.user = user;
 		this.region = region;
 		this.scale = scale;
-	}
+	}*/
 
 
 //----------METHODS----------
