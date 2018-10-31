@@ -3,16 +3,14 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Bean used to define an area with one or many climbing crag
  */
 @Entity
 @Table(name="area")
-@PrimaryKeyJoinColumn(name = "elementId")
+@PrimaryKeyJoinColumn(name = "element_id")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,20 +21,17 @@ public class Area extends Element {
 //----------ATTRIBUTES----------
 
 	@ManyToMany(mappedBy = "areas")
-	private Collection< Atlas > atlases;
+	private List< Atlas > atlases;
 	@OneToMany/*(mappedBy = "area", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "area_id")
-	private Collection< Crag > crags;
+	private List< Crag > crags;
 	private int approachDuration;
 	private String locality;
 	@OneToMany/*(mappedBy = "area", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "area_id")
-	private Collection< Parking > parking;
+	private List< Parking > parking;
 	private String rockType;
 
-
-	//checker les sites existants pour voir comment ils ont divisé les topo..
-	//Division pas claire chez l'existant
 
 
 /*//----------CONSTRUCTORS----------

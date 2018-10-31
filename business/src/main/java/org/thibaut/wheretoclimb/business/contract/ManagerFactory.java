@@ -25,4 +25,16 @@ public interface ManagerFactory {
 	BookingRequestManager getBookingRequestManager( );
 
 	void setBookingRequestManager( BookingRequestManager bookingRequest );
+
+	CragManager getCragManager( );
+
+	void setCragManager( CragManager cragManager );
+
+	RouteManager getRouteManager( );
+
+	void setRouteManager( RouteManager routeManager );
+
+	PitchManager getPitchManager( );
+
+	void setPitchManager( PitchManager pitchManager );
 }

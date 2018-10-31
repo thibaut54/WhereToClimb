@@ -8,6 +8,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,8 +17,11 @@ import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.business.contract.AtlasManager;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 import org.thibaut.wheretoclimb.model.entity.BookingRequest;
+import org.thibaut.wheretoclimb.model.entity.QArea;
 import org.thibaut.wheretoclimb.model.entity.QAtlas;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.lang.ref.Reference;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,9 @@ import static com.querydsl.core.types.dsl.Expressions.stringPath;
 @Component
 @Slf4j
 public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
+
+	@PersistenceContext
+	private EntityManager em;
 
 	@Override
 	public Page< Atlas > getAtlases( int page , int size ) {
@@ -62,6 +69,7 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 
 		ArrayList< Predicate > predicates = new ArrayList<>();
 
+//		List<Atlas> atlases = customSearch( name, country, region, department );
 		List<Atlas> atlases;
 
 		if( !name.equals( "" ) ){
@@ -77,8 +85,6 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 			predicates.add( qAtlas.department.containsIgnoreCase(department) );
 		}
 
-//		Predicate finalPredicate = predicates.get( 0 );
-
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
 
 		for ( Predicate predicate: predicates ) {
@@ -90,6 +96,20 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 		long total = ( long ) atlases.size( );
 
 		return new PageImpl(atlases, PageRequest.of( page, size ), total );
+	}
+
+//	@Override
+	public List<Atlas> customSearch( String name, String country, String region, String department ) {
+		final JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+		final QAtlas qAtlas = QAtlas.atlas;
+		return queryFactory.selectFrom(qAtlas)
+				       .where(
+						       qAtlas.name.containsIgnoreCase(name),
+						       qAtlas.country.containsIgnoreCase(country),
+						       qAtlas.department.containsIgnoreCase(department),
+						       qAtlas.region.containsIgnoreCase(region)
+				       )
+				       .fetch();
 	}
 
 //	@Override

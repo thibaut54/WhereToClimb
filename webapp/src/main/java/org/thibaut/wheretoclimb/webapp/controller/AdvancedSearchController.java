@@ -15,7 +15,7 @@ import org.thibaut.wheretoclimb.model.entity.User;
 import java.util.Optional;
 
 @Controller
-public class AdvancedSearchController {
+public class AdvancedSearchController extends AbstractController{
 
 	@Autowired
 	private ManagerFactory managerFactory;
@@ -32,21 +32,27 @@ public class AdvancedSearchController {
 	                       @RequestParam(name = "searchIn", defaultValue = "") String searchIn){
 
 		model.addAttribute( "searchIn", searchIn );
+		model.addAttribute( "searchHasResults" , false );
 
-//		switch ( searchIn ){
-//			case "Atlas" :
-//				Page< Atlas > atlases = this.managerFactory.getAtlasManager().searchAtlasByNameAndCountryAndRegionAndDepartment(page, size, name, country, region, department);
-//				model.addAttribute( "searchHasResults" , !atlases.getContent().isEmpty() );
-//				model.addAttribute( "atlases", atlases.getContent() );
-//				model.addAttribute( "pages", new int[atlases.getTotalPages()] );
-//				break;
-//			case "Area" :
-//				Page< Area > areas = this.managerFactory.getAtlasManager().searchAtlasByNameAndCountryAndRegionAndDepartment(page, size, name, country, region, department);
-//				model.addAttribute( "searchHasResults" , !atlases.getContent().isEmpty() );
-//				model.addAttribute( "atlases", atlases.getContent() );
-//				model.addAttribute( "pages", new int[atlases.getTotalPages()] );
-//				break;
-//		}
+//		Page< Atlas > atlases = this.managerFactory.getAtlasManager().searchAtlasByNameAndCountryAndRegionAndDepartment(page, size, name, country, region, department);
+//		model.addAttribute( "searchHasResults" , !atlases.getContent().isEmpty() );
+//		model.addAttribute( "atlases", atlases.getContent() );
+//		model.addAttribute( "pages", new int[atlases.getTotalPages()] );
+
+		switch ( searchIn ){
+			case "Atlas" :
+				Page< Atlas > atlases = getManagerFactory().getAtlasManager().searchAtlasByNameAndCountryAndRegionAndDepartment(page, size, name, country, region, department);
+				model.addAttribute( "searchHasResults" , !atlases.getContent().isEmpty() );
+				model.addAttribute( "results", atlases.getContent() );
+				model.addAttribute( "pages", new int[atlases.getTotalPages()] );
+				break;
+			case "Area" :
+				Page< Area > areas = getManagerFactory().getAreaManager().searchAreaByNameAndCountryAndRegionAndDepartment(page, size, name, country, region, department);
+				model.addAttribute( "searchHasResults" , !areas.getContent().isEmpty() );
+				model.addAttribute( "results", areas.getContent() );
+				model.addAttribute( "pages", new int[areas.getTotalPages()] );
+				break;
+		}
 
 
 		isUserAdmin( model );
@@ -64,27 +70,5 @@ public class AdvancedSearchController {
 		return "view/advancedSearch";
 	}
 
-
-	private void isUserAdmin( Model model ){
-		//Get the connected user
-		Optional< User > userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
-
-		boolean isConnected = false;
-
-		//If there is a connected user, put a boolean at true in the model
-		if( userConnectedOpt.isPresent() ){
-
-			User userConnected = userConnectedOpt.get();
-
-			isConnected = true;
-			final boolean[] isAdmin = { false };
-
-			userConnected.getRoles().forEach( role -> isAdmin[0] = role.getRole( ).equals( "ROLE_ADMIN" ) );
-
-			model.addAttribute( "userIsAdmin" , isAdmin[0] );
-			model.addAttribute( "isConnected", isConnected );
-
-		}
-	}
 
 }

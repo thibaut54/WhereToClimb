@@ -3,7 +3,7 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Bean used to store the different roles that users can have
@@ -24,7 +24,7 @@ public class Role {
 	private Integer id;
 	private String role;
 	@ManyToMany(mappedBy = "roles")
-	private Collection< User > users;
+	private List< User > users;
 
 
 //----------CONSTRUCTORS----------

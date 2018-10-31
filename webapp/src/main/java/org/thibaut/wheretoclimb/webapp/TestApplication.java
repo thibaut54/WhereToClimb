@@ -27,12 +27,16 @@ public class TestApplication implements CommandLineRunner {
 	private AtlasRepository atlasRepository;
 	private RoleRepository roleRepository;
 	private AreaRepository areaRepository;
+	private CommunicationRepository communicationRepository;
 	private MessageRepository messageRepository;
 	private CommentRepository commentRepository;
 	private BookingRequestRepository bookingRequestRepository;
+	private CragRepository cragRepository;
+	private RouteRepository routeRepository;
+	private PitchRepository pitchRepository;
 
 
-	public TestApplication( PasswordManager passwordManager, AtlasManager atlasManager, UserRepository userRepository, ElementRepository elementRepository, AtlasRepository atlasRepository, RoleRepository roleRepository, AreaRepository areaRepository, MessageRepository messageRepository, CommentRepository commentRepository, BookingRequestRepository bookingRequestRepository ) {
+	public TestApplication( PasswordManager passwordManager, AtlasManager atlasManager, UserRepository userRepository, ElementRepository elementRepository, AtlasRepository atlasRepository, RoleRepository roleRepository, AreaRepository areaRepository, CommunicationRepository communicationRepository, MessageRepository messageRepository, CommentRepository commentRepository, BookingRequestRepository bookingRequestRepository, CragRepository cragRepository, RouteRepository routeRepository, PitchRepository pitchRepository ) {
 		this.passwordManager = passwordManager;
 		this.atlasManager = atlasManager;
 		this.userRepository = userRepository;
@@ -40,9 +44,13 @@ public class TestApplication implements CommandLineRunner {
 		this.atlasRepository = atlasRepository;
 		this.roleRepository = roleRepository;
 		this.areaRepository = areaRepository;
+		this.communicationRepository = communicationRepository;
 		this.messageRepository = messageRepository;
 		this.commentRepository = commentRepository;
 		this.bookingRequestRepository = bookingRequestRepository;
+		this.cragRepository = cragRepository;
+		this.routeRepository = routeRepository;
+		this.pitchRepository = pitchRepository;
 	}
 
 	/**
@@ -57,21 +65,18 @@ public class TestApplication implements CommandLineRunner {
 		System.out.println( "CONSUMER APP RUN" );
 
 		//-----CLEAN DB
-		this.atlasRepository.deleteAll();
-		this.areaRepository.deleteAll();
-		this.elementRepository.deleteAll();
-		this.messageRepository.deleteAll();
 		this.commentRepository.deleteAll();
+		this.messageRepository.deleteAll();
+		this.communicationRepository.deleteAll();
+		this.elementRepository.deleteAll();
+		this.pitchRepository.deleteAll();
+		this.routeRepository.deleteAll();
+		this.cragRepository.deleteAll();
+		this.areaRepository.deleteAll();
+		this.atlasRepository.deleteAll();
+		this.bookingRequestRepository.deleteAll();
 		this.userRepository.deleteAll();
 		this.roleRepository.deleteAll();
-
-//		this.elementRepository.flush();
-//		this.messageRepository.flush();
-//		this.commentRepository.flush();
-//		this.userRepository.flush();
-//		this.roleRepository.flush();
-//		this.areaRepository.flush();
-//		this.atlasRepository.flush();
 
 
 		//-----POPULATE USER_ROLES
@@ -82,6 +87,71 @@ public class TestApplication implements CommandLineRunner {
 		roles.add(new Role("ROLE_ADMIN"));
 
 		this.roleRepository.saveAll( roles );
+
+
+		//-----POPULATE PITCH
+
+		ArrayList< Pitch > pitches = new ArrayList<>();
+
+		pitches.add( GenericBuilder.of(Pitch::new)
+				            .with( Pitch::setName, "La petite fissure" )
+				            .with( Pitch::setCreateDate, LocalDateTime.now())
+				            .with( Pitch::setGrade, "6a")
+				            .with( Pitch::setLength, 10)
+				            .with( Pitch::setNbAnchor, 4)
+				            .with( Pitch::setVerticality, "Léger dévers")
+				            .build());
+		pitches.add( GenericBuilder.of(Pitch::new)
+				             .with( Pitch::setName, "La grosse fissure" )
+				             .with( Pitch::setCreateDate, LocalDateTime.now())
+				             .with( Pitch::setGrade, "6c")
+				             .with( Pitch::setLength, 10)
+				             .with( Pitch::setNbAnchor, 4)
+				             .with( Pitch::setVerticality, "Gros dévers")
+				             .build());
+
+		this.pitchRepository.saveAll( pitches );
+
+
+		//-----POPULATE ROUTE
+
+		ArrayList< Route > routes = new ArrayList<>();
+
+		routes.add( GenericBuilder.of(Route::new)
+							.with( Route::setName, "La fissure" )
+							.with( Route::setCreateDate, LocalDateTime.now())
+							.with( Route::setGrade, "6a")
+							.with( Route::setLength, 10)
+							.with( Route::setNbAnchor, 9)
+							.with( Route::setMultiPitch, true)
+							.with( Route::setVerticality, "Léger dévers")
+							.with( Route::setPitches, pitches )
+							.build());
+
+		this.routeRepository.saveAll( routes );
+
+
+		//-----POPULATE CRAG
+
+		ArrayList< Crag > crags = new ArrayList<Crag>();
+
+		crags.add( GenericBuilder.of( Crag::new )
+				           .with( Crag::setName, "Secteur bas" )
+				           .with( Crag::setCreateDate, LocalDateTime.now() )
+				           .with( Crag::setUpdateDate, LocalDateTime.now() )
+				           .with( Crag::setApproachDuration, 12 )
+				           .with( Crag::setLocality, "Pour ce secteur, s'arrêter à la 1ère falaise." )
+				           .with( Crag::setRoutes, routes )
+				           .build());
+		crags.add( GenericBuilder.of( Crag::new )
+				           .with( Crag::setName, "Secteur haut" )
+				           .with( Crag::setCreateDate, LocalDateTime.now() )
+				           .with( Crag::setUpdateDate, LocalDateTime.now() )
+				           .with( Crag::setApproachDuration, 12 )
+				           .with( Crag::setLocality, "Pour ce secteur, à la 1ère falaise, continuer sur la gauche en montant jusqu'à la 2ème falaise." )
+				           .build());
+
+		this.cragRepository.saveAll( crags );
 
 
 		//-----POPULATE AREA
@@ -95,6 +165,7 @@ public class TestApplication implements CommandLineRunner {
 							.with( Area::setUpdateDate, LocalDateTime.now() )
 							.with( Area::setApproachDuration, 12 )
 							.with( Area::setLocality, "Au bord de la Moselle, 4 km en amont de la ville de Maron" )
+							.with( Area::setCrags, crags )
 							.build());
 		areas.add( GenericBuilder.of( Area::new )
 							.with( Area::setName, "Liverdun" )
@@ -117,6 +188,8 @@ public class TestApplication implements CommandLineRunner {
 				           .with( Area::setApproachDuration, 5 )
 				           .with( Area::setLocality, "Vers un endroit, quelque part, il faut bien chercher !" )
 				           .build());
+
+
 
 		this.areaRepository.saveAll( areas );
 		this.areaRepository.saveAll( areas2 );

@@ -5,3 +5,8 @@
 .navbar-dark{
     background-color: darkorange;
 }
+
+#search-btn{
+    width: 150px;
+    /*background-color: #1F7AF9;*/
+}

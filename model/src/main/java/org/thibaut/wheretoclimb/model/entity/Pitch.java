@@ -30,24 +30,10 @@ public class Pitch extends Element {
 	private String grade;
 	private int length;
 	private int nbAnchor;
-	private double distanceMeterBetweenAnchors;
+	private String verticality;
 	private String style;
 
 
-/*//----------CONSTRUCTORS----------
-
-
-	public Pitch( String name, LocalDateTime createDate, LocalDateTime updateDate,
-	              ArrayList< Comment > comments, String grade,
-	              int length, int nbAnchor, double distanceMeterBetweenAnchors,
-	              String style ) {
-		super( name, createDate, updateDate, comments );
-		this.grade = grade;
-		this.length = length;
-		this.nbAnchor = nbAnchor;
-		this.distanceMeterBetweenAnchors = distanceMeterBetweenAnchors;
-		this.style = style;
-	}*/
 
 
 }

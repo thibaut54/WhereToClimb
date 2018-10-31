@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+
+<div layout:fragment="customCSS">
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/static/css/pitch.css}" />
+</div>
+
+
+<div layout:fragment="content">
+    <div class="container">
+        <section class="row">
+            <article class="col-lg-8">
+                <table class="listArea table table-bordered table-striped table-condensed">
+                    <caption>
+                        <h3>LIST OF PITCHES IN ROUTE: <span th:text="${route.name}"></span></h3>
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>GRADE</th>
+                        <th>LENGTH</th>
+                        <th>METERS BETWEEN ANCHORS</th>
+                        <th>VERTICALITY</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="pitch:${pitches}">
+                        <td th:text="${pitch.name}"></td>
+                        <td th:text="${pitch.grade}"></td>
+                        <td th:text="${pitch.length}"></td>
+                        <td th:text="${(pitch.length)/(pitch.nbAnchor+1)}"></td>
+                        <td th:text="${pitch.verticality}"></td>
+                        <td th:if="${userIsAdmin}">
+                            <a th:href="@{/admin/editPitch(pitchId=${pitch.id})}">
+                                <i class="icon fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <td th:if="${userIsAdmin}">
+                            <a  id="trash-ic" th:href="@{/admin/deletePitch(pitchId=${pitch.id}, page=${currentPage}, size=${size})}"
+                                onclick="return confirm('Do you really want to delete this Pitch?')">
+                                <i class="icon fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </article>
+            <aside th:if="${elementIsCommented}">
+                <div th:each="comment:${pitch.comments}" class="card">
+                    <div class="card-header">
+                        <span th:text="${comment.title}"></span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <span th:text="${comment.content}"></span>
+                        </p>
+                    </div>
+                </div>
+            </aside>
+            <!--</div>-->
+        </section>
+        <!--<div class="container col-lg-8">-->
+        <footer class="row">
+            <!--<ul class="nav nav-pills">-->
+            <ul class="pagination">
+                <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
+                    <!--<a class="page-link" th:href="@{/public/showCrag(cragId=${crag.id}, page=${status.index}, size=${size})}" th:text="${status.index}+1" >-->
+                    <!--</a>-->
+                    <a class="page-link" th:href="@{/public/showPitch(routeId=${route.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
+                    </a>
+                </li>
+            </ul>
+            <!--</div>-->
+        </footer>
+    </div>
+</div>
+
+</html>

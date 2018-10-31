@@ -28,7 +28,7 @@
                 <tbody>
                     <tr th:each="atlas:${atlases}">
                         <td >
-                            <a th:text="${atlas.name}" th:href="@{/public/showAtlasDetail(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
+                            <a th:text="${atlas.name}" th:href="@{/public/showArea(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
                         </td>
                         <div th:if="${atlas.available}">
                             <td>Yes </td>

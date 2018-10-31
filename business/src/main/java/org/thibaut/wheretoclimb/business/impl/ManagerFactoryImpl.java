@@ -13,7 +13,10 @@ public class ManagerFactoryImpl implements ManagerFactory {
 	private RoleManager roleManager;
 	private PasswordManager passwordManager;
 	private AreaManager areaManager;
-	private BookingRequestManager bookingRequest;
+	private BookingRequestManager bookingRequestManager;
+	private CragManager cragManager;
+	private RouteManager routeManager;
+	private PitchManager pitchManager;
 
 	@Override
 	public UserManager getUserManager( ) {
@@ -74,12 +77,46 @@ public class ManagerFactoryImpl implements ManagerFactory {
 
 	@Override
 	public BookingRequestManager getBookingRequestManager( ) {
-		return bookingRequest;
+		return bookingRequestManager;
 	}
 
 	@Override
 	@Autowired
-	public void setBookingRequestManager( BookingRequestManager bookingRequest ) {
-		this.bookingRequest = bookingRequest;
+	public void setBookingRequestManager( BookingRequestManager bookingRequestManager ) {
+		this.bookingRequestManager = bookingRequestManager;
+	}
+
+
+	@Override
+	public CragManager getCragManager( ) {
+		return cragManager;
+	}
+
+	@Override
+	@Autowired
+	public void setCragManager( CragManager cragManager ) {
+		this.cragManager = cragManager;
+	}
+
+	@Override
+	public RouteManager getRouteManager( ) {
+		return routeManager;
+	}
+
+	@Override
+	@Autowired
+	public void setRouteManager( RouteManager routeManager ) {
+		this.routeManager = routeManager;
+	}
+
+	@Override
+	public PitchManager getPitchManager( ) {
+		return pitchManager;
+	}
+
+	@Override
+	@Autowired
+	public void setPitchManager( PitchManager pitchManager ) {
+		this.pitchManager = pitchManager;
 	}
 }

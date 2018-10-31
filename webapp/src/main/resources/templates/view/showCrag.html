@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+
+<div layout:fragment="customCSS">
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/static/css/crag.css}" />
+</div>
+
+
+<div layout:fragment="content">
+    <div class="container">
+        <section class="row">
+            <article class="col-lg-8">
+                <table class="listArea table table-bordered table-striped table-condensed">
+                    <caption>
+                        <h3>LIST OF CRAGS IN AREA: <span th:text="${area.name}"></span></h3>
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>LOCALITY</th>
+                        <th>CREATION DATE</th>
+                        <th>LAST UPDATE</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="crag:${area.crags}">
+                        <td >
+                            <a th:text="${crag.name}" th:href="@{/public/showRoute(cragId=${crag.id})}"></a>
+                        </td>
+                        <td th:text="${crag.locality}"></td>
+                        <td th:text="${crag.createDate}"></td>
+                        <td th:text="${crag.updateDate}"></td>
+                        <td th:if="${userIsAdmin}">
+                            <a th:href="@{/admin/editCrag(cragId=${crag.id})}">
+                                <i class="icon fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <td th:if="${userIsAdmin}">
+                            <a  id="trash-ic" th:href="@{/admin/deleteCrag(cragId=${crag.id}, page=${currentPage}, size=${size})}"
+                                onclick="return confirm('Do you really want to delete this Area?')">
+                                <i class="icon fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </article>
+            <aside th:if="${elementIsCommented}">
+                <div th:each="comment:${area.comments}" class="card">
+                    <div class="card-header">
+                        <span th:text="${comment.title}"></span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <span th:text="${comment.content}"></span>
+                        </p>
+                    </div>
+                </div>
+            </aside>
+            <!--</div>-->
+        </section>
+        <!--<div class="container col-lg-8">-->
+        <footer class="row">
+            <!--<ul class="nav nav-pills">-->
+            <ul class="pagination">
+                <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
+                    <!--<a class="page-link" th:href="@{/public/showCrag(cragId=${crag.id}, page=${status.index}, size=${size})}" th:text="${status.index}+1" >-->
+                    <!--</a>-->
+                    <a class="page-link" th:href="@{/public/showCrag(areaId=${area.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
+                    </a>
+                </li>
+            </ul>
+            <!--</div>-->
+        </footer>
+    </div>
+</div>
+
+</html>

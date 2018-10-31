@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="row input-group-append">
-                        <div class="col-lg-3">
+                        <div class="col-lg-12">
                             <button id="search-btn" class="btn btn-outline-secondary" type="submit" >
                                 <i class="fa fa-search"></i>
                             </button>
@@ -58,7 +58,7 @@
                 </div>
             </form>
             <div th:if="${!searchHasResults}" class="row">No result found</div>
-            <div th:if="${searchHasResults}" class="row">
+            <div th:if="${searchHasResults && searchIn=='Atlas'}" class="row">
                 <table class="listAtlas table table-bordered table-striped table-condensed">
                     <caption>
                         <h3>RESULTS</h3>
@@ -72,9 +72,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="atlas:${atlases}">
+                    <tr th:each="atlas:${results}">
                         <td >
-                            <a th:text="${atlas.name}" th:href="@{/public/showAtlasDetail(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
+                            <a th:text="${atlas.name}" th:href="@{/public/showArea(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
                         </td>
                         <div th:if="${atlas.available}">
                             <td>Yes</td>
@@ -95,6 +95,44 @@
                                 <!--<i class="icon fas fa-trash"></i>-->
                             <!--</a>-->
                         <!--</td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${searchHasResults && searchIn=='Area'}" class="row">
+                <table class="listAtlas table table-bordered table-striped table-condensed">
+                    <caption>
+                        <h3>RESULTS</h3>
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>LOCALITY</th>
+                        <th>APPROACH DURATION</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="area:${results}">
+                        <td >
+                            <a th:text="${area.name}" th:href="@{/public/showCrag(areaId=${area.id})}"></a>
+                        </td>
+                        <td th:text="${area.locality}"></td>
+                        <td th:text="${area.approachDuration}+' minutes'"></td>
+                        <td th:if="${userIsAdmin}">
+                            <a th:href="@{/admin/editArea(id=${area.id})}">
+                                <i class="icon fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <td th:if="${userIsAdmin}">
+                            <!--<a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size}, keyword=${keyword})}"-->
+                            <!--onclick="return confirm('Do you really want to delete this Area?')">-->
+                            <!--<i class="icon fas fa-trash"></i>-->
+                            <!--</a>-->
+                            <a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size})}"
+                                onclick="return confirm('Do you really want to delete this Area?')">
+                                <i class="icon fas fa-trash"></i>
+                            </a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

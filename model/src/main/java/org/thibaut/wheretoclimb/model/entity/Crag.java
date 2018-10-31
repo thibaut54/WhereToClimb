@@ -1,12 +1,9 @@
 package org.thibaut.wheretoclimb.model.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Bean used to define a spot, a piece of rock/cliff,
@@ -19,22 +16,23 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @ToString
-//@EqualsAndHashCode( callSuper = true )
+@EqualsAndHashCode( callSuper = true )
 public class Crag extends Element {
 
 //----------ATTRIBUTES----------
 
-	@ManyToMany(mappedBy = "crags")
-	private Collection<Atlas> atlases;
+//	@ManyToMany(mappedBy = "crags")
+//	private List< Atlas > atlases;
 	@OneToMany/*(mappedBy = "crag", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "crag_id")
-	private Collection<Route> routes;
+	private List< Route > routes;
 	@OneToMany/*(mappedBy = "crag", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "crag_id")
-	private Collection<Parking> parkings;
+	private List< Parking > parkings;
 	@OneToOne(mappedBy = "crag")
 	private GpsCoordinates cragGps;
 	private String mapUrl;
+	private String locality;
 	private Integer approachDuration;
 	//uploader le file sur le server, et stocker en bdd l'url
 
@@ -42,14 +40,14 @@ public class Crag extends Element {
 //----------CONSTRUCTORS----------
 
 
-	public Crag( Collection< Atlas > atlases, Collection< Route > routes, Collection<Parking> parkings,
-	             GpsCoordinates cragGps, String mapUrl ) {
-		this.atlases = atlases;
-		this.routes = routes;
-		this.parkings = parkings;
-		this.cragGps = cragGps;
-		this.mapUrl = mapUrl;
-	}
+//	public Crag( List< Atlas > atlases, List< Route > routes, List< Parking > parkings,
+//	             GpsCoordinates cragGps, String mapUrl ) {
+//		this.atlases = atlases;
+//		this.routes = routes;
+//		this.parkings = parkings;
+//		this.cragGps = cragGps;
+//		this.mapUrl = mapUrl;
+//	}
 
 
 }

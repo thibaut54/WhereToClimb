@@ -8,18 +8,15 @@ import org.thibaut.wheretoclimb.consumer.contract.DaoFactory;
 public class DaoFactoryImpl implements DaoFactory {
 
 	private UserRepository userRepository;
-
 	private RoleRepository roleRepository;
-
 	private AtlasRepository atlasRepository;
-
 	private AreaRepository areaRepository;
-
 	private MessageRepository messageRepository;
-
 	private CommentRepository commentRepository;
-
 	private BookingRequestRepository bookingRequestRepository;
+	private CragRepository cragRepository;
+	private RouteRepository routeRepository;
+	private PitchRepository pitchRepository;
 
 
 	@Override
@@ -97,5 +94,38 @@ public class DaoFactoryImpl implements DaoFactory {
 	@Autowired
 	public void setBookingRequestRepository( BookingRequestRepository bookingRequestRepository ) {
 		this.bookingRequestRepository = bookingRequestRepository;
+	}
+
+	@Override
+	public CragRepository getCragRepository( ) {
+		return cragRepository;
+	}
+
+	@Override
+	@Autowired
+	public void setCragRepository( CragRepository cragRepository ) {
+		this.cragRepository = cragRepository;
+	}
+
+	@Override
+	public RouteRepository getRouteRepository( ) {
+		return routeRepository;
+	}
+
+	@Override
+	@Autowired
+	public void setRouteRepository( RouteRepository routeRepository ) {
+		this.routeRepository = routeRepository;
+	}
+
+	@Override
+	public PitchRepository getPitchRepository( ) {
+		return pitchRepository;
+	}
+
+	@Override
+	@Autowired
+	public void setPitchRepository( PitchRepository pitchRepository ) {
+		this.pitchRepository = pitchRepository;
 	}
 }

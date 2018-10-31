@@ -6,7 +6,7 @@
 
     <div layout:fragment="customCSS">
         <link rel="stylesheet" type="text/css" media="all"
-              th:href="@{/static/css/atlasDetail.css}" />
+              th:href="@{/static/css/crag.css}" />
     </div>
 
 
@@ -16,7 +16,7 @@
                 <article class="col-lg-8">
                     <table class="listArea table table-bordered table-striped table-condensed">
                         <caption>
-                            <h3>LIST OF AREAS IN ATLAS: <span th:text="${atlasName}"></span></h3>
+                            <h3>LIST OF AREAS IN ATLAS: <span th:text="${atlas.name}"></span></h3>
                             <button th:if="${atlas.available}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bookModal">Ask for borrow this Atlas</button>
 
                             <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -76,7 +76,7 @@
                         <tbody>
                             <tr th:each="area:${atlas.areas}">
                                 <td >
-                                    <a th:text="${area.name}" th:href="@{/public/showAreaDetail(id=${area.id})}"></a>
+                                    <a th:text="${area.name}" th:href="@{/public/showCrag(areaId=${area.id})}"></a>
                                 </td>
                                 <td th:text="${area.locality}"></td>
                                 <td th:text="${area.approachDuration}+' minutes'"></td>
@@ -86,7 +86,11 @@
                                     </a>
                                 </td>
                                 <td th:if="${userIsAdmin}">
-                                    <a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size}, keyword=${keyword})}"
+                                    <!--<a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size}, keyword=${keyword})}"-->
+                                        <!--onclick="return confirm('Do you really want to delete this Area?')">-->
+                                        <!--<i class="icon fas fa-trash"></i>-->
+                                    <!--</a>-->
+                                    <a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size})}"
                                         onclick="return confirm('Do you really want to delete this Area?')">
                                         <i class="icon fas fa-trash"></i>
                                     </a>
@@ -95,7 +99,7 @@
                         </tbody>
                     </table>
                 </article>
-                <aside th:if="${atlasIsCommented}">
+                <aside th:if="${elementIsCommented}">
                     <div th:each="comment:${atlas.comments}" class="card">
                         <div class="card-header">
                             <span th:text="${comment.title}"></span>
@@ -110,12 +114,15 @@
             <!--</div>-->
             </section>
             <!--<div class="container col-lg-8">-->
-            <footer class="row">
+            <footer class="row container">
                 <!--<ul class="nav nav-pills">-->
                 <ul class="pagination">
                     <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
-                        <a class="page-link" th:href="@{/public/showAtlasDetail(atlasId=${atlas.id},page=${status.index}, size=${size}, keyword=${keyword})}" th:text="${status.index}+1" >
+                    <!--<li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page">-->
+                        <a class="page-link" th:href="@{/public/showArea(atlasId=${atlas.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
                         </a>
+                        <!--<a class="page-link" th:href="@{/public/showArea(page=${status.index}, size=${size})}" th:text="${status.index}+1" >-->
+                        <!--</a>-->
                     </li>
                 </ul>
             <!--</div>-->

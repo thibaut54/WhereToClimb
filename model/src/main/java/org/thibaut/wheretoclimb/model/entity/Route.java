@@ -3,9 +3,7 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Bean used to define a precise itinerary that the climber must follow
@@ -26,11 +24,13 @@ public class Route extends Element {
 
 	@OneToMany/*(mappedBy = "route", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "route_id")
-	private Collection< Pitch > pitchList;
+	private List< Pitch > pitches;
 	private String grade;
 	private int length;
 	private int nbAnchor;
 	private boolean multiPitch;
+	private String verticality;
+	private String style;
 
 
 /*//----------CONSTRUCTORS----------
