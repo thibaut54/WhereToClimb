@@ -8,8 +8,6 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 /**
  * Used to define a part of a route, when this one is made up of

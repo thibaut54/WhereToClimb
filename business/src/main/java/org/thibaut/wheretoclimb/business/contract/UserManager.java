@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserManager {
 
-	public List< User > getUsers();
+	List< User > getUsers( );
 
 	User findByUserName( String username );
 

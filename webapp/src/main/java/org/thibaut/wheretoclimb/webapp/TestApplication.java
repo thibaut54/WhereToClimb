@@ -12,7 +12,6 @@ import org.thibaut.wheretoclimb.util.GenericBuilder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -121,12 +120,32 @@ public class TestApplication implements CommandLineRunner {
 							.with( Route::setName, "La fissure" )
 							.with( Route::setCreateDate, LocalDateTime.now())
 							.with( Route::setGrade, "6a")
-							.with( Route::setLength, 10)
+							.with( Route::setLength, 20)
 							.with( Route::setNbAnchor, 9)
 							.with( Route::setMultiPitch, true)
 							.with( Route::setVerticality, "Léger dévers")
 							.with( Route::setPitches, pitches )
 							.build());
+
+		routes.add( GenericBuilder.of(Route::new)
+				            .with( Route::setName, "Le dièdre" )
+				            .with( Route::setCreateDate, LocalDateTime.now())
+				            .with( Route::setGrade, "6c")
+				            .with( Route::setLength, 20)
+				            .with( Route::setNbAnchor, 9)
+				            .with( Route::setMultiPitch, false)
+				            .with( Route::setVerticality, "Verticale")
+				            .build());
+
+		routes.add( GenericBuilder.of(Route::new)
+				            .with( Route::setName, "La dalle" )
+				            .with( Route::setCreateDate, LocalDateTime.now())
+				            .with( Route::setGrade, "7a")
+				            .with( Route::setLength, 20)
+				            .with( Route::setNbAnchor, 9)
+				            .with( Route::setMultiPitch, false)
+				            .with( Route::setVerticality, "Verticale")
+				            .build());
 
 		this.routeRepository.saveAll( routes );
 
@@ -134,13 +153,14 @@ public class TestApplication implements CommandLineRunner {
 		//-----POPULATE CRAG
 
 		ArrayList< Crag > crags = new ArrayList<Crag>();
+		ArrayList< Crag > crags2 = new ArrayList<Crag>();
 
 		crags.add( GenericBuilder.of( Crag::new )
 				           .with( Crag::setName, "Secteur bas" )
 				           .with( Crag::setCreateDate, LocalDateTime.now() )
 				           .with( Crag::setUpdateDate, LocalDateTime.now() )
 				           .with( Crag::setApproachDuration, 12 )
-				           .with( Crag::setLocality, "Pour ce secteur, s'arrêter à la 1ère falaise." )
+				           .with( Crag::setAccess, "Pour ce secteur, s'arrêter à la 1ère falaise." )
 				           .with( Crag::setRoutes, routes )
 				           .build());
 		crags.add( GenericBuilder.of( Crag::new )
@@ -148,10 +168,27 @@ public class TestApplication implements CommandLineRunner {
 				           .with( Crag::setCreateDate, LocalDateTime.now() )
 				           .with( Crag::setUpdateDate, LocalDateTime.now() )
 				           .with( Crag::setApproachDuration, 12 )
-				           .with( Crag::setLocality, "Pour ce secteur, à la 1ère falaise, continuer sur la gauche en montant jusqu'à la 2ème falaise." )
+				           .with( Crag::setAccess, "Pour ce secteur, à la 1ère falaise, continuer sur la gauche en montant jusqu'à la 2ème falaise." )
+				           .build());
+
+		crags2.add( GenericBuilder.of( Crag::new )
+				           .with( Crag::setName, "Secteur test 1" )
+				           .with( Crag::setCreateDate, LocalDateTime.now() )
+				           .with( Crag::setUpdateDate, LocalDateTime.now() )
+				           .with( Crag::setApproachDuration, 12 )
+				           .with( Crag::setAccess, "Pour ce secteur, s'arrêter à la 1ère falaise." )
+				           .with( Crag::setRoutes, routes )
+				           .build());
+		crags2.add( GenericBuilder.of( Crag::new )
+				           .with( Crag::setName, "Secteur test 2" )
+				           .with( Crag::setCreateDate, LocalDateTime.now() )
+				           .with( Crag::setUpdateDate, LocalDateTime.now() )
+				           .with( Crag::setApproachDuration, 12 )
+				           .with( Crag::setAccess, "Pour ce secteur, à la 1ère falaise, continuer sur la gauche en montant jusqu'à la 2ème falaise." )
 				           .build());
 
 		this.cragRepository.saveAll( crags );
+		this.cragRepository.saveAll( crags2 );
 
 
 		//-----POPULATE AREA
@@ -164,29 +201,34 @@ public class TestApplication implements CommandLineRunner {
 							.with( Area::setCreateDate, LocalDateTime.now() )
 							.with( Area::setUpdateDate, LocalDateTime.now() )
 							.with( Area::setApproachDuration, 12 )
-							.with( Area::setLocality, "Au bord de la Moselle, 4 km en amont de la ville de Maron" )
+							.with( Area::setNearestCity, "Maron")
+							.with( Area::setAccess, "Au bord de la Moselle, 4 km en amont de la ville de Maron" )
 							.with( Area::setCrags, crags )
 							.build());
 		areas.add( GenericBuilder.of( Area::new )
-							.with( Area::setName, "Liverdun" )
-							.with( Area::setCreateDate, LocalDateTime.now() )
-							.with( Area::setUpdateDate, LocalDateTime.now() )
-							.with( Area::setApproachDuration, 5 )
-							.with( Area::setLocality, "Vers Liverdun, quelque part, il faut chercher !" )
-							.build());
-		areas2.add( GenericBuilder.of( Area::new )
-				           .with( Area::setName, "Fontainebleau" )
-				           .with( Area::setCreateDate, LocalDateTime.now() )
-				           .with( Area::setUpdateDate, LocalDateTime.now() )
-				           .with( Area::setApproachDuration, 12 )
-				           .with( Area::setLocality, "Dans la forêt de fontainebleau" )
-				           .build());
-		areas2.add( GenericBuilder.of( Area::new )
-				           .with( Area::setName, "SecteurTest" )
+				           .with( Area::setName, "Liverdun" )
 				           .with( Area::setCreateDate, LocalDateTime.now() )
 				           .with( Area::setUpdateDate, LocalDateTime.now() )
 				           .with( Area::setApproachDuration, 5 )
-				           .with( Area::setLocality, "Vers un endroit, quelque part, il faut bien chercher !" )
+				           .with( Area::setNearestCity, "Liverdun")
+				           .with( Area::setAccess, "Vers Liverdun" )
+				           .with( Area::setCrags, crags2 )
+				           .build());
+		areas2.add( GenericBuilder.of( Area::new )
+				            .with( Area::setName, "Cul de chien" )
+				            .with( Area::setCreateDate, LocalDateTime.now() )
+				            .with( Area::setUpdateDate, LocalDateTime.now() )
+				            .with( Area::setApproachDuration, 12 )
+				            .with( Area::setNearestCity, "Fontainebleau")
+				            .with( Area::setAccess, "Au fond dans la forêt." )
+				            .build());
+		areas2.add( GenericBuilder.of( Area::new )
+				            .with( Area::setName, "SecteurTest" )
+				            .with( Area::setCreateDate, LocalDateTime.now() )
+				            .with( Area::setUpdateDate, LocalDateTime.now() )
+				            .with( Area::setApproachDuration, 5 )
+				            .with( Area::setNearestCity, "One city")
+				            .with( Area::setAccess, "Access test." )
 				           .build());
 
 
@@ -259,7 +301,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
-								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Lorraine")
 								.with( Atlas::setUser, users.get( 0 ))
 								.build();
@@ -268,7 +309,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "USA")
-								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Rhône-Alpes")
 								.with( Atlas::setUser, users.get( 0 ))
 								.build();
@@ -277,7 +317,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "MOON")
-								.with( Atlas::setScale, "Rhône-Alpes")
 								.with( Atlas::setRegion, "Lorraine")
 								.with( Atlas::setUser, users.get( 0 ))
 								.build();
@@ -286,7 +325,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
-								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "PACA")
 								.with( Atlas::setUser, users.get( 1 ))
 								.build();
@@ -295,7 +333,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
-								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "PACA")
 								.with( Atlas::setUser, users.get( 1 ))
 								.build();
@@ -304,7 +341,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
-								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Languedoc-Roussillon")
 								.with( Atlas::setUser, users.get( 1 ))
 								.build();
@@ -313,7 +349,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
-								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Languedoc-Roussillon")
 								.with( Atlas::setUser, users.get( 2 ))
 								.build();
@@ -322,7 +357,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
-								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Midi-Pyrénées")
 								.with( Atlas::setUser, users.get( 2 ))
 								.build();
@@ -331,7 +365,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
-								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Midi-Pyrénées")
 								.with( Atlas::setUser, users.get( 2 ))
 								.build();
@@ -340,7 +373,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
-								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "Midi-Pyrénées")
 								.with( Atlas::setUser, users.get( 2 ))
 								.build();
@@ -349,7 +381,6 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
-								.with( Atlas::setScale, "Regional")
 								.with( Atlas::setRegion, "PACA")
 								.with( Atlas::setUser, users.get( 2 ))
 								.build();
@@ -423,7 +454,7 @@ public class TestApplication implements CommandLineRunner {
 
 		BookingRequest bookingRequest = GenericBuilder.of( BookingRequest::new )
 				.with( BookingRequest::setCreateDate, LocalDateTime.now() )
-				.with( BookingRequest::setStartDate, LocalDate.of( 2018, 12, 01 ) )
+				.with( BookingRequest::setStartDate, LocalDate.of( 2018, 12, 1 ) )
 				.with( BookingRequest::setEndDate, LocalDate.of( 2018, 12, 10 ) )
 				.with( BookingRequest::setAtlas, atlas2 )
 				.with( BookingRequest::setUserEmitter, users.get( 2 ) )

@@ -3,8 +3,6 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Bean used to define a commentary that a user can attache to any element of the site

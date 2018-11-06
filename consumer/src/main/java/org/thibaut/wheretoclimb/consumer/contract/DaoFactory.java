@@ -1,14 +1,13 @@
 package org.thibaut.wheretoclimb.consumer.contract;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.thibaut.wheretoclimb.consumer.repository.*;
 
 public interface DaoFactory {
 
-	public UserRepository getUserRepository();
-	public RoleRepository getRoleRepository( );
-	public AtlasRepository getAtlasRepository();
-	public AreaRepository getAreaRepository();
+	UserRepository getUserRepository( );
+	RoleRepository getRoleRepository( );
+	AtlasRepository getAtlasRepository( );
+	AreaRepository getAreaRepository( );
 	MessageRepository getMessageRepository( );
 	CommentRepository getCommentRepository( );
 	BookingRequestRepository getBookingRequestRepository( );

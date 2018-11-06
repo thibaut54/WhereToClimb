@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -23,22 +25,20 @@ public class Atlas extends Element {
 
 //----------ATTRIBUTES----------
 
-	@ManyToMany
-	@JoinTable(
-		name = "areas_in_atlases",
-		joinColumns = { @JoinColumn(name = "atlas_id") },
-		inverseJoinColumns = { @JoinColumn(name = "area_id") } )
+	@OneToMany/*(mappedBy = "atlas")*/
+	@JoinColumn(name = "atlas_id")
 	private List< Area > areas;
-//	@NotNull
-	private String scale;
+	@NotNull
+	@Size(min=4, max=240)
 	private String country;
+	@NotNull
 	private String region;
 	private String department;
 	private boolean available;
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	@OneToMany(mappedBy = "atlas", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "atlas")
 //	@JoinColumn(name = "atlas_id")
 	private List<BookingRequest> bookingRequests;
 

@@ -69,7 +69,7 @@
                         <thead>
                             <tr>
                                 <th>NAME</th>
-                                <th>LOCALITY</th>
+                                <th>NEAREST CITY</th>
                                 <th>APPROACH DURATION</th>
                             </tr>
                         </thead>
@@ -78,7 +78,7 @@
                                 <td >
                                     <a th:text="${area.name}" th:href="@{/public/showCrag(areaId=${area.id})}"></a>
                                 </td>
-                                <td th:text="${area.locality}"></td>
+                                <td th:text="${area.nearestCity}"></td>
                                 <td th:text="${area.approachDuration}+' minutes'"></td>
                                 <td th:if="${userIsAdmin}">
                                     <a th:href="@{/admin/editArea(id=${area.id})}">

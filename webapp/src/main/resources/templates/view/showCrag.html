@@ -31,7 +31,7 @@
                         <td >
                             <a th:text="${crag.name}" th:href="@{/public/showRoute(cragId=${crag.id})}"></a>
                         </td>
-                        <td th:text="${crag.locality}"></td>
+                        <td th:text="${crag.access}"></td>
                         <td th:text="${crag.createDate}"></td>
                         <td th:text="${crag.updateDate}"></td>
                         <td th:if="${userIsAdmin}">
@@ -68,8 +68,6 @@
             <!--<ul class="nav nav-pills">-->
             <ul class="pagination">
                 <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
-                    <!--<a class="page-link" th:href="@{/public/showCrag(cragId=${crag.id}, page=${status.index}, size=${size})}" th:text="${status.index}+1" >-->
-                    <!--</a>-->
                     <a class="page-link" th:href="@{/public/showCrag(areaId=${area.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
                     </a>
                 </li>

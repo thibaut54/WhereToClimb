@@ -2,11 +2,11 @@ package org.thibaut.wheretoclimb.business.contract;
 
 public interface ManagerFactory {
 
-	abstract UserManager getUserManager();
+	UserManager getUserManager( );
 
 	void setUserManager( UserManager userManager );
 
-	abstract AtlasManager getAtlasManager();
+	AtlasManager getAtlasManager( );
 
 	void setAtlasManager( AtlasManager atlasManager );
 
@@ -37,4 +37,8 @@ public interface ManagerFactory {
 	PitchManager getPitchManager( );
 
 	void setPitchManager( PitchManager pitchManager );
+
+	ElementManager getElementManager( );
+
+	void setElementManager( ElementManager elementManager );
 }

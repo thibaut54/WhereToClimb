@@ -66,12 +66,11 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 
 		user.setPassword( encrytedPassword );
 
-		Collection< Role > roles = new ArrayList<>();
+		List< Role > roles = new ArrayList<>();
 
 		roles.add( getDaoFactory().getRoleRepository().findByRoleLike( "%USER" ) );
 
-//		user.setUserRoles( ( List< Role > ) roles );
-		user.setRoles( ( List< Role > ) roles );
+		user.setRoles( roles );
 		this.getDaoFactory().getUserRepository().save( user );
 		return user;
 	}

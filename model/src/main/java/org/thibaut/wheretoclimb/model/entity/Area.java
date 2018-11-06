@@ -15,18 +15,20 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode( callSuper = true )
+//@EqualsAndHashCode( callSuper = true )
 public class Area extends Element {
 
 //----------ATTRIBUTES----------
 
-	@ManyToMany(mappedBy = "areas")
-	private List< Atlas > atlases;
+	@ManyToOne
+	@JoinColumn(name = "atlas_id")
+	private Atlas atlas;
 	@OneToMany/*(mappedBy = "area", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "area_id")
 	private List< Crag > crags;
 	private int approachDuration;
-	private String locality;
+	private String nearestCity;
+	private String access;
 	@OneToMany/*(mappedBy = "area", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "area_id")
 	private List< Parking > parking;

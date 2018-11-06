@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thibaut.wheretoclimb.model.entity.Atlas;
-import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 import org.thibaut.wheretoclimb.model.entity.Crag;
 import org.thibaut.wheretoclimb.model.entity.Route;
 

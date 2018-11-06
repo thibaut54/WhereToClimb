@@ -1,25 +1,19 @@
 package org.thibaut.wheretoclimb.business.impl;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.criteria.internal.expression.ConcatExpression;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.business.contract.AreaManager;
 import org.thibaut.wheretoclimb.model.entity.Area;
-import org.thibaut.wheretoclimb.model.entity.Atlas;
 import org.thibaut.wheretoclimb.model.entity.QArea;
 import org.thibaut.wheretoclimb.model.entity.QAtlas;
+//import org.thibaut.wheretoclimb.model.entity.QArea;
+//import org.thibaut.wheretoclimb.model.entity.QAtlas;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +21,6 @@ import java.util.Optional;
 @Slf4j
 public class AreaManagerImpl extends AbstractManager implements AreaManager {
 
-	@PersistenceContext
-	private EntityManager em;
 
 //	@Override
 //	public Page< Area > searchArea( int page, int size, String keyword ){
@@ -50,67 +42,38 @@ public class AreaManagerImpl extends AbstractManager implements AreaManager {
 		return null;
 	}
 
-//	@Override
-//	public Page< Area > getAreas( int page, int size, Atlas atlas ){
-//		Page< Area > areas =
-//				getDaoFactory().getAreaRepository().searchArea(
-//						"%"+keyword.toLowerCase()+"%", PageRequest.of( page, size ) );
-//		return areas;
-//	}
 
 	@Override
-	public Page< Area > searchAreaByNameAndCountryAndRegionAndDepartment( int page, int size, String name, String country, String region, String department ){
+	public Page< Area > searchAreaByNameAndCountryAndRegionAndDepartment( int page, int size, String typeObject, String name, String country, String region, String department, String city ){
 
 		QAtlas qAtlas = QAtlas.atlas;
 		QArea qArea = QArea.area;
 
-//		ArrayList< Predicate > predicates = new ArrayList<>();
+		JPAQueryFactory queryFactory = new JPAQueryFactory(getEm());
 
-		final JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
 
+		if( ! name.equals( "" ) ){
+			booleanBuilder.and( qArea.name.containsIgnoreCase(name) );
+		}
+		if( ! country.equals( "" ) ){
+			booleanBuilder.and( qAtlas.country.containsIgnoreCase(country) );
+		}
+		if( ! region.equals( "" ) ){
+			booleanBuilder.and( qAtlas.region.containsIgnoreCase(region) );
+		}
+		if( ! department.equals( "" ) ){
+			booleanBuilder.and( qAtlas.department.containsIgnoreCase(department) );
+		}
+		if( ! city.equals( "" ) ){
+			booleanBuilder.and( qArea.nearestCity.containsIgnoreCase(city) );
+		}
 
-		List<Area> areas = queryFactory.selectFrom(qArea)
+		List<Area> areas = queryFactory.from(qAtlas)
 				                   .innerJoin(qAtlas.areas, qArea)
-				                   .where(
-						                   qArea.name.containsIgnoreCase(name),
-						                   qAtlas.country.containsIgnoreCase(country),
-						                   qAtlas.department.containsIgnoreCase(department),
-						                   qAtlas.region.containsIgnoreCase(region)
-				                   )
+				                   .where(booleanBuilder)
+				                   .select(qArea)
 				                   .fetch();
-
-//		JPAQuery query = new JPAQuery( em );
-//
-//
-//		if( !name.equals( "" ) ){
-//			areas = ( List< Area > ) query.from(qArea).where( qArea.name.containsIgnoreCase(name) );
-////			predicates.add( qArea.crags.containsIgnoreCase(name) );
-//		}
-//		if( !country.equals( "" ) ){
-//			/*here should be the equivalent for
-//			SELECT * FROM Area
-//			INNER JOIN Atlas ON atlas.country =:country'
-//			*/
-//
-//			areas = ( List< Area > ) query.from(qArea)
-//					.innerJoin(qAtlas)
-//					.where(qAtlas.country.containsIgnoreCase( country ));
-////			predicates.add(  );
-//		}
-//		if( !region.equals( "" ) ){
-////			predicates.add( ??? );
-//		}
-//		if( !department.equals( "" ) ){
-////			predicates.add( ??? );
-//		}
-//
-//		BooleanBuilder booleanBuilder = new BooleanBuilder();
-//
-//		for ( Predicate predicate: predicates ) {
-//			booleanBuilder.and(predicate);
-//		}
-
-//		areas = ( List< Area> ) getDaoFactory().getAreaRepository().findAll( booleanBuilder );
 
 		long total = ( long ) areas.size( );
 

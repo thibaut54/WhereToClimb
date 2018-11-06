@@ -16,10 +16,10 @@ public interface UserRepository extends JpaRepository< User, Integer > {
 
 //	Optional< User> findByUserName( String userName );
 
-	public User findByUserName( String username );
+	User findByUserName( String username );
 
-	public User findByEmail( String email );
+	User findByEmail( String email );
 
-	public User findByConfirmationToken(String confirmationToken);
+	User findByConfirmationToken( String confirmationToken );
 
 }

@@ -32,7 +32,7 @@ public class Crag extends Element {
 	@OneToOne(mappedBy = "crag")
 	private GpsCoordinates cragGps;
 	private String mapUrl;
-	private String locality;
+	private String access;
 	private Integer approachDuration;
 	//uploader le file sur le server, et stocker en bdd l'url
 

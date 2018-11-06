@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thibaut.wheretoclimb.model.entity.Area;
-import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 import org.thibaut.wheretoclimb.model.entity.Crag;
 
 import java.util.Optional;

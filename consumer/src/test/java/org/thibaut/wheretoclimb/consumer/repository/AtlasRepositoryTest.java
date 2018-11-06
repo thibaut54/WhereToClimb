@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.thibaut.wheretoclimb.consumer.DemoApplication;
-import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 import org.thibaut.wheretoclimb.util.GenericBuilder;
 
@@ -38,7 +37,6 @@ public class AtlasRepositoryTest {
 		Atlas atlasTest = GenericBuilder.of( Atlas::new )
 				                  .with( Atlas::setName, "AtlasTest" )
 				                  .with( Atlas::setCreateDate, LocalDateTime.now() )
-				                  .with( Atlas::setScale, "ScaleTest" )
 				                  .with( Atlas::setCountry, "CountryTest" )
 				                  .build();
 		this.atlasRepository.save( atlasTest );

@@ -1,16 +1,12 @@
 package org.thibaut.wheretoclimb.webapp.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
-import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 import org.thibaut.wheretoclimb.model.entity.User;
 
 import javax.validation.Valid;
@@ -20,9 +16,6 @@ import java.util.Optional;
 @Controller
 public class AtlasController extends AbstractController {
 
-//	@Autowired
-//	private ManagerFactory managerFactory;
-
 
 	@GetMapping( "/public/showAtlas" )
 	public String atlas( Model model,
@@ -30,7 +23,6 @@ public class AtlasController extends AbstractController {
 	                     @RequestParam(name = "size", defaultValue = "5") int size,
 	                     @RequestParam(name = "keyword", defaultValue = "") String keyword){
 
-//		Page< Atlas > atlases = this.managerFactory.getAtlasManager().searchAtlas(page, size, keyword);
 		Page< Atlas > atlases = getManagerFactory().getAtlasManager().searchAtlas(page, size, keyword);
 
 		isUserAdmin( model );
