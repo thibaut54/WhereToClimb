@@ -1,5 +1,6 @@
 package org.thibaut.wheretoclimb.webapp.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ public abstract class AbstractController {
 	private EntityManager em;
 
 
-	public ManagerFactory getManagerFactory( ) {
+	ManagerFactory getManagerFactory( ) {
 		return managerFactory;
 	}
 
@@ -29,7 +30,26 @@ public abstract class AbstractController {
 	}
 
 
-	protected void isUserAdmin( Model model ){
+	void setConnectedUser(Model model){
+		//Get the connected user
+		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
+
+		boolean isConnected = false;
+
+		if( userConnectedOpt.isPresent() ){
+			model.addAttribute( "user", userConnectedOpt );
+			isConnected = true;
+		}
+		model.addAttribute( "isConnected", isConnected );
+	}
+
+
+	Optional<User> getConnectedUser(){
+		return Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
+	}
+
+
+	void isUserAdmin( Model model ){
 		//Get the connected user
 		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
 
@@ -51,88 +71,20 @@ public abstract class AbstractController {
 		}
 	}
 
-	protected void isCommented( Model model, Element atlas ){
+
+	void isCommented( Model model, Element atlas ){
 
 		boolean elementIsCommented = false;
 
-//		System.out.println( atlas.getComments().get( 0 ).getTitle());
-
 		if( ! atlas.getComments().isEmpty() ){
 			elementIsCommented = true;
-			model.addAttribute( "atlasIsCommented", elementIsCommented );
+			model.addAttribute( "elementIsCommented", elementIsCommented );
 		}
-
-		System.out.println( "The atlas " + atlas.getName() + " has been commented: " + elementIsCommented );
-
 	}
 
-//	public Page< ? > searchElementByNameAndCountryAndRegionAndDepartmentAndCity( int page, int size, String name, String country, String region, String department, String city, String objectType ){
-//
-//		QAtlas qAtlas = QAtlas.atlas;
-//		QArea qArea = QArea.area;
-//		QCrag qCrag = QCrag.crag;;
-//		QRoute qRoute = QRoute.route;
-//		BooleanBuilder booleanBuilder = new BooleanBuilder();
-//
-//		JPAQueryFactory queryFactory = new JPAQueryFactory( em );
-//
-//		JPAQuery< ? > query = queryFactory.from(qAtlas)
-//				                      .innerJoin(qAtlas.areas, qArea);
-//
-//		List< ? > result = null;
-//
-//		if(objectType.equals( "Atlas" )){
-//			booleanBuilder.and( qAtlas.name.containsIgnoreCase(name) );
-//		}
-//		if(objectType.equals( "Area" )){
-//			booleanBuilder.and( qArea.name.containsIgnoreCase(name) );
-//		}
-//		if(objectType.equals( "Crag" )) {
-//			booleanBuilder.and( qCrag.name.containsIgnoreCase(name) );
-//		}
-//		if(objectType.equals( "Route" )) {
-//			booleanBuilder.and( qRoute.name.containsIgnoreCase(name) );
-//		}
-//
-//		if( ! country.equals( "" ) ){
-//			booleanBuilder.and( qAtlas.country.containsIgnoreCase(country) );
-//		}
-//		if( ! region.equals( "" ) ){
-//			booleanBuilder.and( qAtlas.region.containsIgnoreCase(region) );
-//		}
-//		if( ! department.equals( "" ) ){
-//			booleanBuilder.and( qAtlas.department.containsIgnoreCase(department) );
-//		}
-//		if( ! city.equals( "" ) ){
-//			booleanBuilder.and( qArea.nearestCity.containsIgnoreCase(city) );
-//		}
-//
-//
-//		if(objectType.equals( "Atlas" )){
-//			result = (List<Atlas>)query.where(booleanBuilder)
-//					                      .select(qAtlas)
-//					                      .fetch();
-//		}
-//		else if (objectType.equals( "Area" )){
-//			result = (List< Area >) query.where(booleanBuilder)
-//					                        .select(qArea)
-//					                        .fetch();
-//		}
-//		else if (objectType.equals( "Crag" )){
-//			result = (List< Crag >) query.innerJoin(qArea.crags, qCrag)
-//					                      .where(booleanBuilder)
-//					                      .select(qCrag)
-//					                      .fetch();
-//		}
-//		else if (objectType.equals( "Crag" )){
-//			result = (List<Route>) query.innerJoin(qArea.crags, qCrag)
-//					                       .innerJoin( qCrag.routes, qRoute  )
-//					                       .where(booleanBuilder)
-//					                       .select(qRoute)
-//					                       .fetch();
-//		}
-//
-//		return new PageImpl(result, PageRequest.of( page, size ), (long)result.size() );
-//	}
+	void getGradesAndVerticalities( Model model ){
+		model.addAttribute( "grades" , Grade.getGrades() );
+		model.addAttribute( "verticalities" , Verticality.getVerticalities() );
+	}
 
 }

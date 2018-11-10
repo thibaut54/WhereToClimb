@@ -6,4 +6,6 @@ import org.thibaut.wheretoclimb.model.entity.Comment;
 
 @Repository
 public interface CommentRepository extends JpaRepository< Comment, Integer > {
+
+
 }

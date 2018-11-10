@@ -23,48 +23,44 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
 	private String email;
+
 	@OneToMany/*(mappedBy = "user")*/
 	@JoinColumn(name = "user_id")
 	private List< Atlas > atlases;
+
 	@OneToMany/*(mappedBy = "user")*/
-	@JoinColumn(name = "user_emitter_id")
-	private List< Communication > communications;
-//	@OneToMany
-//	@JoinColumn/*(name = "user_emitter_id")*/
-//	private Collection<Comment> comments;
-	private String password;
-	private String firstName;
-	private String lastName;
-	private String userName;
-	private String gender;
-	private boolean enabled;
-	private String confirmationToken;
-	private boolean emailVisible;
-	private LocalDateTime createAccountDate;
-	private LocalDateTime dateOfBirth;
-	private String gradeMax;
-	private String gradeFirstAttempt;
-	private String gradeAverage;
+	@JoinColumn(name = "user_id")
+	private List< Comment > comments;
+
 	@ManyToMany
 	@JoinTable(
 			name = "roles_of_users",
 			joinColumns = { @JoinColumn(name = "user_id") },
 			inverseJoinColumns = { @JoinColumn(name = "role_id") } )
 	private List< Role > roles;
-	@OneToMany/*(mappedBy = "user")*/
-	@JoinColumn(name = "user_recipient_id")
-	private List<Message> messages;
+
 	@OneToMany/*(mappedBy = "user")*/
 	@JoinColumn(name = "user_emitter_id")
 	private List<BookingRequest> bookingRequests;
 
+	private String password;
+	private String firstName;
+	private String lastName;
+	private String userName;
+	private String gender;
+	private boolean emailVisible;
+	private LocalDateTime createAccountDate;
+	private LocalDateTime dateOfBirth;
+	private String gradeMax;
+	private String gradeFirstAttempt;
+	private String gradeAverage;
 
 //----------CONSTRUCTORS----------
 
 	public User() {
 		super();
-		this.enabled=false;
 	}
 
 	public User( String gender,
@@ -99,7 +95,6 @@ public class User {
 		this.lastName = lastName;
 		this.userName = userName;
 		this.gender = gender;
-		this.enabled = enabled;
 		this.emailVisible = emailVisible;
 		this.createAccountDate = createAccountDate;
 //		this.dateOfBirth = dateOfBirth;

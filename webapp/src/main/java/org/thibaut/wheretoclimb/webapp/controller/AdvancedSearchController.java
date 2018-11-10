@@ -22,7 +22,7 @@ public class AdvancedSearchController extends AbstractController{
 	private ManagerFactory managerFactory;
 
 	private static int currentPage = 1;
-	private static int PAGE_SIZE = 5;
+	private final static int PAGE_SIZE = 5;
 
 	@GetMapping("/public/advancedSearch")
 	public String advancedSearch(  Model model,
@@ -36,7 +36,7 @@ public class AdvancedSearchController extends AbstractController{
 	                       @RequestParam(name = "city", defaultValue = "") String city){
 
 		page.ifPresent(p -> currentPage = p);
-		size.ifPresent(s -> PAGE_SIZE = s);
+//		size.ifPresent(s -> PAGE_SIZE = s);
 
 		model.addAttribute( "searchIn", searchIn );
 		model.addAttribute( "searchHasResults" , false );
@@ -55,33 +55,6 @@ public class AdvancedSearchController extends AbstractController{
 					                            .collect( Collectors.toList());
 			model.addAttribute("pageNumbers", pageNumbers);
 		}
-
-//		switch ( searchIn ){
-//			case "Atlas" :
-//				Page< Atlas > atlases = getManagerFactory().getAtlasManager().searchAtlasByNameAndCountryAndRegionAndDepartment(page, size, searchIn, name, country, region, department, city);
-//				model.addAttribute( "searchHasResults" , !atlases.getContent().isEmpty() );
-//				model.addAttribute( "results", atlases.getContent() );
-//				model.addAttribute( "pages", new int[atlases.getTotalPages()] );
-//				break;
-//			case "Area" :
-//				Page< Area > areas = getManagerFactory().getAreaManager().searchAreaByNameAndCountryAndRegionAndDepartment(page, size, searchIn, name, country, region, department, city);
-//				model.addAttribute( "searchHasResults" , !areas.getContent().isEmpty() );
-//				model.addAttribute( "results", areas.getContent() );
-//				model.addAttribute( "pages", new int[areas.getTotalPages()] );
-//				break;
-//			case "Crag" :
-//				Page< Crag > crags = getManagerFactory().getCragManager().searchCragByNameAndCountryAndRegionAndDepartment(page, size, searchIn, name, country, region, department, city);
-//				model.addAttribute( "searchHasResults" , !crags.getContent().isEmpty() );
-//				model.addAttribute( "results", crags.getContent() );
-//				model.addAttribute( "pages", new int[crags.getTotalPages()] );
-//				break;
-//			case "Route" :
-//				Page< Route > routes = getManagerFactory().getRouteManager().searchRouteByNameAndCountryAndRegionAndDepartment(page, size, searchIn, name, country, region, department, city);
-//				model.addAttribute( "searchHasResults" , !routes.getContent().isEmpty() );
-//				model.addAttribute( "results", routes.getContent() );
-//				model.addAttribute( "pages", new int[routes.getTotalPages()] );
-//				break;
-//		}
 
 
 		isUserAdmin( model );

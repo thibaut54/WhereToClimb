@@ -18,9 +18,11 @@ public class Parking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
 	@OneToOne(mappedBy = "parking")
 	@JoinColumn(name = "crag_id")
 	private GpsCoordinates parkingGps;
+
 	private String indication;
 
 

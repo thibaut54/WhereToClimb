@@ -11,7 +11,6 @@
 
     <div layout:fragment="content">
         <div class="container spacer col-md-6 col-xs-12">
-
             <div class="card">
                 <div class="card-header">
                     <h5>Create new Atlas</h5>
@@ -40,7 +39,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Department</label>
-                                <input name="inputTxt" type="text" class="form-control" placeholder="The country concerned by the atlas"
+                                <input name="inputTxt" type="text" class="form-control" placeholder="If relevant, the department concerned by the atlas"
                                        th:field="${atlas.department}"/>
                                 <span class="error-field" th:errors="${atlas.department}"></span>
                             </div>
@@ -55,9 +54,7 @@
                         </form>
                     </div>
                 </div>
-
             </div>
-
         </div>
         <script type="text/javascript" language="javascript" src="../../static/js/countryAutocomplete.js"></script>
     </div>

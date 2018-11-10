@@ -9,5 +9,7 @@ public interface CragManager {
 
 //	Page< Crag > searchCragByNameAndCountryAndRegionAndDepartment( int page, int size, String name, String country, String region, String department );
 
-	Page< Crag > searchCragByNameAndCountryAndRegionAndDepartment( int page, int size, String typeObject , String name, String country, String region, String department, String city );
+//	Page< Crag > searchCragByNameAndCountryAndRegionAndDepartment( int page, int size, String typeObject , String name, String country, String region, String department, String city );
+
+	void saveCrag( Crag crag );
 }

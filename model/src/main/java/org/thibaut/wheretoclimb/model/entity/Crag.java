@@ -21,33 +21,27 @@ public class Crag extends Element {
 
 //----------ATTRIBUTES----------
 
-//	@ManyToMany(mappedBy = "crags")
-//	private List< Atlas > atlases;
+	@ManyToOne
+	@JoinColumn(name = "area_id")
+	private Area area;
+
 	@OneToMany/*(mappedBy = "crag", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "crag_id")
 	private List< Route > routes;
+
 	@OneToMany/*(mappedBy = "crag", fetch = FetchType.LAZY)*/
 	@JoinColumn(name = "crag_id")
 	private List< Parking > parkings;
+
 	@OneToOne(mappedBy = "crag")
 	private GpsCoordinates cragGps;
+
 	private String mapUrl;
 	private String access;
-	private Integer approachDuration;
+	private int approachDuration;
+	private int parentCreateId;
 	//uploader le file sur le server, et stocker en bdd l'url
 
-
-//----------CONSTRUCTORS----------
-
-
-//	public Crag( List< Atlas > atlases, List< Route > routes, List< Parking > parkings,
-//	             GpsCoordinates cragGps, String mapUrl ) {
-//		this.atlases = atlases;
-//		this.routes = routes;
-//		this.parkings = parkings;
-//		this.cragGps = cragGps;
-//		this.mapUrl = mapUrl;
-//	}
 
 
 }

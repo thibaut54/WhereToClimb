@@ -24,25 +24,17 @@ public abstract class Element {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
 	@NotNull
 	@Size(min=4,max=50)
 	private String name;
-	private LocalDateTime createDate;
-	private LocalDateTime updateDate;
+
 	@OneToMany/*(mappedBy = "element")*/
 	@JoinColumn(name = "element_id")
 	private List< Comment > comments;
 
+	private LocalDateTime createDate;
+	private LocalDateTime updateDate;
 
-////----------CONSTRUCTORS----------
-//
-//
-//	public Element( String name, LocalDateTime createDate, LocalDateTime updateDate,
-//	                ArrayList< Comment > comments ) {
-//		this.name = name;
-//		this.createDate = createDate;
-//		this.updateDate = updateDate;
-//		this.comments = comments;
-//	}
 
 }

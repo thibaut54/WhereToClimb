@@ -30,54 +30,49 @@ public class CragManagerImpl extends AbstractManager implements CragManager {
 		return null;
 	}
 
-	@Override
-	public Page< Crag > searchCragByNameAndCountryAndRegionAndDepartment( int page, int size, String typeObject , String name, String country, String region, String department, String city){
-
-		QAtlas qAtlas = QAtlas.atlas;
-		QArea qArea = QArea.area;
-		QCrag qCrag = QCrag.crag;
-
-		JPAQueryFactory queryFactory = new JPAQueryFactory( getEm() );
-
-		BooleanBuilder booleanBuilder = new BooleanBuilder();
-
-		if( ! name.equals( "" ) ){
-			booleanBuilder.and( qCrag.name.containsIgnoreCase(name) );
-		}
-		if( ! country.equals( "" ) ){
-			booleanBuilder.and( qAtlas.country.containsIgnoreCase(country) );
-		}
-		if( ! region.equals( "" ) ){
-			booleanBuilder.and( qAtlas.region.containsIgnoreCase(region) );
-		}
-		if( ! department.equals( "" ) ){
-			booleanBuilder.and( qAtlas.department.containsIgnoreCase(department) );
-		}
-		if( ! city.equals( "" ) ){
-			booleanBuilder.and( qArea.nearestCity.containsIgnoreCase(city) );
-		}
-
-		List<Crag> crags = queryFactory.from(qAtlas)
-				                   .innerJoin(qAtlas.areas, qArea)
-				                   .innerJoin(qArea.crags, qCrag)
-				                   .where(booleanBuilder)
-				                   .select(qCrag)
-//				                   .offset( page*size )
-//				                   .limit( size )
-				                   .fetch();
-
-//		JPAQuery< ? > query = queryFactory.from(qAtlas);
+//	@Override
+//	public Page< Crag > searchCragByNameAndCountryAndRegionAndDepartment( int page, int size, String typeObject , String name, String country, String region, String department, String city){
 //
-//		if(typeObject.equals( "Crag" )){
-//			query.innerJoin(qAtlas.areas, qArea)
-//					.innerJoin(qArea.crags, qCrag);
+//		QAtlas qAtlas = QAtlas.atlas;
+//		QArea qArea = QArea.area;
+//		QCrag qCrag = QCrag.crag;
+//
+//		JPAQueryFactory queryFactory = new JPAQueryFactory( getEm() );
+//
+//		BooleanBuilder booleanBuilder = new BooleanBuilder();
+//
+//		if( ! name.equals( "" ) ){
+//			booleanBuilder.and( qCrag.name.containsIgnoreCase(name) );
 //		}
-//		List<Crag> crags = query.where(booleanBuilder)
+//		if( ! country.equals( "" ) ){
+//			booleanBuilder.and( qAtlas.country.containsIgnoreCase(country) );
+//		}
+//		if( ! region.equals( "" ) ){
+//			booleanBuilder.and( qAtlas.region.containsIgnoreCase(region) );
+//		}
+//		if( ! department.equals( "" ) ){
+//			booleanBuilder.and( qAtlas.department.containsIgnoreCase(department) );
+//		}
+//		if( ! city.equals( "" ) ){
+//			booleanBuilder.and( qArea.nearestCity.containsIgnoreCase(city) );
+//		}
+//
+//		List<Crag> crags = queryFactory.from(qAtlas)
+//				                   .innerJoin(qAtlas.areas, qArea)
+//				                   .innerJoin(qArea.crags, qCrag)
+//				                   .where(booleanBuilder)
 //				                   .select(qCrag)
+////				                   .offset( page*size )
+////				                   .limit( size )
 //				                   .fetch();
+//
+//		long total = ( long ) crags.size( );
+//
+//		return new PageImpl(crags, PageRequest.of( page, size ), total );
+//	}
 
-		long total = ( long ) crags.size( );
-
-		return new PageImpl(crags, PageRequest.of( page, size ), total );
+	@Override
+	public void saveCrag( Crag crag ) {
+		getDaoFactory().getCragRepository().save( crag );
 	}
 }

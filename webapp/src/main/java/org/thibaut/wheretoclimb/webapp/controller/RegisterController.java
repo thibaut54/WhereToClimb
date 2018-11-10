@@ -36,7 +36,6 @@ public class RegisterController {
 		if (target == null) {
 			return;
 		}
-		System.out.println("Target=" + target);
 
 		if (target.getClass() == UserForm.class) {
 			dataBinder.setValidator(userValidator);

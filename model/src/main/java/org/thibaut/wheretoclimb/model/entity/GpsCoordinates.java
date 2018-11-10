@@ -18,13 +18,17 @@ public class GpsCoordinates {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@OneToOne
+	private Crag crag;
+
+	@OneToOne
+	private Parking parking;
+
 	private double latitude;
 	private double longitude;
 	private int altitude;
-	@OneToOne
-	private Crag crag;
-	@OneToOne
-	private Parking parking;
+
 
 
 //----------CONSTRUCTORS----------

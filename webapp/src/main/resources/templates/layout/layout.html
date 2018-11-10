@@ -37,8 +37,24 @@
                             <li class="nav-item col-lg-auto">
                                 <a class="nav-link" th:href="@{/public/advancedSearch}">Advanced search</a>
                             </li>
-                            <li class="nav-item col-lg-auto">
-                                <a class="nav-link" th:href="@{/user/createAtlas}">Create Atlas</a>
+                            <!--<li class="nav-item col-lg-auto">-->
+                                <!--<a class="nav-link" th:href="@{/user/createAtlas}">Create Atlas</a>-->
+                            <!--</li>-->
+                            <li class="nav-item dropdown col-lg-auto">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Add element
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{/user/createAtlas}">Add Atlas</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" th:href="@{/user/createArea}">Add Area</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" th:href="@{/user/createCrag}">Add Crag</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" th:href="@{/user/createRoute}">Add Route</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" th:href="@{/user/createPitch}">Add Pitch</a>
+                                </div>
                             </li>
                             <li th:if="${isConnected}" class="nav-item col-lg-auto">
                                 <a class="nav-link" th:href="@{/public/logout}" th:inline="text">

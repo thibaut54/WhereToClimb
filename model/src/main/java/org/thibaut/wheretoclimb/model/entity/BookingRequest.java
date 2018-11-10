@@ -24,20 +24,24 @@ public class BookingRequest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
 	@NotNull
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private LocalDate startDate;
+
 	@NotNull
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private LocalDate endDate;
-	private LocalDateTime createDate;
-	private String message;
+
 	@ManyToOne
 //	@JoinColumn(name = "atlas_id")
 	private Atlas atlas;
+
 	@ManyToOne
 	@JoinColumn(name = "user_emitter_id")
 	private User userEmitter;
 
+	private LocalDateTime createDate;
+	private String message;
 
 }

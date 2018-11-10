@@ -19,8 +19,6 @@ import java.util.Optional;
 @Slf4j
 public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 
-//	@PersistenceContext
-//	private EntityManager em;
 
 	@Override
 	public Page< Atlas > getAtlases( int page , int size ) {
@@ -84,18 +82,20 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 
 	@Override
 	public void deleteAtlas( Integer id ){
+		getDaoFactory().getCommentRepository().deleteAll( findAtlasById( id ).getComments() );
 		getDaoFactory().getAtlasRepository().deleteById( id );
 	}
 
 
 	@Override
 	public void saveAtlas( Atlas atlas ){
+//		getDaoFactory().getCommentRepository().saveAll( atlas.getComments() );
 		getDaoFactory().getAtlasRepository().save( atlas );
 	}
 
 
 	@Override
-	public  Atlas findById( Integer id ){
+	public  Atlas findAtlasById( Integer id ){
 
 		if(id != null){
 			Optional< Atlas > atlas =  getDaoFactory().getAtlasRepository().findById( id );
@@ -108,7 +108,7 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 
 
 	@Override
-	public  Atlas findByName( String name ){
+	public  Atlas findAtlasByName( String name ){
 		if(name != null){
 			return getDaoFactory().getAtlasRepository().findByName( name );
 		} else {
@@ -121,7 +121,7 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 	@Override
 	public void saveBookingRequest( Integer atlasId, BookingRequest bookingRequest ) {
 		log.info( "Trying to insert booking request for atlasID: " + atlasId );
-		Atlas atlas = findById( atlasId );
+		Atlas atlas = findAtlasById( atlasId );
 		log.info( "Atlas: " + atlas );
 		log.info( "Size booking request before: " + atlas.getBookingRequests().size() );
 		atlas.getBookingRequests().add( bookingRequest );

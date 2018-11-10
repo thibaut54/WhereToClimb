@@ -1,10 +1,12 @@
 package org.thibaut.wheretoclimb.webapp.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.*;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 import org.thibaut.wheretoclimb.model.entity.User;
@@ -37,31 +39,11 @@ public class AtlasController extends AbstractController {
 		return "view/showAtlas";
 	}
 
-//	@GetMapping("/user/bookAtlas")
-//	public String btnBooking(Model model){
-//		model.addAttribute( "bookingRequest" , new BookingRequest() );
-//		return "view/showArea";
-//	}
-
 
 	@GetMapping("/public/layout")
-	public String loyoutBtn(Model model){
+	public String layoutBtn(Model model){
 
-		//Get the connected user
-		Optional<User> userConnectedOpt = Optional.ofNullable( getManagerFactory().getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
-
-		boolean isConnected = false;
-
-		//If there is a connected user, put a boolean at true in the model
-		if( userConnectedOpt.isPresent() ){
-
-			User userConnected = userConnectedOpt.get();
-
-			isConnected = true;
-
-		}
-
-		model.addAttribute( "isConnected", isConnected );
+		setConnectedUser( model );
 
 		return "layout/layout";
 	}
@@ -90,15 +72,35 @@ public class AtlasController extends AbstractController {
 		//Warnging : vérifier si ok avec plusieurs utilisateurs connecté en mm temps
 		atlas.setUser( getManagerFactory().getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()));
 		getManagerFactory().getAtlasManager().saveAtlas( atlas );
-		return "view/confirmation";
+
+		return "view/createAtlasConfirm";
+	}
+
+
+	@PostMapping( "/user/editAtlas" )
+	public String  editAtlas( Model model, @ModelAttribute @Valid Atlas atlas, BindingResult result ){
+		if(result.hasErrors()){
+			return "view/editAtlas";
+		}
+		atlas.setUpdateDate( LocalDateTime.now() );
+		//Warnging : vérifier si ok avec plusieurs utilisateurs connecté en mm temps
+//		atlas.setUser( getManagerFactory().getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()));
+
+		getManagerFactory().getAtlasManager().saveAtlas( atlas );
+
+		return "view/createAtlasConfirm";
 	}
 
 
 	@GetMapping( "/admin/editAtlas" )
+//	@RequestMapping( "/admin/editAtlas" )
 	public String editAtlas( Model model, Integer id){
-		Atlas atlas = getManagerFactory().getAtlasManager().findById( id );
+		Atlas atlas = getManagerFactory().getAtlasManager().findAtlasById( id );
 		model.addAttribute( "atlas", atlas );
+//		ra.addFlashAttribute("atlas", atlas);
+//		ra.addFlashAttribute("id", id );
 		return "view/editAtlas";
+//		return "redirect:/user/editAtlas";
 	}
 
 

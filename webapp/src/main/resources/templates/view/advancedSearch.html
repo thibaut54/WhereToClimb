@@ -12,21 +12,25 @@
 
     <div class="advancedSearchBar" layout:fragment="content">
         <div class="container" >
-            <form th:action="@{/public/advancedSearch}" method="get">
+            <form th:action="@{/public/advancedSearch(searchIn=${searchIn})}" method="get">
                 <div class="row input-group">
                     <div class="btn-group btn-group-toggle" id="radio-btn" data-toggle="buttons">
                         <h5>Search in  </h5>
                         <label th:class="${searchIn}=='Atlas'?'btn btn-secondary active':'btn btn-secondary'">
-                            <input type="radio" name="searchIn" value="Atlas" id="Atlas" autocomplete="off"> Atlas
+                            <input th:if="${searchIn}!='Atlas'" type="radio" name="searchIn" value="Atlas"  autocomplete="off">
+                            <input th:if="${searchIn}=='Atlas'" type="radio" name="searchIn" value="Atlas"  autocomplete="off" checked> Atlas
                         </label>
                         <label th:class="${searchIn}=='Area'?'btn btn-secondary active':'btn btn-secondary'">
-                            <input type="radio" name="searchIn" value="Area" id="Area" autocomplete="off"> Area
+                            <input th:if="${searchIn}!='Area'" type="radio" name="searchIn" value="Area"  autocomplete="off">
+                            <input th:if="${searchIn}=='Area'" type="radio" name="searchIn" value="Area"  autocomplete="off" checked> Area
                         </label>
                         <label th:class="${searchIn}=='Crag'?'btn btn-secondary active':'btn btn-secondary'">
-                            <input type="radio" name="searchIn" value="Crag" id="Crag" autocomplete="off"> Crag
+                            <input th:if="${searchIn}!='Crag'" type="radio" name="searchIn" value="Crag"  autocomplete="off">
+                            <input th:if="${searchIn}=='Crag'" type="radio" name="searchIn" value="Crag"  autocomplete="off" checked> Crag
                         </label>
                         <label th:class="${searchIn}=='Route'?'btn btn-secondary active':'btn btn-secondary'">
-                            <input type="radio" name="searchIn" value="Route" id="Route" autocomplete="off"> Route
+                            <input th:if="${searchIn}!='Route'" type="radio" name="searchIn" value="Route"  autocomplete="off">
+                            <input th:if="${searchIn}=='Route'" type="radio" name="searchIn" value="Route"  autocomplete="off" checked> Route
                         </label>
                     </div>
                     <div class="row">
@@ -51,19 +55,12 @@
                             <input id="city" class="form-control border-secondary py-2" type="search" name="city" placeholder="search"/>
                         </div>
                         <div class="input-group-append col-lg-2">
+                            <label for="city"></label>
                             <button id="search-btn" class="btn btn-outline-secondary" type="submit" >
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
                     </div>
-                    <!--<div class="row input-group-append">-->
-                        <!--<div class="col-lg-12">-->
-                            <!--<button id="search-btn" class="btn btn-outline-secondary" type="submit" >-->
-                                <!--<i class="fa fa-search"></i>-->
-                            <!--</button>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
                 </div>
             </form>
             <div th:if="${!searchHasResults}" class="row">No result found</div>
@@ -221,8 +218,8 @@
                    <!--th:text="${pageNumber}" th:class="${pageNumber==resultNumber + 1} ? active"></a>-->
             <!--</div>-->
             <div class="container">
-                <ul th:if="${results.size() > 0}" class="pagination" th:each="pageNumber : ${pageNumbers}" >
-                    <li class="page-item" >
+                <ul th:if="${results.size() > 0}" class="pagination list-inline" th:each="pageNumber : ${pageNumbers}">
+                    <li class="page-item">
                         <a class="page-link" th:href="@{/public/advancedSearch(page=${pageNumber},size=${results.size()}, searchIn=${searchIn}, name=${name}, country=${country}, region=${region}, department=${department}, city=${city})}"
                            th:text="${pageNumber}" th:class="${pageNumber==resultNumber + 1} ? active">
                         </a>

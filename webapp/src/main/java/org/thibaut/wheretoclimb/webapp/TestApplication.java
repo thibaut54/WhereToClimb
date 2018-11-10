@@ -26,8 +26,6 @@ public class TestApplication implements CommandLineRunner {
 	private AtlasRepository atlasRepository;
 	private RoleRepository roleRepository;
 	private AreaRepository areaRepository;
-	private CommunicationRepository communicationRepository;
-	private MessageRepository messageRepository;
 	private CommentRepository commentRepository;
 	private BookingRequestRepository bookingRequestRepository;
 	private CragRepository cragRepository;
@@ -35,7 +33,7 @@ public class TestApplication implements CommandLineRunner {
 	private PitchRepository pitchRepository;
 
 
-	public TestApplication( PasswordManager passwordManager, AtlasManager atlasManager, UserRepository userRepository, ElementRepository elementRepository, AtlasRepository atlasRepository, RoleRepository roleRepository, AreaRepository areaRepository, CommunicationRepository communicationRepository, MessageRepository messageRepository, CommentRepository commentRepository, BookingRequestRepository bookingRequestRepository, CragRepository cragRepository, RouteRepository routeRepository, PitchRepository pitchRepository ) {
+	public TestApplication( PasswordManager passwordManager, AtlasManager atlasManager, UserRepository userRepository, ElementRepository elementRepository, AtlasRepository atlasRepository, RoleRepository roleRepository, AreaRepository areaRepository,  CommentRepository commentRepository, BookingRequestRepository bookingRequestRepository, CragRepository cragRepository, RouteRepository routeRepository, PitchRepository pitchRepository ) {
 		this.passwordManager = passwordManager;
 		this.atlasManager = atlasManager;
 		this.userRepository = userRepository;
@@ -43,8 +41,6 @@ public class TestApplication implements CommandLineRunner {
 		this.atlasRepository = atlasRepository;
 		this.roleRepository = roleRepository;
 		this.areaRepository = areaRepository;
-		this.communicationRepository = communicationRepository;
-		this.messageRepository = messageRepository;
 		this.commentRepository = commentRepository;
 		this.bookingRequestRepository = bookingRequestRepository;
 		this.cragRepository = cragRepository;
@@ -65,8 +61,6 @@ public class TestApplication implements CommandLineRunner {
 
 		//-----CLEAN DB
 		this.commentRepository.deleteAll();
-		this.messageRepository.deleteAll();
-		this.communicationRepository.deleteAll();
 		this.elementRepository.deleteAll();
 		this.pitchRepository.deleteAll();
 		this.routeRepository.deleteAll();
@@ -415,28 +409,13 @@ public class TestApplication implements CommandLineRunner {
 //		atlases1.forEach( System.out::println );
 //		System.out.println( " FIN DU TEST REQUETE QUERYDSL" );
 
-		//-----POPULATE MESSAGE
-
-		List< Message > messages = new ArrayList<>();
-
-		Message message1 = GenericBuilder.of( Message::new )
-								.with( Message::setContent, "Salut, qu'a tu pensé de Maron ?" )
-								.with( Message::setCreateDate, LocalDateTime.now())
-								.with( Message::setUserEmitter, this.userRepository.findByUserName( "Lele" ) )
-								.with( Message::setUserRecipient, this.userRepository.findByUserName( "Another" ) )
-								.build();
-
-		messages.add( message1 );
-
-		this.messageRepository.saveAll( messages );
-
 
 		//-----POPULATE COMMENT
 
 		List<Comment> comments = new ArrayList<>();
 
 		Comment comment1 = GenericBuilder.of( Comment::new )
-			                    .with( Comment::setUserEmitter, this.userRepository.findByUserName( "Another" ) )
+			                    .with( Comment::setUser, this.userRepository.findByUserName( "Another" ) )
 								.with( Comment::setElement, this.atlasRepository.findByName( "Grimper en Lorraine" ) )
 			                    .with( Comment::setCreateDate, LocalDateTime.now())
 			                    .with( Comment::setContent, "En Lorraine on peut grimper mine de rien !! Maron c'est top pour apprendre.")
@@ -464,7 +443,7 @@ public class TestApplication implements CommandLineRunner {
 
 
 		//Pourquoi ça ne fonctionne pas ?
-//		this.atlasRepository.findByName( "Grimper en Lorraine" ).setUser( ( ( ArrayList< User> ) users ).get( 0 ) );
+//		this.atlasRepository.findAtlasByName( "Grimper en Lorraine" ).setUser( ( ( ArrayList< User> ) users ).get( 0 ) );
 
 
 

@@ -6,8 +6,6 @@ import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 
 public interface AtlasManager {
 
-//	public List< Atlas > getAtlases();
-
 	Page< Atlas > getAtlases( int page, int size );
 
 	Page< Atlas > searchAtlas( int page, int size, String keyword );
@@ -18,9 +16,9 @@ public interface AtlasManager {
 
 	void saveAtlas( Atlas atlas );
 
-	Atlas findById( Integer id );
+	Atlas findAtlasById( Integer id );
 
-	Atlas findByName( String name );
+	Atlas findAtlasByName( String name );
 
 	void saveBookingRequest( Integer atlasId, BookingRequest bookingRequest );
 }

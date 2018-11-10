@@ -27,44 +27,50 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager {
 		return null;
 	}
 
+//	@Override
+//	public Page< Route > searchRouteByNameAndCountryAndRegionAndDepartment( int page, int size, String typeObject, String name, String country, String region, String department, String city ){
+//
+//		QAtlas qAtlas = QAtlas.atlas;
+//		QArea qArea = QArea.area;
+//		QCrag qCrag = QCrag.crag;
+//		QRoute qRoute = QRoute.route;
+//
+//		JPAQueryFactory queryFactory = new JPAQueryFactory( getEm() );
+//
+//		BooleanBuilder booleanBuilder = new BooleanBuilder();
+//
+//		if( ! name.equals( "" ) ){
+//			booleanBuilder.and( qRoute.name.containsIgnoreCase(name) );
+//		}
+//		if( ! country.equals( "" ) ){
+//			booleanBuilder.and( qAtlas.country.containsIgnoreCase(country) );
+//		}
+//		if( ! region.equals( "" ) ){
+//			booleanBuilder.and( qAtlas.region.containsIgnoreCase(region) );
+//		}
+//		if( ! department.equals( "" ) ){
+//			booleanBuilder.and( qAtlas.department.containsIgnoreCase(department) );
+//		}
+//		if( ! city.equals( "" ) ){
+//			booleanBuilder.and( qArea.nearestCity.containsIgnoreCase(city) );
+//		}
+//
+//		List<Route> routes = queryFactory.from(qAtlas)
+//				                   .innerJoin(qAtlas.areas, qArea)
+//				                   .innerJoin(qArea.crags, qCrag)
+//				                   .innerJoin(qCrag.routes, qRoute)
+//				                   .where(booleanBuilder)
+//				                   .select(qRoute)
+//				                   .fetch();
+//
+//		long total = ( long ) routes.size( );
+//
+//		return new PageImpl(routes, PageRequest.of( page, size ), total );
+//	}
+
+
 	@Override
-	public Page< Route > searchRouteByNameAndCountryAndRegionAndDepartment( int page, int size, String typeObject, String name, String country, String region, String department, String city ){
-
-		QAtlas qAtlas = QAtlas.atlas;
-		QArea qArea = QArea.area;
-		QCrag qCrag = QCrag.crag;
-		QRoute qRoute = QRoute.route;
-
-		JPAQueryFactory queryFactory = new JPAQueryFactory( getEm() );
-
-		BooleanBuilder booleanBuilder = new BooleanBuilder();
-
-		if( ! name.equals( "" ) ){
-			booleanBuilder.and( qRoute.name.containsIgnoreCase(name) );
-		}
-		if( ! country.equals( "" ) ){
-			booleanBuilder.and( qAtlas.country.containsIgnoreCase(country) );
-		}
-		if( ! region.equals( "" ) ){
-			booleanBuilder.and( qAtlas.region.containsIgnoreCase(region) );
-		}
-		if( ! department.equals( "" ) ){
-			booleanBuilder.and( qAtlas.department.containsIgnoreCase(department) );
-		}
-		if( ! city.equals( "" ) ){
-			booleanBuilder.and( qArea.nearestCity.containsIgnoreCase(city) );
-		}
-
-		List<Route> routes = queryFactory.from(qAtlas)
-				                   .innerJoin(qAtlas.areas, qArea)
-				                   .innerJoin(qArea.crags, qCrag)
-				                   .innerJoin(qCrag.routes, qRoute)
-				                   .where(booleanBuilder)
-				                   .select(qRoute)
-				                   .fetch();
-
-		long total = ( long ) routes.size( );
-
-		return new PageImpl(routes, PageRequest.of( page, size ), total );
+	public void saveRoute( Route route ) {
+		getDaoFactory().getRouteRepository().save( route );
 	}
 }

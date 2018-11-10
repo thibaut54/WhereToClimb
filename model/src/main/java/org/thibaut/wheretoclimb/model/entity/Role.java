@@ -22,9 +22,12 @@ public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private String role;
+
 	@ManyToMany(mappedBy = "roles")
 	private List< User > users;
+
+	private String role;
+
 
 
 //----------CONSTRUCTORS----------
