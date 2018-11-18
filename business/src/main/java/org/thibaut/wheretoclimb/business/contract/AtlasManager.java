@@ -10,7 +10,7 @@ public interface AtlasManager {
 
 	Page< Atlas > searchAtlas( int page, int size, String keyword );
 
-	Page<Atlas> searchAtlasByNameAndCountryAndRegionAndDepartment( int page, int size, String typeObject, String name, String country, String region, String department, String city );
+//	Page<Atlas> searchAtlasByNameAndCountryAndRegionAndDepartment( int page, int size, String typeObject, String name, String country, String region, String department, String city );
 
 	void deleteAtlas( Integer id );
 
@@ -21,4 +21,6 @@ public interface AtlasManager {
 	Atlas findAtlasByName( String name );
 
 	void saveBookingRequest( Integer atlasId, BookingRequest bookingRequest );
+
+	Atlas createAtlas( Atlas atlasToCreate );
 }

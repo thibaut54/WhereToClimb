@@ -1,6 +1,8 @@
 package org.thibaut.wheretoclimb.model.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,19 +25,19 @@ public class Area extends Element {
 	@JoinColumn(name = "atlas_id")
 	private Atlas atlas;
 
-	@OneToMany/*(mappedBy = "area", fetch = FetchType.LAZY)*/
-	@JoinColumn(name = "area_id")
+	@OneToMany(mappedBy = "area")
 	private List< Crag > crags;
-
-	@OneToMany/*(mappedBy = "area", fetch = FetchType.LAZY)*/
-	@JoinColumn(name = "area_id")
-	private List< Parking > parking;
 
 	private int approachDuration;
 	private String nearestCity;
 	private String access;
 	private String rockType;
-	private int parentCreateId;
 
+	private double gpsLatitude;
+	private double gpsLongitude;
+	private int atltitude;
+	private double parkingGpsLatitude;
+	private double parkingGpsLongitude;
+	private String parkingAccess;
 
 }

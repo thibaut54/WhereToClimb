@@ -6,10 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thibaut.wheretoclimb.model.entity.*;
-import org.thibaut.wheretoclimb.webapp.util.ParentEntityId;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class PitchController extends AbstractController{
 	                        @RequestParam(name = "page", defaultValue = "0") int page,
 	                        @RequestParam(name = "size", defaultValue = "5") int size){
 
-		Optional< Route > routeOpt = Optional.ofNullable( getManagerFactory().getRouteManager().findById( routeId ) );
+		Optional< Route > routeOpt = Optional.ofNullable( getManagerFactory().getRouteManager().findRouteById( routeId ) );
 
 		Page< Pitch > pitches = new PageImpl<Pitch>( routeOpt.get().getPitches(), PageRequest.of(page, size), routeOpt.get().getPitches().size()) ;
 
@@ -44,8 +46,8 @@ public class PitchController extends AbstractController{
 
 
 	@GetMapping( "/user/createPitch" )
-	public String  createPitch(Model model){
-		setConnectedUser( model );
+	public String  createPitch( Model model/*, HttpSession httpSession*/ ){
+//		putUserInHttpSession( httpSession );
 		model.addAttribute( "pitch" , new Pitch() );
 		List< Atlas > atlases = getConnectedUser().get().getAtlases();
 		List< Area > areas = new ArrayList<>();
@@ -71,11 +73,27 @@ public class PitchController extends AbstractController{
 		if(result.hasErrors()){
 			return "view/createPitch";
 		}
-		pitch.setCreateDate( LocalDateTime.now() );
-		pitch.setRoute( getManagerFactory().getRouteManager().findById( pitch.getParentCreateId() ) );
-//		pitch.setRoute( getManagerFactory().getRouteManager().findAtlasById( parentId.getParentId() ) );
-		//Warnging : vérifier si ok avec plusieurs utilisateurs connecté en mm temps
+		if( pitch.getId()==null ){
+			pitch.setCreateDate( LocalDateTime.now() );
+		}
+		else if ( pitch.getId()!=null ){
+			pitch.setUpdateDate( LocalDateTime.now() );
+		}
 		getManagerFactory().getPitchManager().savePitch( pitch );
 		return "view/createPitchConfirm";
+	}
+
+
+	@GetMapping( "/admin/editPitch" )
+	public String editPitch( Model model, Integer id){
+		Pitch pitch = getManagerFactory().getPitchManager().findPitchById( id );
+		model.addAttribute( "pitch", pitch);
+		return "view/createPitch";
+	}
+
+	@GetMapping( "/admin/deletePitch" )
+	public String deletePitch(Integer id, int page, int size){
+		getManagerFactory().getPitchManager().deletePitch( id );
+		return "redirect:/public/showPitch?routeId=" + id + "?page=" + page + "&size=" + size;
 	}
 }

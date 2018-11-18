@@ -3,7 +3,6 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,7 +15,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class BookingRequest {
 
 //----------ATTRIBUTES----------
@@ -26,22 +24,23 @@ public class BookingRequest {
 	private Integer id;
 
 	@NotNull
-	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate startDate;
 
 	@NotNull
-	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate endDate;
 
 	@ManyToOne
-//	@JoinColumn(name = "atlas_id")
+	@JoinColumn(name = "atlas_id")
 	private Atlas atlas;
 
 	@ManyToOne
 	@JoinColumn(name = "user_emitter_id")
-	private User userEmitter;
+	private User user;
 
 	private LocalDateTime createDate;
 	private String message;
+	private boolean accepted;
 
 }

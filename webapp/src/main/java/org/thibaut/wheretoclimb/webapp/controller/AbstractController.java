@@ -1,26 +1,39 @@
 package org.thibaut.wheretoclimb.webapp.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.model.entity.*;
+import org.thibaut.wheretoclimb.model.entity.Element;
+import org.thibaut.wheretoclimb.model.entity.Grade;
+import org.thibaut.wheretoclimb.model.entity.User;
+import org.thibaut.wheretoclimb.model.entity.Verticality;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
+@Slf4j
 public abstract class AbstractController {
 
 	private ManagerFactory managerFactory;
 
+	HttpSession httpSession;
+
+
+
+	private boolean edit = false;
+
 	@Autowired
 	private EntityManager em;
 
+	private Integer editedEntityId;
 
-	ManagerFactory getManagerFactory( ) {
+
+	protected ManagerFactory getManagerFactory( ) {
 		return managerFactory;
 	}
 
@@ -30,17 +43,14 @@ public abstract class AbstractController {
 	}
 
 
-	void setConnectedUser(Model model){
-		//Get the connected user
-		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
+	public User getConnectedUser ( HttpSession httpSession ){
+		return getManagerFactory().getUserManager().findByUserName( httpSession.getAttribute( "userName" ).toString() );
+	}
 
-		boolean isConnected = false;
 
-		if( userConnectedOpt.isPresent() ){
-			model.addAttribute( "user", userConnectedOpt );
-			isConnected = true;
-		}
-		model.addAttribute( "isConnected", isConnected );
+	void putUserInHttpSession( Model model, HttpSession httpSession ) {
+
+			httpSession.setAttribute( "user" , getManagerFactory().getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
 	}
 
 
@@ -53,20 +63,17 @@ public abstract class AbstractController {
 		//Get the connected user
 		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
 
-		boolean isConnected = false;
+		final boolean[] isAdmin = { false };
+		model.addAttribute( "userIsAdmin" , isAdmin[0] );
 
 		//If there is a connected user, put a boolean at true in the model
 		if( userConnectedOpt.isPresent() ){
 
 			User userConnected = userConnectedOpt.get();
 
-			isConnected = true;
-			final boolean[] isAdmin = { false };
-
 			userConnected.getRoles().forEach( role -> isAdmin[0] = role.getRole( ).equals( "ROLE_ADMIN" ) );
 
 			model.addAttribute( "userIsAdmin" , isAdmin[0] );
-			model.addAttribute( "isConnected", isConnected );
 
 		}
 	}
@@ -81,6 +88,7 @@ public abstract class AbstractController {
 			model.addAttribute( "elementIsCommented", elementIsCommented );
 		}
 	}
+
 
 	void getGradesAndVerticalities( Model model ){
 		model.addAttribute( "grades" , Grade.getGrades() );

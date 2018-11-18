@@ -13,7 +13,7 @@ import org.thibaut.wheretoclimb.model.entity.User;
 public class UserValidator implements Validator {
 
 	// common-validator library.
-	private EmailValidator emailValidator = EmailValidator.getInstance();
+	private EmailValidator emailValidator = EmailValidator.getInstance( );
 
 	@Autowired
 	private ManagerFactory managerFactory;
@@ -53,44 +53,56 @@ public class UserValidator implements Validator {
 	@Override
 	public void validate( Object target, Errors errors ) {
 
-		UserForm userForm = (UserForm) target;
+		UserForm userForm = ( UserForm ) target;
 
-		if( ! (userForm.getUserName().matches("[a-zA-Z ]*$")))
-		{
-			errors.rejectValue("userName", "symbolsPresent",new Object[]{"'name'"},"Username can't be symbols");
+
+		if ( !( userForm.getUserName( ).matches( "^[a-zA-Z0-9]{4,30}$" ) ) ) {
+			errors.rejectValue( "userName", "Pattern.userForm.username" );
 		}
 
 		// Check the fields of AppUserForm.
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "NotEmpty.userForm.userName");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.userForm.firstName");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.userForm.lastName");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.userForm.email");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.userForm.password");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "NotEmpty.userForm.confirmPassword");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "NotEmpty.userForm.gender");
+		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "userName", "NotEmpty.userForm.userName" );
+		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "firstName", "NotEmpty.userForm.firstName" );
+		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "lastName", "NotEmpty.userForm.lastName" );
+		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "email", "NotEmpty.userForm.email" );
 
-		if ( ! this.emailValidator.isValid(userForm.getEmail())) {
+		if ( userForm.getId( ) == null ) {
+			ValidationUtils.rejectIfEmptyOrWhitespace( errors, "password", "NotEmpty.userForm.password" );
+			ValidationUtils.rejectIfEmptyOrWhitespace( errors, "confirmPassword", "NotEmpty.userForm.confirmPassword" );
+
+			if ( !( userForm.getPassword( ).matches( "^[a-zA-Z0-9!\\+]{4,30}$" ) ) ) {
+				errors.rejectValue( "password", "Pattern.userForm.password" );
+			}
+			if ( !( userForm.getConfirmPassword( ).matches( "^[a-zA-Z0-9!\\+]{4,30}$" ) ) ) {
+				errors.rejectValue( "confirmPassword", "Pattern.userForm.password" );
+			}
+		}
+
+		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "gender", "NotEmpty.userForm.gender" );
+
+		if ( !this.emailValidator.isValid( userForm.getEmail( ) ) ) {
 			// Invalid email.
-			errors.rejectValue("email", "Pattern.userForm.email");
-		} else if (userForm.getId() == null) {
-			User dbUser = managerFactory.getUserManager().findByEmail( userForm.getEmail() );
-			if (dbUser != null) {
+			errors.rejectValue( "email", "Pattern.userForm.email" );
+		}
+		else if ( userForm.getId( ) == null ) {
+			User dbUser = managerFactory.getUserManager( ).findByEmail( userForm.getEmail( ) );
+			if ( dbUser != null && !dbUser.getId( ).equals( userForm.getId( ) ) ) {
 				// Email has been used by another account.
-				errors.rejectValue("email", "Duplicate.userForm.email");
+				errors.rejectValue( "email", "Duplicate.userForm.email" );
 			}
 		}
 
-		if (!errors.hasFieldErrors("userName")) {
-			User dbUser = managerFactory.getUserManager().findByUserName( userForm.getUserName() );
-			if (dbUser != null) {
+		if ( !errors.hasFieldErrors( "userName" ) ) {
+			User dbUser = managerFactory.getUserManager( ).findByUserName( userForm.getUserName( ) );
+			if ( dbUser != null && !dbUser.getId( ).equals( userForm.getId( ) ) ) {
 				// Username is not available.
-				errors.rejectValue("userName", "Duplicate.userForm.userName");
+				errors.rejectValue( "userName", "Duplicate.userForm.userName" );
 			}
 		}
 
-		if (!errors.hasErrors()) {
-			if (!userForm.getConfirmPassword().equals(userForm.getPassword())) {
-				errors.rejectValue("confirmPassword", "Match.userForm.confirmPassword");
+		if ( !errors.hasErrors( ) ) {
+			if ( !userForm.getConfirmPassword( ).equals( userForm.getPassword( ) ) ) {
+				errors.rejectValue( "confirmPassword", "Match.userForm.confirmPassword" );
 			}
 		}
 	}

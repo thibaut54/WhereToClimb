@@ -3,8 +3,10 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,12 +28,10 @@ public class User {
 
 	private String email;
 
-	@OneToMany/*(mappedBy = "user")*/
-	@JoinColumn(name = "user_id")
+	@OneToMany(mappedBy = "user")
 	private List< Atlas > atlases;
 
-	@OneToMany/*(mappedBy = "user")*/
-	@JoinColumn(name = "user_id")
+	@OneToMany(mappedBy = "user")
 	private List< Comment > comments;
 
 	@ManyToMany
@@ -41,8 +41,7 @@ public class User {
 			inverseJoinColumns = { @JoinColumn(name = "role_id") } )
 	private List< Role > roles;
 
-	@OneToMany/*(mappedBy = "user")*/
-	@JoinColumn(name = "user_emitter_id")
+	@OneToMany(mappedBy = "user")
 	private List<BookingRequest> bookingRequests;
 
 	private String password;
@@ -52,55 +51,15 @@ public class User {
 	private String gender;
 	private boolean emailVisible;
 	private LocalDateTime createAccountDate;
-	private LocalDateTime dateOfBirth;
-	private String gradeMax;
-	private String gradeFirstAttempt;
+
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	private LocalDate dateOfBirth;
 	private String gradeAverage;
 
 //----------CONSTRUCTORS----------
 
 	public User() {
 		super();
-	}
-
-	public User( String gender,
-	             String firstName,
-	             String lastName,
-	             String userName,
-	             String email,
-	             LocalDateTime createAccountDate ) {
-		this.gender = gender;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.email = email;
-		this.createAccountDate = createAccountDate;
-	}
-
-	public User( String email,
-	             String password,
-	             String firstName,
-	             String lastName,
-	             String userName,
-	             String gender,
-	             boolean emailVisible,
-	             LocalDateTime createAccountDate/*,
-	             Date dateOfBirth,
-	             String gradeMax,
-	             String gradeFirstAttempt,
-	             String gradeAverage*/ ) {
-		this.email = email;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.gender = gender;
-		this.emailVisible = emailVisible;
-		this.createAccountDate = createAccountDate;
-//		this.dateOfBirth = dateOfBirth;
-//		this.gradeMax = gradeMax;
-//		this.gradeFirstAttempt = gradeFirstAttempt;
-//		this.gradeAverage = gradeAverage;
 	}
 
 

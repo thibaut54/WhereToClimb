@@ -12,26 +12,30 @@
         <div class="container spacer col-md-6 col-xs-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Create new Pitch</h5>
+                    <h5 th:if="${pitch.id==null}">Create new Pitch</h5>
+                    <h5 th:if="${pitch.id!=null}">Edit Pitch</h5>
                     <div class="card-block">
-                        <form autocomplete="off" th:action="@{/user/savePitch}" method="post">
+                        <form autocomplete="off" th:action="@{/user/savePitch}" method="post" th:object="${pitch}">
+                            <input th:if="${pitch.id!=null}" type="hidden" th:field="*{id}"/>
+                            <input th:if="${pitch.id!=null}" type="hidden" th:field="*{createDate}"/>
+                            <input th:if="${pitch.id!=null}" type="hidden" th:field="*{comments}"/>
+                            <input th:if="${pitch.id!=null}" type="hidden" th:field="*{route}"/>
                             <div class="form-group">
                                 <label>Concerned Route</label>
-                                <!--<select th:field="*{pitch.parentCreateId}">-->
-                                <select th:field="*{pitch.parentCreateId}">
+                                <select th:field="${pitch.route}" autofocus>
                                     <option th:each="route:${routes}" th:value="${route.id}" th:text="${route.name}">
                                     </option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
-                                <input name="inputTxt" type="text" class="form-control" placeholder="The name of the route"
-                                       th:field="${pitch.name}"/>
-                                <span class="error-field" th:errors="${pitch.name}"></span>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="The name of the pitch"
+                                       th:field="*{name}"/>
+                                <span class="error-field" th:errors="*{name}"></span>
                             </div>
                             <div class="form-group">
                                 <label>Grade</label>
-                                <select th:field="*{pitch.grade}">
+                                <select th:field="*{grade}">
                                     <option th:each="grade:${grades}" th:value="${grade}" th:text="${grade}">
                                     </option>
                                 </select>
@@ -39,17 +43,17 @@
                             <div class="autocomplete form-group">
                                 <label>Length</label>
                                 <input name="inputTxt" type="number" class="form-control" placeholder="the length in meters"
-                                       th:field="${pitch.length}"/>
-                                <span class="error-field" th:errors="${pitch.length}"></span>
+                                       th:field="*{length}"/>
+                                <span class="error-field" th:errors="*{length}"></span>
                             </div>
                             <div class="autocomplete form-group">
                                 <label>Number of anchors</label>
-                                <input name="inputTxt" type="number" class="form-control" th:field="${pitch.nbAnchor}"/>
-                                <span class="error-field" th:errors="${pitch.nbAnchor}"></span>
+                                <input name="inputTxt" type="number" class="form-control" th:field="*{nbAnchor}"/>
+                                <span class="error-field" th:errors="*{nbAnchor}"></span>
                             </div>
                             <div class="form-group">
                                 <label>Verticality</label>
-                                <select th:field="*{pitch.verticality}">
+                                <select th:field="*{verticality}">
                                     <option th:each="verticality:${verticalities}" th:value="${verticality}" th:text="${verticality}">
                                     </option>
                                 </select>
@@ -57,10 +61,8 @@
                             <div class="form-group">
                                 <label>Climbing style</label>
                                 <input name="inputTxt" type="text" class="form-control" placeholder="Ex: physical, technical, equilibrium?..."
-                                       th:field="${pitch.style}"/>
-                                <span class="error-field" th:errors="${pitch.style}"></span>
-                                <small id="atlasHelp" class="form-text text-muted">
-                                    A good idea would be to name the crag with its official name.</small>
+                                       th:field="*{style}"/>
+                                <span class="error-field" th:errors="*{style}"></span>
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>

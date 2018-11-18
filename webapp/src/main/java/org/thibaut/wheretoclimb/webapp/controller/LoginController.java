@@ -2,29 +2,35 @@ package org.thibaut.wheretoclimb.webapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
 
-@Controller
-public class WelcomeController {
+import javax.servlet.http.HttpSession;
 
-	@Autowired
-	private ManagerFactory managerFactory;
+@Controller
+public class LoginController{
+
+//	@Autowired
+//	private ManagerFactory managerFactory;
 
 	// Injectez (inject) via application.properties.
-	@Value("${welcome.message}")
-	private String message;
-
-	@Value("${error.message}")
-	private String errorMessage;
+//	@Value("${welcome.message}")
+//	private String message;
+//
+//	@Value("${error.message}")
+//	private String errorMessage;
 
 
 	@GetMapping("/public/login")
-	public String login(Model model){
+	public String login(Model model ){
+
+
 		return "view/login";
 	}
+
 
 
 	@GetMapping("/public/logoutSuccessful")
@@ -33,26 +39,6 @@ public class WelcomeController {
 		return "view/logoutSuccessful";
 
 	}
-
-
-//	@GetMapping("/userInfo")
-//	public String userInfo(Model model, Principal principal) {
-//
-//		// After user login successfully.
-//		String userName = principal.getName();
-//
-//		System.out.println("User Name: " + userName);
-//
-//		User connectedUser = (User) ((Authentication) principal).getPrincipal();
-//
-//		String userInfo = WebUtils.toString(connectedUser);
-//		model.addAttribute("userInfo", userInfo);
-//
-//		return "view/userInfo";
-//	}
-
-
-
 
 
 //	@GetMapping("/403")

@@ -3,9 +3,7 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,28 +18,26 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString( exclude = {"areas" , "bookingRequests" , "user"})
 //@EqualsAndHashCode( callSuper = true )
 public class Atlas extends Element {
 
 //----------ATTRIBUTES----------
 
-	@OneToMany/*(mappedBy = "atlas")*/
-	@JoinColumn(name = "atlas_id")
+	@OneToMany(mappedBy = "atlas")
 	private List< Area > areas;
 
-	@NotNull
-	@Size(min=3, max=50)
+//	@NotNull
+//	@Size(min=3, max=50)
 	private String country;
 
-	@NotNull
-	@Size(min=3, max=50)
+//	@NotNull
+//	@Size(min=3, max=50)
 	private String region;
 
-	@Size(min=3, max=50)
+//	@Size(min=3, max=50)
 	private String department;
 
-	@NotNull
+//	@NotNull
 	private boolean available;
 
 	@ManyToOne
@@ -49,9 +45,6 @@ public class Atlas extends Element {
 	private User user;
 
 	@OneToMany(mappedBy = "atlas")
-//	@JoinColumn(name = "atlas_id")
 	private List<BookingRequest> bookingRequests;
-
-
 
 }

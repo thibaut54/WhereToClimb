@@ -38,12 +38,12 @@
                         <td th:text="${(route.length)/(route.nbAnchor+1)}"></td>
                         <td th:text="${route.verticality}"></td>
                         <td th:if="${userIsAdmin}">
-                            <a th:href="@{/admin/editRoute(routeId=${route.id})}">
+                            <a th:href="@{/admin/editRoute(id=${route.id})}">
                                 <i class="icon fas fa-pencil-alt"></i>
                             </a>
                         </td>
                         <td th:if="${userIsAdmin}">
-                            <a  id="trash-ic" th:href="@{/admin/deleteRoute(routeId=${route.id}, page=${currentPage}, size=${size})}"
+                            <a  id="trash-ic" th:href="@{/admin/deleteRoute(id=${route.id}, page=${currentPage}, size=${size})}"
                                 onclick="return confirm('Do you really want to delete this Route?')">
                                 <i class="icon fas fa-trash"></i>
                             </a>

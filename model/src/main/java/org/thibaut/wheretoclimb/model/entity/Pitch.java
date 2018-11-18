@@ -1,9 +1,9 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -17,8 +17,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
-//@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode
 public class Pitch extends Element {
 
 //----------ATTRIBUTES----------
@@ -32,7 +31,6 @@ public class Pitch extends Element {
 	private int nbAnchor;
 	private String verticality;
 	private String style;
-	private int parentCreateId;
 
 
 }

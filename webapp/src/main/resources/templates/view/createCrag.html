@@ -12,35 +12,41 @@
         <div class="container spacer col-md-6 col-xs-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Create new Crag</h5>
+                    <h5 th:if="${crag.id==null}">Create new Crag</h5>
+                    <h5 th:if="${crag.id!=null}">Edit Crag</h5>
                     <div class="card-block">
-                        <form autocomplete="off" th:action="@{/user/saveCrag}" method="post">
-                            <div class="form-group">
+                        <form autocomplete="off" th:action="@{/user/saveCrag}" method="post" th:object="${crag}">
+                            <input th:if="${crag.id!=null}" type="hidden" th:field="*{id}"/>
+                            <input th:if="${crag.id!=null}" type="hidden" th:field="*{createDate}"/>
+                            <input th:if="${crag.id!=null}" type="hidden" th:field="*{comments}"/>
+                            <input th:if="${crag.id!=null}" type="hidden" th:field="*{routes}"/>
+                            <input th:if="${crag.id!=null}" type="hidden" th:field="*{area}"/>
+                            <div class="form-group" th:if="${crag.id==null}">
                                 <label>Concerned Area</label>
-                                <select th:field="*{crag.parentCreateId}">
+                                <select th:field="${crag.area}" autofocus>
                                     <option th:each="area:${areas}" th:value="${area.id}" th:text="${area.name}">
                                     </option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
-                                <input name="inputTxt" type="text" class="form-control" placeholder="The name of the area"
-                                       th:field="${crag.name}"/>
-                                <span class="error-field" th:errors="${crag.name}"></span>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="The name of the crag"
+                                       th:field="*{name}" autofocus/>
+                                <span class="error-field" th:errors="*{name}"></span>
                                 <small id="atlasHelp" class="form-text text-muted">
                                     A good idea would be to name the crag with its official name.</small>
                             </div>
                             <div class="autocomplete form-group">
                                 <label>Approach duration in minuts</label>
                                 <input id="myInput" name="inputTxt" type="number" class="form-control" placeholder="The walking time before reaching the crag"
-                                       th:field="${crag.approachDuration}"/>
-                                <span class="error-field" th:errors="${crag.approachDuration}"></span>
+                                       th:field="*{approachDuration}"/>
+                                <span class="error-field" th:errors="*{approachDuration}"></span>
                             </div>
                             <div class="form-group">
                                 <label>Access information</label>
-                                <input name="inputTxt" type="text" class="form-control" placeholder="A brief description of how to find the climbing area"
-                                       th:field="${crag.access}"/>
-                                <span class="error-field" th:errors="${crag.access}"></span>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="A brief description of how to find the crag"
+                                       th:field="*{access}"/>
+                                <span class="error-field" th:errors="*{access}"></span>
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>

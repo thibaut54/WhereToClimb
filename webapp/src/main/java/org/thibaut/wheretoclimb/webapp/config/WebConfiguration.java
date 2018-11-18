@@ -8,6 +8,12 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.dialect.IDialect;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
 @EnableWebMvc
@@ -40,4 +46,16 @@ public class WebConfiguration implements WebMvcConfigurer {
 				.addResourceHandler("/webjars/**")
 				.addResourceLocations("/webjars/");
 	}
+
+
+//	@Bean
+//	public SpringTemplateEngine templateEngine() {
+//		SpringTemplateEngine engine  =  new SpringTemplateEngine();
+//
+//		final Set< IDialect > dialects = new HashSet<IDialect>();
+//		dialects.add( new SpringSecurityDialect() );
+//		engine.setDialects( dialects );
+//
+//		return engine;
+//	}
 }

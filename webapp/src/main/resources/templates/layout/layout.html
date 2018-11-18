@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
     <head>
@@ -17,22 +18,32 @@
 
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="#">WhereToClimb</a>
-                <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">-->
-                    <!--&lt;!&ndash;<span class="navbar-toggler-icon"></span>&ndash;&gt;-->
-                <!--</button>-->
-
+                <a class="navbar-brand" th:href="@{/public/showAtlas}">WhereToClimb</a>
                 <div class="container collapse navbar-collapse" id="navbarColor01">
-                    <div class="row">
+                    <div class="row" >
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item col-lg-auto">
+                            <li sec:authorize="hasRole('ROLE_USER')"  class="nav-item dropdown col-lg-auto" >
+                                <a class="nav-link dropdown-toggle" href="#" id="myAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    My account
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="myAccount">
+                                    <a class="dropdown-item" th:href="@{/user/editAccount}">Personal data</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" th:href="@{/user/changePassword}">Change password</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" th:href="@{/user/showMyAtlases}">My Atlases</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" th:href="@{/user/showBookingRequest}">My borrowing requests</a>
+                                </div>
+                            </li>
+                            <li sec:authorize="!hasRole('ROLE_USER')" class="nav-item col-lg-auto">
                                 <a class="nav-link" th:href="@{/public/register}">Register</a>
                             </li>
-                            <li class="nav-item col-lg-auto">
+                            <li sec:authorize="!hasRole('ROLE_USER')" class="nav-item col-lg-auto">
                                 <a class="nav-link" th:href="@{/public/login}">Login</a>
                             </li>
                             <li class="nav-item col-lg-auto">
-                                <a class="nav-link" th:href="@{/public/showAtlas}">Atlas</a>
+                                <a class="nav-link" th:href="@{/public/showAtlas}">Atlases</a>
                             </li>
                             <li class="nav-item col-lg-auto">
                                 <a class="nav-link" th:href="@{/public/advancedSearch}">Advanced search</a>
@@ -56,9 +67,9 @@
                                     <a class="dropdown-item" th:href="@{/user/createPitch}">Add Pitch</a>
                                 </div>
                             </li>
-                            <li th:if="${isConnected}" class="nav-item col-lg-auto">
+                            <li sec:authorize="hasRole('ROLE_USER')" class="nav-item col-lg-auto">
                                 <a class="nav-link" th:href="@{/public/logout}" th:inline="text">
-                                    [[${#httpServletRequest.remoteUser}]] : logout
+                                    [[${#httpServletRequest.remoteUser}]]: logout
                                 </a>
                             </li>
                             <li class="col-lg-auto offset-lg-1 offset-md-1">

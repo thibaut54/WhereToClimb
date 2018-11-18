@@ -31,18 +31,13 @@
                 <form style="margin:50px" name='f' th:action="@{/j_spring_security_check}" method='POST'>
 
                     <div style="width: 200px" class="form-group">
-                        Email or username
-                        <input class="form-control" type='text' name='username' value=''>
+                        Email or Username
+                        <input class="form-control" type='text' name='username' value='' autofocus>
                     </div>
 
                     <div style="width: 200px" class="form-group">
                         Password
                         <input class="form-control" type='password' name='password' />
-                    </div>
-
-                    <div style="width: 200px" class="form-group">
-                        Remember me?
-                        <input class="check-box" type="checkbox" name="remember-me" />
                     </div>
 
                     <div class="form-group">

@@ -12,12 +12,18 @@
         <div class="container spacer col-md-6 col-xs-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Create new Area</h5>
+                    <h5 th:if="${area.id==null}">Create new Area</h5>
+                    <h5 th:if="${area.id!=null}">Edit Area</h5>
                     <div class="card-block">
-                        <form autocomplete="off" th:action="@{/user/saveArea}" method="post" th:object="${area, parent}">
-                            <div class="form-group">
+                        <form autocomplete="off" th:action="@{/user/saveArea}" method="post" th:object="${area}">
+                            <input th:if="${area.id!=null}" type="hidden" th:field="*{id}"/>
+                            <input th:if="${area.id!=null}" type="hidden" th:field="*{createDate}"/>
+                            <input th:if="${area.id!=null}" type="hidden" th:field="*{comments}"/>
+                            <input th:if="${area.id!=null}" type="hidden" th:field="*{crags}"/>
+                            <input th:if="${area.id!=null}" type="hidden" th:field="*{atlas}"/>
+                            <div class="form-group" th:if="${area.id==null}">
                                 <label>Concerned Atlas</label>
-                                <select th:field="${parentEntityId.parentId}">
+                                <select th:field="${area.atlas}" autofocus>
                                     <option th:each="atlas:${atlases}" th:value="${atlas.id}" th:text="${atlas.name}">
                                     </option>
                                 </select>
@@ -25,34 +31,34 @@
                             <div class="form-group">
                                 <label>Name</label>
                                 <input name="inputTxt" type="text" class="form-control" placeholder="The name of the area"
-                                       th:field="${area.name}"/>
-                                <span class="error-field" th:errors="${area.name}"></span>
+                                       th:field="*{name}" autofocus/>
+                                <span class="error-field" th:errors="*{name}"></span>
                                 <small id="atlasHelp" class="form-text text-muted">
                                     A good idea would be to name the area with the region's or nearest city's name.</small>
                             </div>
                             <div class="form-group">
                                 <label>Nearest city</label>
                                 <input name="inputTxt" type="text" class="form-control" placeholder="The area's nearest city"
-                                       th:field="${area.nearestCity}"/>
-                                <span class="error-field" th:errors="${area.nearestCity}"></span>
+                                       th:field="*{nearestCity}"/>
+                                <span class="error-field" th:errors="*{nearestCity}"></span>
                             </div>
                             <div class="autocomplete form-group">
                                 <label>Approach duration in minuts</label>
                                 <input id="myInput" name="inputTxt" type="number" class="form-control" placeholder="The walking time before reaching the area"
-                                       th:field="${area.approachDuration}"/>
-                                <span class="error-field" th:errors="${area.approachDuration}"></span>
+                                       th:field="*{approachDuration}"/>
+                                <span class="error-field" th:errors="*{approachDuration}"></span>
                             </div>
                             <div class="form-group">
                                 <label>Access information</label>
                                 <input name="inputTxt" type="text" class="form-control" placeholder="A brief description of how to find the climbing area"
-                                       th:field="${area.access}"/>
-                                <span class="error-field" th:errors="${area.access}"></span>
+                                       th:field="*{access}"/>
+                                <span class="error-field" th:errors="*{access}"></span>
                             </div>
                             <div class="form-group">
                                 <label>Cliff rock type</label>
                                 <input name="inputTxt" type="text" class="form-control" placeholder="Which kind of rock the cliff is made of"
-                                       th:field="${area.rockType}"/>
-                                <span class="error-field" th:errors="${area.rockType}"></span>
+                                       th:field="*{rockType}"/>
+                                <span class="error-field" th:errors="*{rockType}"></span>
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>

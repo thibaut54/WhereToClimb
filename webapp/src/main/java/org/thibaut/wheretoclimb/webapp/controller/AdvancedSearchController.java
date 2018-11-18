@@ -43,6 +43,7 @@ public class AdvancedSearchController extends AbstractController{
 
 
 		Page< ? > result = getManagerFactory().getElementManager().searchElementByNameAndCountryAndRegionAndDepartmentAndCity( PageRequest.of(currentPage - 1, PAGE_SIZE ), searchIn, name, country, region, department, city );
+//		Page< ? > result = getManagerFactory().getElementManager().searchElementByNameAndCountryAndRegionAndDepartmentAndCity( PageRequest.of(page.get()-1, size.get() ), searchIn, name, country, region, department, city );
 		model.addAttribute( "searchHasResults" , !result.getContent().isEmpty() );
 		model.addAttribute( "results", result.getContent() );
 		model.addAttribute( "resultNumber", result.getNumber() );

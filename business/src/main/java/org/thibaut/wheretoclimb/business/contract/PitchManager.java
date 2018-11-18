@@ -4,4 +4,8 @@ import org.thibaut.wheretoclimb.model.entity.Pitch;
 
 public interface PitchManager {
 	void savePitch( Pitch pitch );
+
+	Pitch findPitchById( Integer id );
+
+	void deletePitch( Integer id );
 }

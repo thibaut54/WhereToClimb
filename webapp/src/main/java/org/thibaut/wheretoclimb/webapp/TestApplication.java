@@ -3,7 +3,6 @@ package org.thibaut.wheretoclimb.webapp;
 import groovy.util.logging.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.thibaut.wheretoclimb.business.contract.AtlasManager;
 import org.thibaut.wheretoclimb.business.contract.PasswordManager;
 import org.thibaut.wheretoclimb.consumer.repository.*;
 import org.thibaut.wheretoclimb.model.entity.*;
@@ -12,7 +11,6 @@ import org.thibaut.wheretoclimb.util.GenericBuilder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -20,9 +18,7 @@ import java.util.List;
 public class TestApplication implements CommandLineRunner {
 
 	private PasswordManager passwordManager;
-	private AtlasManager atlasManager;
 	private UserRepository userRepository;
-	private ElementRepository elementRepository;
 	private AtlasRepository atlasRepository;
 	private RoleRepository roleRepository;
 	private AreaRepository areaRepository;
@@ -31,13 +27,12 @@ public class TestApplication implements CommandLineRunner {
 	private CragRepository cragRepository;
 	private RouteRepository routeRepository;
 	private PitchRepository pitchRepository;
+	private ElementRepository elementRepository;
 
 
-	public TestApplication( PasswordManager passwordManager, AtlasManager atlasManager, UserRepository userRepository, ElementRepository elementRepository, AtlasRepository atlasRepository, RoleRepository roleRepository, AreaRepository areaRepository,  CommentRepository commentRepository, BookingRequestRepository bookingRequestRepository, CragRepository cragRepository, RouteRepository routeRepository, PitchRepository pitchRepository ) {
+	public TestApplication( PasswordManager passwordManager, AtlasRepository atlasManager, UserRepository userRepository, AtlasRepository atlasRepository, RoleRepository roleRepository, AreaRepository areaRepository, CommentRepository commentRepository, BookingRequestRepository bookingRequestRepository, CragRepository cragRepository, RouteRepository routeRepository, PitchRepository pitchRepository, ElementRepository elementRepository ) {
 		this.passwordManager = passwordManager;
-		this.atlasManager = atlasManager;
 		this.userRepository = userRepository;
-		this.elementRepository = elementRepository;
 		this.atlasRepository = atlasRepository;
 		this.roleRepository = roleRepository;
 		this.areaRepository = areaRepository;
@@ -46,6 +41,7 @@ public class TestApplication implements CommandLineRunner {
 		this.cragRepository = cragRepository;
 		this.routeRepository = routeRepository;
 		this.pitchRepository = pitchRepository;
+		this.elementRepository = elementRepository;
 	}
 
 	/**
@@ -74,161 +70,13 @@ public class TestApplication implements CommandLineRunner {
 
 		//-----POPULATE USER_ROLES
 
-		Collection<Role> roles = new ArrayList<>();
+		List< Role > roles = new ArrayList<>();
 
 		roles.add(new Role("ROLE_USER"));
 		roles.add(new Role("ROLE_ADMIN"));
 
 		this.roleRepository.saveAll( roles );
 
-
-		//-----POPULATE PITCH
-
-		ArrayList< Pitch > pitches = new ArrayList<>();
-
-		pitches.add( GenericBuilder.of(Pitch::new)
-				            .with( Pitch::setName, "La petite fissure" )
-				            .with( Pitch::setCreateDate, LocalDateTime.now())
-				            .with( Pitch::setGrade, "6a")
-				            .with( Pitch::setLength, 10)
-				            .with( Pitch::setNbAnchor, 4)
-				            .with( Pitch::setVerticality, "Léger dévers")
-				            .build());
-		pitches.add( GenericBuilder.of(Pitch::new)
-				             .with( Pitch::setName, "La grosse fissure" )
-				             .with( Pitch::setCreateDate, LocalDateTime.now())
-				             .with( Pitch::setGrade, "6c")
-				             .with( Pitch::setLength, 10)
-				             .with( Pitch::setNbAnchor, 4)
-				             .with( Pitch::setVerticality, "Gros dévers")
-				             .build());
-
-		this.pitchRepository.saveAll( pitches );
-
-
-		//-----POPULATE ROUTE
-
-		ArrayList< Route > routes = new ArrayList<>();
-
-		routes.add( GenericBuilder.of(Route::new)
-							.with( Route::setName, "La fissure" )
-							.with( Route::setCreateDate, LocalDateTime.now())
-							.with( Route::setGrade, "6a")
-							.with( Route::setLength, 20)
-							.with( Route::setNbAnchor, 9)
-							.with( Route::setMultiPitch, true)
-							.with( Route::setVerticality, "Léger dévers")
-							.with( Route::setPitches, pitches )
-							.build());
-
-		routes.add( GenericBuilder.of(Route::new)
-				            .with( Route::setName, "Le dièdre" )
-				            .with( Route::setCreateDate, LocalDateTime.now())
-				            .with( Route::setGrade, "6c")
-				            .with( Route::setLength, 20)
-				            .with( Route::setNbAnchor, 9)
-				            .with( Route::setMultiPitch, false)
-				            .with( Route::setVerticality, "Verticale")
-				            .build());
-
-		routes.add( GenericBuilder.of(Route::new)
-				            .with( Route::setName, "La dalle" )
-				            .with( Route::setCreateDate, LocalDateTime.now())
-				            .with( Route::setGrade, "7a")
-				            .with( Route::setLength, 20)
-				            .with( Route::setNbAnchor, 9)
-				            .with( Route::setMultiPitch, false)
-				            .with( Route::setVerticality, "Verticale")
-				            .build());
-
-		this.routeRepository.saveAll( routes );
-
-
-		//-----POPULATE CRAG
-
-		ArrayList< Crag > crags = new ArrayList<Crag>();
-		ArrayList< Crag > crags2 = new ArrayList<Crag>();
-
-		crags.add( GenericBuilder.of( Crag::new )
-				           .with( Crag::setName, "Secteur bas" )
-				           .with( Crag::setCreateDate, LocalDateTime.now() )
-				           .with( Crag::setUpdateDate, LocalDateTime.now() )
-				           .with( Crag::setApproachDuration, 12 )
-				           .with( Crag::setAccess, "Pour ce secteur, s'arrêter à la 1ère falaise." )
-				           .with( Crag::setRoutes, routes )
-				           .build());
-		crags.add( GenericBuilder.of( Crag::new )
-				           .with( Crag::setName, "Secteur haut" )
-				           .with( Crag::setCreateDate, LocalDateTime.now() )
-				           .with( Crag::setUpdateDate, LocalDateTime.now() )
-				           .with( Crag::setApproachDuration, 12 )
-				           .with( Crag::setAccess, "Pour ce secteur, à la 1ère falaise, continuer sur la gauche en montant jusqu'à la 2ème falaise." )
-				           .build());
-
-		crags2.add( GenericBuilder.of( Crag::new )
-				           .with( Crag::setName, "Secteur test 1" )
-				           .with( Crag::setCreateDate, LocalDateTime.now() )
-				           .with( Crag::setUpdateDate, LocalDateTime.now() )
-				           .with( Crag::setApproachDuration, 12 )
-				           .with( Crag::setAccess, "Pour ce secteur, s'arrêter à la 1ère falaise." )
-				           .with( Crag::setRoutes, routes )
-				           .build());
-		crags2.add( GenericBuilder.of( Crag::new )
-				           .with( Crag::setName, "Secteur test 2" )
-				           .with( Crag::setCreateDate, LocalDateTime.now() )
-				           .with( Crag::setUpdateDate, LocalDateTime.now() )
-				           .with( Crag::setApproachDuration, 12 )
-				           .with( Crag::setAccess, "Pour ce secteur, à la 1ère falaise, continuer sur la gauche en montant jusqu'à la 2ème falaise." )
-				           .build());
-
-		this.cragRepository.saveAll( crags );
-		this.cragRepository.saveAll( crags2 );
-
-
-		//-----POPULATE AREA
-
-		ArrayList< Area > areas = new ArrayList<Area>();
-		ArrayList< Area > areas2 = new ArrayList<Area>();
-
-		areas.add( GenericBuilder.of( Area::new )
-							.with( Area::setName, "Maron" )
-							.with( Area::setCreateDate, LocalDateTime.now() )
-							.with( Area::setUpdateDate, LocalDateTime.now() )
-							.with( Area::setApproachDuration, 12 )
-							.with( Area::setNearestCity, "Maron")
-							.with( Area::setAccess, "Au bord de la Moselle, 4 km en amont de la ville de Maron" )
-							.with( Area::setCrags, crags )
-							.build());
-		areas.add( GenericBuilder.of( Area::new )
-				           .with( Area::setName, "Liverdun" )
-				           .with( Area::setCreateDate, LocalDateTime.now() )
-				           .with( Area::setUpdateDate, LocalDateTime.now() )
-				           .with( Area::setApproachDuration, 5 )
-				           .with( Area::setNearestCity, "Liverdun")
-				           .with( Area::setAccess, "Vers Liverdun" )
-				           .with( Area::setCrags, crags2 )
-				           .build());
-		areas2.add( GenericBuilder.of( Area::new )
-				            .with( Area::setName, "Cul de chien" )
-				            .with( Area::setCreateDate, LocalDateTime.now() )
-				            .with( Area::setUpdateDate, LocalDateTime.now() )
-				            .with( Area::setApproachDuration, 12 )
-				            .with( Area::setNearestCity, "Fontainebleau")
-				            .with( Area::setAccess, "Au fond dans la forêt." )
-				            .build());
-		areas2.add( GenericBuilder.of( Area::new )
-				            .with( Area::setName, "SecteurTest" )
-				            .with( Area::setCreateDate, LocalDateTime.now() )
-				            .with( Area::setUpdateDate, LocalDateTime.now() )
-				            .with( Area::setApproachDuration, 5 )
-				            .with( Area::setNearestCity, "One city")
-				            .with( Area::setAccess, "Access test." )
-				           .build());
-
-
-
-		this.areaRepository.saveAll( areas );
-		this.areaRepository.saveAll( areas2 );
 
 
 		//-----POPULATE USERS
@@ -293,7 +141,7 @@ public class TestApplication implements CommandLineRunner {
 		Atlas atlas1 = GenericBuilder.of( Atlas::new )
 								.with( Atlas::setName, "Grimper en Lorraine" )
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, false)
+								.with( Atlas::setAvailable, true)
 								.with( Atlas::setCountry, "France")
 								.with( Atlas::setRegion, "Lorraine")
 								.with( Atlas::setUser, users.get( 0 ))
@@ -383,8 +231,8 @@ public class TestApplication implements CommandLineRunner {
 
 		List< Atlas > atlases = new ArrayList<Atlas>();
 
-		atlas1.setAreas( areas );
-		atlas2.setAreas( areas2 );
+//		atlas1.setAreas( areas );
+//		atlas2.setAreas( areas2 );
 		atlases.add( atlas1 );
 		atlases.add( atlas2 );
 		atlases.add( atlas3 );
@@ -399,6 +247,163 @@ public class TestApplication implements CommandLineRunner {
 
 
 		this.atlasRepository.saveAll( atlases );
+
+
+		//-----POPULATE AREA
+
+		ArrayList< Area > areas = new ArrayList<Area>();
+		ArrayList< Area > areas2 = new ArrayList<Area>();
+
+		areas.add( GenericBuilder.of( Area::new )
+				           .with( Area::setName, "Maron" )
+				           .with( Area::setCreateDate, LocalDateTime.now() )
+				           .with( Area::setUpdateDate, LocalDateTime.now() )
+				           .with( Area::setApproachDuration, 12 )
+				           .with( Area::setNearestCity, "Maron")
+				           .with( Area::setAccess, "Au bord de la Moselle, 4 km en amont de la ville de Maron" )
+				           .with( Area::setAtlas, atlas1 )
+				           .build());
+		areas.add( GenericBuilder.of( Area::new )
+				           .with( Area::setName, "Liverdun" )
+				           .with( Area::setCreateDate, LocalDateTime.now() )
+				           .with( Area::setUpdateDate, LocalDateTime.now() )
+				           .with( Area::setApproachDuration, 5 )
+				           .with( Area::setNearestCity, "Liverdun")
+				           .with( Area::setAccess, "Vers Liverdun" )
+				           .with( Area::setAtlas, atlas1 )
+				           .build());
+		areas2.add( GenericBuilder.of( Area::new )
+				            .with( Area::setName, "Cul de chien" )
+				            .with( Area::setCreateDate, LocalDateTime.now() )
+				            .with( Area::setUpdateDate, LocalDateTime.now() )
+				            .with( Area::setApproachDuration, 12 )
+				            .with( Area::setNearestCity, "Fontainebleau")
+				            .with( Area::setAccess, "Au fond dans la forêt." )
+				            .with( Area::setAtlas, atlas2 )
+				            .build());
+		areas2.add( GenericBuilder.of( Area::new )
+				            .with( Area::setName, "SecteurTest" )
+				            .with( Area::setCreateDate, LocalDateTime.now() )
+				            .with( Area::setUpdateDate, LocalDateTime.now() )
+				            .with( Area::setApproachDuration, 5 )
+				            .with( Area::setNearestCity, "One city")
+				            .with( Area::setAccess, "Access test." )
+				            .with( Area::setAtlas, atlas2 )
+				            .build());
+
+
+
+		this.areaRepository.saveAll( areas );
+		this.areaRepository.saveAll( areas2 );
+
+
+		//-----POPULATE CRAG
+
+		ArrayList< Crag > crags = new ArrayList<Crag>();
+		ArrayList< Crag > crags2 = new ArrayList<Crag>();
+
+		crags.add( GenericBuilder.of( Crag::new )
+				           .with( Crag::setName, "Secteur bas" )
+				           .with( Crag::setCreateDate, LocalDateTime.now() )
+				           .with( Crag::setUpdateDate, LocalDateTime.now() )
+				           .with( Crag::setApproachDuration, 12 )
+				           .with( Crag::setAccess, "Pour ce secteur, s'arrêter à la 1ère falaise." )
+				           .with( Crag::setArea, areas.get( 0 ) )
+				           .build());
+		crags.add( GenericBuilder.of( Crag::new )
+				           .with( Crag::setName, "Secteur haut" )
+				           .with( Crag::setCreateDate, LocalDateTime.now() )
+				           .with( Crag::setUpdateDate, LocalDateTime.now() )
+				           .with( Crag::setApproachDuration, 12 )
+				           .with( Crag::setAccess, "Pour ce secteur, à la 1ère falaise, continuer sur la gauche en montant jusqu'à la 2ème falaise." )
+				           .with( Crag::setArea, areas.get( 0 ) )
+				           .build());
+
+		crags2.add( GenericBuilder.of( Crag::new )
+				            .with( Crag::setName, "Secteur test 1" )
+				            .with( Crag::setCreateDate, LocalDateTime.now() )
+				            .with( Crag::setUpdateDate, LocalDateTime.now() )
+				            .with( Crag::setApproachDuration, 12 )
+				            .with( Crag::setAccess, "Pour ce secteur, s'arrêter à la 1ère falaise." )
+				            .with( Crag::setArea, areas.get( 1 ) )
+				            .build());
+		crags2.add( GenericBuilder.of( Crag::new )
+				            .with( Crag::setName, "Secteur test 2" )
+				            .with( Crag::setCreateDate, LocalDateTime.now() )
+				            .with( Crag::setUpdateDate, LocalDateTime.now() )
+				            .with( Crag::setApproachDuration, 12 )
+				            .with( Crag::setAccess, "Pour ce secteur, à la 1ère falaise, continuer sur la gauche en montant jusqu'à la 2ème falaise." )
+				            .with( Crag::setArea, areas2.get( 0 ) )
+				            .build());
+
+		this.cragRepository.saveAll( crags );
+		this.cragRepository.saveAll( crags2 );
+
+
+		//-----POPULATE ROUTE
+
+		ArrayList< Route > routes = new ArrayList<>();
+
+		routes.add( GenericBuilder.of(Route::new)
+				            .with( Route::setName, "La fissure" )
+				            .with( Route::setCreateDate, LocalDateTime.now())
+				            .with( Route::setGrade, "6a")
+				            .with( Route::setLength, 20)
+				            .with( Route::setNbAnchor, 9)
+				            .with( Route::setMultiPitch, true)
+				            .with( Route::setVerticality, "Léger dévers")
+				            .with( Route::setCrag, crags.get( 0 ))
+				            .build());
+
+		routes.add( GenericBuilder.of(Route::new)
+				            .with( Route::setName, "Le dièdre" )
+				            .with( Route::setCreateDate, LocalDateTime.now())
+				            .with( Route::setGrade, "6c")
+				            .with( Route::setLength, 20)
+				            .with( Route::setNbAnchor, 9)
+				            .with( Route::setMultiPitch, false)
+				            .with( Route::setVerticality, "Verticale")
+				            .with( Route::setCrag, crags.get( 0 ))
+				            .build());
+
+		routes.add( GenericBuilder.of(Route::new)
+				            .with( Route::setName, "La dalle" )
+				            .with( Route::setCreateDate, LocalDateTime.now())
+				            .with( Route::setGrade, "7a")
+				            .with( Route::setLength, 20)
+				            .with( Route::setNbAnchor, 9)
+				            .with( Route::setMultiPitch, false)
+				            .with( Route::setVerticality, "Verticale")
+				            .with( Route::setCrag, crags.get( 1 ))
+				            .build());
+
+		this.routeRepository.saveAll( routes );
+
+
+		//-----POPULATE PITCH
+
+		ArrayList< Pitch > pitches = new ArrayList<>();
+
+		pitches.add( GenericBuilder.of(Pitch::new)
+				             .with( Pitch::setName, "La petite fissure" )
+				             .with( Pitch::setCreateDate, LocalDateTime.now())
+				             .with( Pitch::setGrade, "6a")
+				             .with( Pitch::setLength, 10)
+				             .with( Pitch::setNbAnchor, 4)
+				             .with( Pitch::setVerticality, "Léger dévers")
+				             .with( Pitch::setRoute, routes.get( 0 ))
+				             .build());
+		pitches.add( GenericBuilder.of(Pitch::new)
+				             .with( Pitch::setName, "La grosse fissure" )
+				             .with( Pitch::setCreateDate, LocalDateTime.now())
+				             .with( Pitch::setGrade, "6c")
+				             .with( Pitch::setLength, 10)
+				             .with( Pitch::setNbAnchor, 4)
+				             .with( Pitch::setVerticality, "Gros dévers")
+				             .with( Pitch::setRoute, routes.get( 0 ))
+				             .build());
+
+		this.pitchRepository.saveAll( pitches );
 
 //		QAtlas qAtlas = QAtlas.atlas;
 //
@@ -431,13 +436,13 @@ public class TestApplication implements CommandLineRunner {
 
 		List<BookingRequest> bookingRequests = new ArrayList<>();
 
-		BookingRequest bookingRequest = GenericBuilder.of( BookingRequest::new )
+		bookingRequests.add( GenericBuilder.of( BookingRequest::new )
 				.with( BookingRequest::setCreateDate, LocalDateTime.now() )
 				.with( BookingRequest::setStartDate, LocalDate.of( 2018, 12, 1 ) )
 				.with( BookingRequest::setEndDate, LocalDate.of( 2018, 12, 10 ) )
-				.with( BookingRequest::setAtlas, atlas2 )
-				.with( BookingRequest::setUserEmitter, users.get( 2 ) )
-				.build();
+				.with( BookingRequest::setAtlas, atlas1 )
+				.with( BookingRequest::setUser, users.get( 1 ) )
+				.build());
 
 		this.bookingRequestRepository.saveAll( bookingRequests );
 

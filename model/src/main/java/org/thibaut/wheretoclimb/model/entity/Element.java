@@ -1,6 +1,9 @@
 package org.thibaut.wheretoclimb.model.entity;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,9 +18,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
-public abstract class Element {
+public /*abstract*/ class Element {
 
 //----------ATTRIBUTES----------
 
@@ -29,8 +31,7 @@ public abstract class Element {
 	@Size(min=4,max=50)
 	private String name;
 
-	@OneToMany/*(mappedBy = "element")*/
-	@JoinColumn(name = "element_id")
+	@OneToMany(mappedBy = "element")
 	private List< Comment > comments;
 
 	private LocalDateTime createDate;

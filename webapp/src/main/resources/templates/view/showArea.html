@@ -17,54 +17,10 @@
                     <table class="listArea table table-bordered table-striped table-condensed">
                         <caption>
                             <h3>LIST OF AREAS IN ATLAS: <span th:text="${atlas.name}"></span></h3>
-                            <button th:if="${atlas.available}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bookModal">Ask for borrow this Atlas</button>
-
-                            <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Booking request to: @
-                                                <span th:text="${atlas.user.userName}"></span></h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form th:action="@{/user/saveBookingRequest(atlasId=${atlas.id})}" method="post">
-                                                <div class="form-group">
-                                                    <label for="datepicker-start" class="col-form-label">Start date:</label>
-                                                    <input id="datepicker-start"  width="276" th:field="${bookingRequest.startDate}" />
-                                                    <script>
-                                                        $('#datepicker-start').datepicker({
-                                                            uiLibrary: 'bootstrap4'
-                                                        });
-                                                    </script>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="datepicker-end" class="col-form-label">End date:</label>
-                                                    <input id="datepicker-end" th:field="${bookingRequest.endDate}" width="276" />
-                                                    <script>
-                                                        $('#datepicker-end').datepicker({
-                                                            uiLibrary: 'bootstrap4'
-                                                        });
-                                                    </script>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="message-text" th:field="${bookingRequest.message}" class="col-form-label">Add a message:</label>
-                                                    <textarea class="form-control" id="message-text" ></textarea>
-                                                </div>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" >Send request</button>
-                                            </form>
-                                        </div>
-                                        <!--<div class="modal-footer">-->
-                                            <!---->
-                                        <!--</div>-->
-                                    </div>
-                                </div>
-                            </div>
-
+                            <a th:if="${atlas.available}" class="btn btn-primary" th:href="@{/user/createBookingRequest(atlasId=${atlas.id})}" role="button">Ask for borrow this Atlas</a>
+                            <!--<button th:if="${atlas.available}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bookModal">Ask for borrow this Atlas-->
+                                <!---->
+                            <!--</button>-->
                         </caption>
                         <thead>
                             <tr>
@@ -80,17 +36,13 @@
                                 </td>
                                 <td th:text="${area.nearestCity}"></td>
                                 <td th:text="${area.approachDuration}+' minutes'"></td>
-                                <td th:if="${userIsAdmin}">
-                                    <a th:href="@{/admin/editArea(id=${area.id})}">
+                                <td th:if="${userIsAdmin or (session.user!=null and areasId.contains(area.id))}">
+                                    <a th:href="@{/user/editArea(id=${area.id})}">
                                         <i class="icon fas fa-pencil-alt"></i>
                                     </a>
                                 </td>
-                                <td th:if="${userIsAdmin}">
-                                    <!--<a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size}, keyword=${keyword})}"-->
-                                        <!--onclick="return confirm('Do you really want to delete this Area?')">-->
-                                        <!--<i class="icon fas fa-trash"></i>-->
-                                    <!--</a>-->
-                                    <a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size})}"
+                                <td th:if="${userIsAdmin or (session.user!=null and areasId.contains(area.id))}">
+                                    <a  id="trash-ic" th:href="@{/user/deleteArea(id=${area.id},parentId=${area.atlas.id}, page=${currentPage}, size=${size})}"
                                         onclick="return confirm('Do you really want to delete this Area?')">
                                         <i class="icon fas fa-trash"></i>
                                     </a>

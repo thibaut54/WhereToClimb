@@ -5,4 +5,8 @@ import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 public interface BookingRequestManager {
 
 	void saveBookingRequest( BookingRequest bookingRequest );
+
+	BookingRequest createBookingRequest( BookingRequest bookingRequest );
+
+	BookingRequest findBookingRequestById( Integer id );
 }

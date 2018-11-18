@@ -13,4 +13,6 @@ public interface UserManager {
 	User findByEmail( String email );
 
 	User createUser( User user );
+
+	User findById( Integer id );
 }

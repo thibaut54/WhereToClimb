@@ -12,12 +12,18 @@
         <div class="container spacer col-md-6 col-xs-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Create new Route</h5>
+                    <h5 th:if="${route.id==null}">Create new Route</h5>
+                    <h5 th:if="${route.id!=null}">Edit Route</h5>
                     <div class="card-block">
-                        <form autocomplete="off" th:action="@{/user/saveRoute}" method="post">
-                            <div class="form-group">
+                        <form autocomplete="off" th:action="@{/user/saveRoute}" method="post" th:object="${route}">
+                            <input th:if="${route.id!=null}" type="hidden" th:field="*{id}"/>
+                            <input th:if="${route.id!=null}" type="hidden" th:field="*{createDate}"/>
+                            <input th:if="${route.id!=null}" type="hidden" th:field="*{comments}"/>
+                            <input th:if="${route.id!=null}" type="hidden" th:field="*{crag}"/>
+                            <input th:if="${route.id!=null}" type="hidden" th:field="*{pitches}"/>
+                            <div class="form-group" th:if="${route.id==null}">
                                 <label>Concerned Crag</label>
-                                <select th:field="*{route.parentCreateId}">
+                                <select th:field="${route.crag}" autofocus>
                                     <option th:each="crag:${crags}" th:value="${crag.id}" th:text="${crag.name}">
                                     </option>
                                 </select>
@@ -30,7 +36,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Grade</label>
-                                <select th:field="*{route.grade}">
+                                <select th:field="*{grade}">
                                     <option th:each="grade:${grades}" th:value="${grade}" th:text="${grade}">
                                     </option>
                                 </select>
@@ -38,17 +44,17 @@
                             <div class="autocomplete form-group">
                                 <label>Length</label>
                                 <input name="inputTxt" type="number" class="form-control" placeholder="the length in meters"
-                                       th:field="${route.length}"/>
-                                <span class="error-field" th:errors="${route.length}"></span>
+                                       th:field="*{length}"/>
+                                <span class="error-field" th:errors="*{length}"></span>
                             </div>
                             <div class="autocomplete form-group">
                                 <label>Number of anchors</label>
-                                <input name="inputTxt" type="number" class="form-control" th:field="${route.nbAnchor}"/>
-                                <span class="error-field" th:errors="${route.nbAnchor}"></span>
+                                <input name="inputTxt" type="number" class="form-control" th:field="*{nbAnchor}"/>
+                                <span class="error-field" th:errors="*{nbAnchor}"></span>
                             </div>
                             <div class="form-group">
                                 <label>Verticality</label>
-                                <select th:field="*{route.verticality}">
+                                <select th:field="*{verticality}">
                                     <option th:each="verticality:${verticalities}" th:value="${verticality}" th:text="${verticality}">
                                     </option>
                                 </select>
@@ -63,7 +69,7 @@
                             </div>
                             <div class="form-group">
                                 <label>The route has multiple pitch?</label>
-                                <select th:field="*{route.multiPitch}">
+                                <select th:field="*{multiPitch}">
                                     <option value="true">Yes</option>
                                     <option value="false">No</option>
                                 </select>

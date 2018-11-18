@@ -1,6 +1,9 @@
 package org.thibaut.wheretoclimb.model.entity;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,7 +18,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode( callSuper = true )
 public class Crag extends Element {
 
@@ -25,21 +27,12 @@ public class Crag extends Element {
 	@JoinColumn(name = "area_id")
 	private Area area;
 
-	@OneToMany/*(mappedBy = "crag", fetch = FetchType.LAZY)*/
-	@JoinColumn(name = "crag_id")
+	@OneToMany(mappedBy = "crag")
 	private List< Route > routes;
-
-	@OneToMany/*(mappedBy = "crag", fetch = FetchType.LAZY)*/
-	@JoinColumn(name = "crag_id")
-	private List< Parking > parkings;
-
-	@OneToOne(mappedBy = "crag")
-	private GpsCoordinates cragGps;
 
 	private String mapUrl;
 	private String access;
 	private int approachDuration;
-	private int parentCreateId;
 	//uploader le file sur le server, et stocker en bdd l'url
 
 
