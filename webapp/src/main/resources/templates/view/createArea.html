@@ -12,19 +12,16 @@
         <div class="container spacer col-md-6 col-xs-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 th:if="${area.id==null}">Create new Area</h5>
-                    <h5 th:if="${area.id!=null}">Edit Area</h5>
+                    <h5 th:if="${areaForm.id==null}">Create new Area</h5>
+                    <h5 th:if="${areaForm.id!=null}">Edit Area</h5>
                     <div class="card-block">
-                        <form autocomplete="off" th:action="@{/user/saveArea}" method="post" th:object="${area}">
-                            <input th:if="${area.id!=null}" type="hidden" th:field="*{id}"/>
-                            <input th:if="${area.id!=null}" type="hidden" th:field="*{createDate}"/>
-                            <input th:if="${area.id!=null}" type="hidden" th:field="*{comments}"/>
-                            <input th:if="${area.id!=null}" type="hidden" th:field="*{crags}"/>
-                            <input th:if="${area.id!=null}" type="hidden" th:field="*{atlas}"/>
-                            <div class="form-group" th:if="${area.id==null}">
+                        <form autocomplete="off" th:action="@{/user/saveArea}" method="post" th:object="${areaForm}">
+                            <input th:if="${areaForm.id!=null}" type="hidden" th:field="*{id}"/>
+                            <!--<div class="form-group" th:if="${areaForm.id==null}">-->
+                            <div class="form-group" >
                                 <label>Concerned Atlas</label>
-                                <select th:field="${area.atlas}" autofocus>
-                                    <option th:each="atlas:${atlases}" th:value="${atlas.id}" th:text="${atlas.name}">
+                                <select th:field="${areaForm.atlas}" autofocus>
+                                    <option th:each="atlas:${session.atlasesFromConnectedUser}" th:value="${atlas.id}" th:text="${atlas.name}">
                                     </option>
                                 </select>
                             </div>
@@ -34,7 +31,7 @@
                                        th:field="*{name}" autofocus/>
                                 <span class="error-field" th:errors="*{name}"></span>
                                 <small id="atlasHelp" class="form-text text-muted">
-                                    A good idea would be to name the area with the region's or nearest city's name.</small>
+                                    Please refer to the official area's name.</small>
                             </div>
                             <div class="form-group">
                                 <label>Nearest city</label>
@@ -43,7 +40,7 @@
                                 <span class="error-field" th:errors="*{nearestCity}"></span>
                             </div>
                             <div class="autocomplete form-group">
-                                <label>Approach duration in minuts</label>
+                                <label>Approach duration in minutes</label>
                                 <input id="myInput" name="inputTxt" type="number" class="form-control" placeholder="The walking time before reaching the area"
                                        th:field="*{approachDuration}"/>
                                 <span class="error-field" th:errors="*{approachDuration}"></span>
@@ -59,6 +56,30 @@
                                 <input name="inputTxt" type="text" class="form-control" placeholder="Which kind of rock the cliff is made of"
                                        th:field="*{rockType}"/>
                                 <span class="error-field" th:errors="*{rockType}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>GPS coordinates: latitude </label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="Which kind of rock the cliff is made of"
+                                       th:field="*{gpsLatitude}"/>
+                                <span class="error-field" th:errors="*{gpsLatitude}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>GPS coordinates: longitude </label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="Which kind of rock the cliff is made of"
+                                       th:field="*{gpsLongitude}"/>
+                                <span class="error-field" th:errors="*{gpsLongitude}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Altitude </label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="Which kind of rock the cliff is made of"
+                                       th:field="*{altitude}"/>
+                                <span class="error-field" th:errors="*{altitude}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Parking access information </label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="Which kind of rock the cliff is made of"
+                                       th:field="*{parkingAccess}"/>
+                                <span class="error-field" th:errors="*{parkingAccess}"></span>
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>

@@ -19,6 +19,7 @@
                 </caption>
                 <thead>
                     <tr>
+                        <th th:if="${session.connectedUser!=null}"></th>
                         <th>NAME</th>
                         <th>CAN BE BORROWED</th>
                         <th>COMMENTS</th>
@@ -28,41 +29,42 @@
                 </thead>
                 <tbody>
                     <tr th:each="atlas:${atlases}">
+                        <td th:if="${session.connectedUser!=null}">
+                            <a th:href="@{/user/commentElement(elementId=${atlas.id})}">
+                                <i class="fas fa-comment-dots"></i>
+                            </a>
+                        </td>
                         <td >
                             <a th:text="${atlas.name}" th:href="@{/public/showArea(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
                         </td>
                         <div th:if="${atlas.available}">
                             <td>Yes</td>
-                            <!--<td>Yes <a><i class="fas fa-hand-holding"></i></a></td>-->
                         </div>
                         <div th:if="${!atlas.available}">
                             <td>No</td>
                         </div>
                         <td th:text="${atlas.getComments().size()}"></td>
-                        <td th:text="${atlas.createDate}"></td>
+                        <td th:text="${#temporals.format(atlas.createDate, 'yyyy-MM-dd')}"></td>
                         <td th:text="${atlas.user.userName}"></td>
-                        <!--<td th:if="${session.role.equals('[ROLE_ADMIN]') or (session.role.equals('[ROLE_USER]') and atlasesIds.contains(atlas.id))}">-->
-                        <td th:if="${session.role!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and atlasesIds.contains(atlas.id)))}">
-                            <!--<form autocomplete="off" th:action="@{'/user/editAtlas/' + ${atlas.id}}" method="post">-->
-                                <!--<button type="submit" class="btn btn-primary">-->
-                                    <!--<a  id="edit-ic" onclick="return confirm('Do you really want to modify this Atlas?')">-->
-                                        <!--<i class="icon fas fa-pencil-alt"></i>-->
-                                    <!--</a>-->
-                                <!--</button>-->
-                            <!--</form>-->
-                            <a th:href="@{/user/editAtlas(id=${atlas.id})}">
-                                <i class="icon fas fa-pencil-alt"></i>
-                            </a>
-                        </td>
-                        <td th:if="${session.role!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and atlasesIds.contains(atlas.id)))}">
-                            <form autocomplete="off" th:action="@{'/user/deleteAtlas/' + ${atlas.id}}" method="post">
-                                <button type="submit" class="btn btn-primary">
-                                    <a  id="trash-ic" onclick="return confirm('Do you really want to delete this Atlas?')">
-                                        <i class="icon fas fa-trash"></i>
-                                    </a>
-                                </button>
-                            </form>
-                        </td>
+                        <span th:if="${session.connectedUser!=null
+                        and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and session.atlasesIds.contains(atlas.id)))}">
+                            <td>
+                                <a th:href="@{/user/editAtlas(id=${atlas.id})}" onclick="return confirm('Do you really want to modify this Atlas?')">
+                                    <i class="icon fas fa-pencil-alt"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a th:href="@{/user/editAtlas(id=${atlas.id})}">
+                                    <form autocomplete="off" th:action="@{'/user/deleteAtlas/' + ${atlas.id}}" method="post">
+                                        <button type="submit" class="btn btn-primary">
+                                            <a  id="trash-ic" onclick="return confirm('Do you really want to delete this Atlas?')">
+                                                <i class="icon fas fa-trash"></i>
+                                            </a>
+                                        </button>
+                                    </form>
+                                </a>
+                            </td>
+                        </span>
                     </tr>
                 </tbody>
             </table>

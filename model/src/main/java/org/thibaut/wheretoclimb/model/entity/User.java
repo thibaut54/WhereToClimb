@@ -28,7 +28,7 @@ public class User {
 
 	private String email;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
 	private List< Atlas > atlases;
 
 	@OneToMany(mappedBy = "user")

@@ -1,16 +1,19 @@
-package org.thibaut.wheretoclimb.webapp.validation;
+package org.thibaut.wheretoclimb.webapp.validation.validator;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-
-import java.time.LocalDate;
+import org.thibaut.wheretoclimb.model.entity.User;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.PasswordForm;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.UserForm;
 
 @Component
-public class BookingRequestValidator implements Validator {
+public class PasswordValidator implements Validator {
+
 
 	@Autowired
 	private ManagerFactory managerFactory;
@@ -32,7 +35,7 @@ public class BookingRequestValidator implements Validator {
 	 */
 	@Override
 	public boolean supports( Class< ? > clazz ) {
-		return clazz == BookingRequestForm.class;
+		return clazz == PasswordForm.class;
 	}
 
 
@@ -41,29 +44,28 @@ public class BookingRequestValidator implements Validator {
 	 * of a {@link Class} for which the {@link #supports(Class)} method
 	 * typically has (or would) return {@code true}.
 	 * <p>The supplied {@link Errors errors} instance can be used to report
-	 * any resulting validation errors.
+	 * any resulting validator errors.
 	 *
 	 * @param target the object that is to be validated (can be {@code null})
-	 * @param errors contextual state about the validation process (never {@code null})
+	 * @param errors contextual state about the validator process (never {@code null})
 	 * @see ValidationUtils
 	 */
 	@Override
 	public void validate( Object target, Errors errors ) {
 
-		BookingRequestForm bookingRequestForm = (BookingRequestForm ) target;
+		PasswordForm passwordForm = ( PasswordForm ) target;
 
-		ValidationUtils.rejectIfEmptyOrWhitespace( errors , "startDate",  "NotEmpty.bookingRequest.startDate");
-		ValidationUtils.rejectIfEmptyOrWhitespace( errors , "endDate",  "NotEmpty.bookingRequest.endDate");
+		if ( !( passwordForm.getNewPassword( ).matches( "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})" ) ) ) {
+			errors.rejectValue( "newPassword", "Pattern.passwordForm.password" );
+		}
+		if ( !( passwordForm.getNewPassword( ).equals( passwordForm.getNewPasswordConfirm( )  ) ) ) {
+			errors.rejectValue( "confirmPassword", "Match.passwordForm.confirmPassword" );
+		}
 
-		if ( bookingRequestForm.getStartDate() != null ) {
-			if ( bookingRequestForm.getStartDate( ).isBefore( LocalDate.now( ) ) ) {
-				errors.rejectValue( "startDate", "DateIsBeforeToday.bookingRequest.startDate" );
-			}
-		}
-		if ( bookingRequestForm.getEndDate() != null ) {
-			if( bookingRequestForm.getEndDate().isBefore( bookingRequestForm.getStartDate() ) ){
-				errors.rejectValue( "endDate","EndDateIsBeforeStart.bookingRequest.endDate" );
-			}
-		}
+		// Check the fields of AppUserForm.
+		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "currentPassword", "NotEmpty.passwordForm.field" );
+		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "newPassword", "NotEmpty.passwordForm.field" );
+		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "newPasswordConfirm", "NotEmpty.passwordForm.field" );
 	}
+
 }

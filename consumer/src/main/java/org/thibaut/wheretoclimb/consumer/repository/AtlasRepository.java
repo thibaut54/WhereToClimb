@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 
+import java.util.List;
+
 @Repository
 public interface AtlasRepository  extends JpaRepository< Atlas, Integer > , QuerydslPredicateExecutor <Atlas> {
 
@@ -16,5 +18,7 @@ public interface AtlasRepository  extends JpaRepository< Atlas, Integer > , Quer
 
 	@Query("SELECT atlas FROM Atlas atlas WHERE LOWER(atlas.name) LIKE :keyword")
 	Page< Atlas > searchAtlas( @Param( "keyword" ) String keyword, Pageable pageable );
+
+	List<Atlas> findAtlasByUserId(Integer userId);
 
 }

@@ -1,5 +1,6 @@
 package org.thibaut.wheretoclimb.webapp.config;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,6 +17,7 @@ import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
 import org.thibaut.wheretoclimb.business.impl.ManagerFactoryImpl;
 import org.thibaut.wheretoclimb.consumer.contract.DaoFactory;
 import org.thibaut.wheretoclimb.consumer.repository.UserRepository;
+import org.thibaut.wheretoclimb.model.entity.*;
 import org.thibaut.wheretoclimb.webapp.controller.AbstractController;
 
 import javax.servlet.ServletException;
@@ -24,34 +26,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
 	private ManagerFactory managerFactory;
-//	@Override
-//	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-//	                                    HttpServletResponse httpServletResponse,
-//	                                    Authentication authentication)
-//			throws IOException, ServletException {
-//		//do some logic here if you want something to be done whenever
-//		//the user successfully logs in.
-//
-//		HttpSession session = httpServletRequest.getSession();
-//		User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		session.setAttribute("username", authUser.getUsername());
-//		session.setAttribute("userConnected", this.managerFactory.getUserManager().findByUserName( authUser.getUsername() ) );
-//		session.setAttribute("authorities", authentication.getAuthorities());
-//
-//		//set our response to OK status
-//		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-//
-//		//since we have created our custom success handler, its up to us to where
-//		//we will redirect the user after successfully login
-//		httpServletResponse.sendRedirect("/public/showAtlas" );
-//	}
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request,
@@ -59,23 +43,83 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	                                    Authentication authentication)
 			throws IOException, ServletException {
 
-		String userName = "";
-		HttpSession session = request.getSession();
-		Collection< GrantedAuthority > authorities = null;
-		if(authentication.getPrincipal() instanceof Principal ) {
-			userName = ((Principal)authentication.getPrincipal()).getName();
-//			session.setAttribute("userName",userName);
-			session.setAttribute("role", "none");
-		}else {
-//			userName = ((User)authentication.getPrincipal()).getUsername();
-			User userSpringSecu = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			session.setAttribute("userSpringSecu", userSpringSecu );
-			session.setAttribute("userName", userSpringSecu.getUsername());
-			session.setAttribute("role", String.valueOf( userSpringSecu.getAuthorities()));
-			session.setAttribute( "userConnected" , managerFactory.getUserManager().findByUserName( userSpringSecu.getUsername() ) );
+//		String userName = "";
+		HttpSession httpSession = request.getSession();
+//		Collection< GrantedAuthority > authorities = null;
 
+		if(authentication.getPrincipal() instanceof Principal ) {
+//			userName = ((Principal)authentication.getPrincipal()).getName();
+			httpSession.setAttribute("role", "none");
 		}
-//		session.setAttribute("userId", userName);
+		else {
+			User userSpringSecu = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			httpSession.setAttribute("role", String.valueOf( userSpringSecu.getAuthorities()));
+			org.thibaut.wheretoclimb.model.entity.User connectedUser = managerFactory.getUserManager().findByUserName( userSpringSecu.getUsername() );
+			httpSession.setAttribute( "connectedUserId" , connectedUser.getId() );
+			httpSession.setAttribute( "connectedUser" , connectedUser );
+			putElementFromUserInSession(httpSession);
+		}
 		response.sendRedirect("/public/showAtlas" );
+	}
+
+	private void putElementFromUserInSession( HttpSession httpsession ) {
+		User userSpringSecu = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		org.thibaut.wheretoclimb.model.entity.User user = managerFactory.getUserManager().findByUserName(userSpringSecu.getUsername());
+//		Hibernate.initialize(user);
+		List< Atlas > atlasesFromConnectedUser = managerFactory.getAtlasManager().findAtlasesByUserId( user.getId() );
+		List< Integer > atlasesIds = new ArrayList<>();
+		for ( Atlas atlas : atlasesFromConnectedUser ) {
+			atlasesIds.add( atlas.getId( ) );
+		}
+//		List< Area > areasFromConnectedUser = new ArrayList<>();
+//		List< Crag > cragFromConnectedUser = new ArrayList<>();
+//		List< Route > routesFromConnectedUser = new ArrayList<>();
+//		List< Pitch > pitchesFromConnectedUser = new ArrayList<>();
+//		List< Integer > atlasesIds = new ArrayList<>( );
+//		List< Integer > areasIds = new ArrayList<>( );
+//		List< Integer > cragsIds = new ArrayList<>( );
+//		List< Integer > routesIds = new ArrayList<>( );
+//		List< Integer > pitchesIds = new ArrayList<>( );
+//
+//		for ( Atlas atlas: atlasesFromConnectedUser ) {
+//			areasFromConnectedUser.addAll( atlas.getAreas( ) );
+//		}
+//		for ( Area area: areasFromConnectedUser) {
+//			cragFromConnectedUser.addAll( area.getCrags( ) );
+//		}
+//		for ( Crag crag: cragFromConnectedUser) {
+//			routesFromConnectedUser.addAll( crag.getRoutes( ) );
+//		}
+//		for ( Route route: routesFromConnectedUser) {
+//			pitchesFromConnectedUser.addAll( route.getPitches( ) );
+//		}
+//
+//		for ( Atlas atlas : atlasesFromConnectedUser ) {
+//			atlasesIds.add( atlas.getId( ) );
+//		}
+//		for ( Area area: areasFromConnectedUser ) {
+//			areasIds.add( area.getId( ) );
+//		}
+//		for ( Crag crag : cragFromConnectedUser) {
+//			cragsIds.add( crag.getId( ) );
+//		}
+//		for ( Route route : routesFromConnectedUser) {
+//			routesIds.add( route.getId( ) );
+//		}
+//		for ( Pitch pitch: pitchesFromConnectedUser) {
+//			pitchesIds.add( pitch.getId( ) );
+//		}
+
+		httpsession.setAttribute( "atlasesFromConnectedUser" , atlasesFromConnectedUser );
+//		httpsession.setAttribute( "areasFromConnectedUser" , areasFromConnectedUser );
+//		httpsession.setAttribute( "cragFromConnectedUser" , cragFromConnectedUser );
+//		httpsession.setAttribute( "routesFromConnectedUser" , atlasesFromConnectedUser );
+//		httpsession.setAttribute( "atlasesFromConnectedUser" , pitchesFromConnectedUser );
+		httpsession.setAttribute( "atlasesIds" , atlasesIds );
+//		httpsession.setAttribute( "areasIds" , areasIds);
+//		httpsession.setAttribute( "cragsIds" , cragsIds);
+//		httpsession.setAttribute( "routesIds" , routesIds);
+//		httpsession.setAttribute( "pitchesIds" , pitchesIds);
+
 	}
 }

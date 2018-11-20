@@ -1,13 +1,8 @@
-package org.thibaut.wheretoclimb.webapp.validation;
+package org.thibaut.wheretoclimb.webapp.validation.pojo;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.thibaut.wheretoclimb.model.entity.Element;
-
-import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter

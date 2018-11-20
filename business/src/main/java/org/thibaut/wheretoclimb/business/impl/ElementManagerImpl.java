@@ -10,10 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.business.contract.ElementManager;
-import org.thibaut.wheretoclimb.model.entity.QArea;
-import org.thibaut.wheretoclimb.model.entity.QAtlas;
-import org.thibaut.wheretoclimb.model.entity.QCrag;
-import org.thibaut.wheretoclimb.model.entity.QRoute;
+import org.thibaut.wheretoclimb.model.entity.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -112,6 +109,11 @@ public class ElementManagerImpl extends AbstractManager implements ElementManage
 		}
 
 		return new PageImpl(list, PageRequest.of( currentPage, pageSize ), (long)result.size() );
+	}
+
+	@Override
+	public Element findElementById( Integer elementId ) {
+		return getDaoFactory().getElementRepository().findElementById( elementId );
 	}
 
 //	@Override

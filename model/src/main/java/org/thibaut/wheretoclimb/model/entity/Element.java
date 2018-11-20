@@ -31,7 +31,7 @@ public /*abstract*/ class Element {
 	@Size(min=4,max=50)
 	private String name;
 
-	@OneToMany(mappedBy = "element")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "element")
 	private List< Comment > comments;
 
 	private LocalDateTime createDate;

@@ -89,7 +89,7 @@
                         <div th:if="${!atlas.available}">
                             <td>No</td>
                         </div>
-                        <td th:text="${atlas.createDate}"></td>
+                        <td th:text="${#temporals.format(atlas.createDate, 'yyyy-MM-dd')}"></td>
                         <td th:text="${atlas.user.userName}"></td>
                         <td th:if="${userIsAdmin}">
                             <a th:href="@{/admin/editAtlas(id=${atlas.id})}">
@@ -219,8 +219,8 @@
                    <!--th:text="${pageNumber}" th:class="${pageNumber==resultNumber + 1} ? active"></a>-->
             <!--</div>-->
             <div class="container">
-                <ul th:if="${results.size() > 0}" class="pagination list-inline" th:each="pageNumber : ${pageNumbers}">
-                    <li class="page-item">
+                <ul th:if="${results.size() > 0}" class="pagination list-inline" >
+                    <li class="page-item" th:each="pageNumber : ${pageNumbers}">
                         <a class="page-link" th:href="@{/public/advancedSearch(page=${pageNumber},size=${results.size()}, searchIn=${searchIn}, name=${name}, country=${country}, region=${region}, department=${department}, city=${city})}"
                            th:text="${pageNumber}" th:class="${pageNumber==resultNumber + 1} ? active">
                         </a>

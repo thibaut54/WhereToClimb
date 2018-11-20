@@ -6,6 +6,7 @@ import org.thibaut.wheretoclimb.business.contract.AreaManager;
 import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -43,6 +44,12 @@ public class AreaManagerImpl extends AbstractManager implements AreaManager {
 	public Area createArea( Area area ) {
 		getDaoFactory( ).getAreaRepository( ).save( area );
 		return area;
+	}
+
+
+	@Override
+	public List<Area> findAreasByAtlasId( Integer atlasId ){
+		return getDaoFactory().getAreaRepository().findAreaByAtlasId( atlasId );
 	}
 
 }

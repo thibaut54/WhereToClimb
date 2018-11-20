@@ -6,6 +6,11 @@ public interface DaoFactory {
 
 	UserRepository getUserRepository( );
 	RoleRepository getRoleRepository( );
+
+	ElementRepository getElementRepository( );
+
+	void setElementRepository( ElementRepository elementRepository );
+
 	AtlasRepository getAtlasRepository( );
 	AreaRepository getAreaRepository( );
 	CommentRepository getCommentRepository( );

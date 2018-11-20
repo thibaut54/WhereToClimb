@@ -35,9 +35,7 @@ public class Area extends Element {
 
 	private double gpsLatitude;
 	private double gpsLongitude;
-	private int atltitude;
-	private double parkingGpsLatitude;
-	private double parkingGpsLongitude;
+	private int altitude;
 	private String parkingAccess;
 
 }

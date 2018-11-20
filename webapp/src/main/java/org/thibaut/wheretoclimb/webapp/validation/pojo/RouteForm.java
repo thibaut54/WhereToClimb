@@ -1,18 +1,15 @@
-package org.thibaut.wheretoclimb.webapp.validation;
+package org.thibaut.wheretoclimb.webapp.validation.pojo;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.thibaut.wheretoclimb.model.entity.Element;
-
-import javax.persistence.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-public class PitchForm extends ElementForm{
+public class RouteForm extends ElementForm{
 
 //----------ATTRIBUTES----------
 
@@ -20,7 +17,9 @@ public class PitchForm extends ElementForm{
 	private String grade;
 	private int length;
 	private int nbAnchor;
+	private boolean multiPitch;
 	private String verticality;
 	private String style;
+	private int parentCreateId;
 
 }

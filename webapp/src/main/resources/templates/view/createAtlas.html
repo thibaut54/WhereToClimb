@@ -18,11 +18,6 @@
                     <div class="card-block">
                         <form autocomplete="off" th:action="@{/user/saveAtlas}" method="post" th:object="${atlasForm}">
                             <input th:if="${atlasForm.id!=null}" type="hidden" th:field="*{id}"/>
-                            <!--<input th:if="${atlas.id!=null}" type="hidden" th:field="*{createDate}"/>-->
-                            <!--<input th:if="${atlas.id!=null}" type="hidden" th:field="*{comments}"/>-->
-                            <!--<input th:if="${atlas.id!=null}" type="hidden" th:field="*{user}"/>-->
-                            <!--<input th:if="${atlas.id!=null}" type="hidden" th:field="*{areas}"/>-->
-                            <!--<input th:if="${atlas.id!=null}" type="hidden" th:field="*{bookingRequests}"/>-->
                             <div class="form-group">
                                 <label>Atlas name</label>
                                 <input name="inputTxt" type="text" class="form-control" placeholder="The name of your atlas"

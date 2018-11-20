@@ -41,4 +41,8 @@ public interface ManagerFactory {
 	ElementManager getElementManager( );
 
 	void setElementManager( ElementManager elementManager );
+
+	CommentManager getCommentManager( );
+
+	void setCommentManager( CommentManager commentManager );
 }

@@ -1,4 +1,4 @@
-package org.thibaut.wheretoclimb.webapp.validation;
+package org.thibaut.wheretoclimb.webapp.validation.validator;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
 import org.thibaut.wheretoclimb.model.entity.User;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.UserForm;
 
 @Component
 public class UserValidator implements Validator {
@@ -44,10 +45,10 @@ public class UserValidator implements Validator {
 	 * of a {@link Class} for which the {@link #supports(Class)} method
 	 * typically has (or would) return {@code true}.
 	 * <p>The supplied {@link Errors errors} instance can be used to report
-	 * any resulting validation errors.
+	 * any resulting validator errors.
 	 *
 	 * @param target the object that is to be validated (can be {@code null})
-	 * @param errors contextual state about the validation process (never {@code null})
+	 * @param errors contextual state about the validator process (never {@code null})
 	 * @see ValidationUtils
 	 */
 	@Override
@@ -70,11 +71,11 @@ public class UserValidator implements Validator {
 			ValidationUtils.rejectIfEmptyOrWhitespace( errors, "password", "NotEmpty.userForm.password" );
 			ValidationUtils.rejectIfEmptyOrWhitespace( errors, "confirmPassword", "NotEmpty.userForm.confirmPassword" );
 
-			if ( !( userForm.getPassword( ).matches( "^[a-zA-Z0-9!\\+]{4,30}$" ) ) ) {
+			if ( !( userForm.getPassword( ).matches( "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})" ) ) ) {
 				errors.rejectValue( "password", "Pattern.userForm.password" );
 			}
-			if ( !( userForm.getConfirmPassword( ).matches( "^[a-zA-Z0-9!\\+]{4,30}$" ) ) ) {
-				errors.rejectValue( "confirmPassword", "Pattern.userForm.password" );
+			if ( !( userForm.getConfirmPassword( ).equals( userForm.getPassword( )  ) ) ) {
+				errors.rejectValue( "confirmPassword", "Match.userForm.confirmPassword" );
 			}
 		}
 
@@ -100,11 +101,6 @@ public class UserValidator implements Validator {
 			}
 		}
 
-		if ( !errors.hasErrors( ) ) {
-			if ( !userForm.getConfirmPassword( ).equals( userForm.getPassword( ) ) ) {
-				errors.rejectValue( "confirmPassword", "Match.userForm.confirmPassword" );
-			}
-		}
 	}
 
 }

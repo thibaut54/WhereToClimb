@@ -1,4 +1,4 @@
-package org.thibaut.wheretoclimb.webapp.validation;
+package org.thibaut.wheretoclimb.webapp.validation.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-@Component
 @Getter
 @Setter
 @NoArgsConstructor

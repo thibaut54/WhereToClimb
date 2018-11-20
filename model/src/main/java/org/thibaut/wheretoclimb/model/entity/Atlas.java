@@ -26,18 +26,12 @@ public class Atlas extends Element {
 	@OneToMany(mappedBy = "atlas")
 	private List< Area > areas;
 
-//	@NotNull
-//	@Size(min=3, max=50)
 	private String country;
 
-//	@NotNull
-//	@Size(min=3, max=50)
 	private String region;
 
-//	@Size(min=3, max=50)
 	private String department;
 
-//	@NotNull
 	private boolean available;
 
 	@ManyToOne

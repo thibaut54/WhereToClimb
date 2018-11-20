@@ -20,7 +20,6 @@ import javax.sql.DataSource;
 import java.util.Enumeration;
 
 @Configuration
-//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -32,11 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 
-//	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-//	@Override
-//	public AuthenticationManager authenticationManagerBean() throws Exception {
-//		return super.authenticationManagerBean();
-//	}
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -82,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginProcessingUrl("/j_spring_security_check") // Submit URL
 				.loginPage("/public/login")
 				.defaultSuccessUrl("/public/showAtlas")//
-				.successHandler( new CustomAuthenticationSuccessHandler() )
+				.successHandler( customAuthenticationSuccessHandler )
 				.failureUrl("/public/login?error=true")//
 				.usernameParameter("username")//
 				.passwordParameter("password")

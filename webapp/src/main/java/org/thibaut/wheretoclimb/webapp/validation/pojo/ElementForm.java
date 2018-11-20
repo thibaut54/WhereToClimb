@@ -1,4 +1,4 @@
-package org.thibaut.wheretoclimb.webapp.validation;
+package org.thibaut.wheretoclimb.webapp.validation.pojo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

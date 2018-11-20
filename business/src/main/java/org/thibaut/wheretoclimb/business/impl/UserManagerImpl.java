@@ -20,6 +20,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 	@Autowired
 	private PasswordManager passwordManager;
 
+
 	@Override
 	public List< User > getUsers( ) {
 
@@ -56,36 +57,20 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 
 	@Override
 	public User createUser( User user ) {
-
-//		String encrytedPassword = passwordManager.crypt(user.getPassword());
-//
-//		user.setPassword( encrytedPassword );
-
-//		List< Role > roles = new ArrayList<>();
-//
-//		roles.add( getDaoFactory().getRoleRepository().findByRoleLike( "%USER" ) );
-//
-//		user.setRoles( roles );
-
 		getDaoFactory().getUserRepository().save( user );
-
 		return user;
 	}
 
+
 	@Override
 	public User findById( Integer id ){
-
 		User user = null;
-
 		try {
 			user = getDaoFactory().getUserRepository().findById( id ).get();
 		} catch (Exception e) {
 			throw e;
 		}
-
 		return user;
 	}
-
-
 
 }

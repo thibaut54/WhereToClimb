@@ -8,6 +8,7 @@ import org.thibaut.wheretoclimb.business.contract.AtlasManager;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -68,6 +69,12 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 
 
 	@Override
+	public List<Atlas> findAtlasesByUserId( Integer userId ){
+		return getDaoFactory().getAtlasRepository().findAtlasByUserId(userId);
+	}
+
+
+	@Override
 	public void saveBookingRequest( Integer atlasId, BookingRequest bookingRequest ) {
 		log.info( "Trying to insert booking request for atlasID: " + atlasId );
 		Atlas atlas = findAtlasById( atlasId );
@@ -77,6 +84,7 @@ public class AtlasManagerImpl extends AbstractManager implements AtlasManager {
 		log.info( "Size booking request afer: " + atlas.getBookingRequests().size() );
 		saveAtlas( atlas );
 	}
+
 
 	@Override
 	public Atlas createAtlas( Atlas atlas ) {

@@ -11,13 +11,12 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thibaut.wheretoclimb.business.contract.PasswordManager;
-import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.User;
 import org.thibaut.wheretoclimb.util.GenericBuilder;
-import org.thibaut.wheretoclimb.webapp.validation.BookingRequestForm;
-import org.thibaut.wheretoclimb.webapp.validation.PasswordForm;
-import org.thibaut.wheretoclimb.webapp.validation.UserForm;
-import org.thibaut.wheretoclimb.webapp.validation.UserValidator;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.PasswordForm;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.UserForm;
+import org.thibaut.wheretoclimb.webapp.validation.validator.PasswordValidator;
+import org.thibaut.wheretoclimb.webapp.validation.validator.UserValidator;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -28,6 +27,9 @@ public class RegisterController extends AbstractController {
 
 	@Autowired
 	private UserValidator userValidator;
+
+	@Autowired
+	private PasswordValidator passwordValidator;
 
 	@Autowired
 	private PasswordManager passwordManager;
@@ -43,6 +45,20 @@ public class RegisterController extends AbstractController {
 
 		if ( target.getClass( ) == UserForm.class ) {
 			dataBinder.setValidator( userValidator );
+		}
+	}
+
+	// Set a form validator
+	@InitBinder
+	protected void initBinderPassword( WebDataBinder dataBinder ) {
+		// Form target
+		Object target = dataBinder.getTarget( );
+		if ( target == null ) {
+			return;
+		}
+
+		if ( target.getClass( ) == PasswordForm.class ) {
+			dataBinder.setValidator( passwordValidator );
 		}
 	}
 
@@ -144,7 +160,14 @@ public class RegisterController extends AbstractController {
 
 
 	@PostMapping( "/user/changePassword/{id}" )
-	public String changePassword( Model model, @PathVariable( name = "id" ) Integer id, @ModelAttribute( "passwordForm" ) /*@Validated*/ PasswordForm passwordForm, BindingResult result ) {
+	public String changePassword( Model model,
+	                              @PathVariable( name = "id" ) Integer id,
+	                              @ModelAttribute( "passwordForm" ) @Validated PasswordForm passwordForm,
+	                              BindingResult result ) {
+		// Validate result
+		if ( result.hasErrors( ) ) {
+			return "view/editPassword";
+		}
 
 		User newUser = null;
 
@@ -152,20 +175,20 @@ public class RegisterController extends AbstractController {
 
 		if ( passwordForm.getNewPassword( ).equals( passwordForm.getNewPasswordConfirm( ) ) ) {
 
-			updatedUser.setPassword( passwordForm.getNewPassword( ) );
+			updatedUser.setPassword( passwordManager.crypt( passwordForm.getNewPassword( ) ) );
 
 			try {
 				newUser = getManagerFactory( ).getUserManager( ).createUser( updatedUser );
 			}
 			// Other error!!
 			catch ( Exception e ) {
-				log.error( "error occuring update/update user account: " + updatedUser.getUserName( ), e );
+				log.error( "error occuring update user passwordt: " + updatedUser.getUserName( ), e );
 				model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
 				return "view/editPassword";
 			}
 		}
 
-		return "redirect:/public/showAtlas";
+		return "view/editPasswordConfirm";
 	}
 
 

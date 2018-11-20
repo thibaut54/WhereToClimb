@@ -1,6 +1,5 @@
 package org.thibaut.wheretoclimb.webapp.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,9 +12,8 @@ import org.thibaut.wheretoclimb.model.entity.Atlas;
 import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 import org.thibaut.wheretoclimb.model.entity.User;
 import org.thibaut.wheretoclimb.util.GenericBuilder;
-import org.thibaut.wheretoclimb.webapp.validation.BookingRequestForm;
-import org.thibaut.wheretoclimb.webapp.validation.BookingRequestValidator;
-import org.thibaut.wheretoclimb.webapp.validation.UserForm;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.BookingRequestForm;
+import org.thibaut.wheretoclimb.webapp.validation.validator.BookingRequestValidator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -55,7 +53,10 @@ public class BookingRequestController extends AbstractController {
 
 //	@PostMapping( "/user/saveBookingRequest" )
 	@PostMapping( "/user/saveBookingRequest/{atlasId}" )
-	public String saveBookingRequest( Model model, @PathVariable(name = "atlasId") Integer atlasId, @ModelAttribute("bookingRequestForm") @Validated BookingRequestForm bookingRequestForm, BindingResult result ) {
+	public String saveBookingRequest( Model model,
+	                                  @PathVariable(name = "atlasId") Integer atlasId,
+	                                  @ModelAttribute("bookingRequestForm") @Validated BookingRequestForm bookingRequestForm,
+	                                  BindingResult result ) {
 
 		if ( result.hasErrors( ) ) {
 			return "view/createBookingRequest";

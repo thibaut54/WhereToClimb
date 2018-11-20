@@ -5,6 +5,8 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import org.thibaut.wheretoclimb.model.entity.Area;
 
+import java.util.List;
+
 @Repository
 public interface AreaRepository extends JpaRepository< Area, Integer > , QuerydslPredicateExecutor< Area > {
 
@@ -12,5 +14,7 @@ public interface AreaRepository extends JpaRepository< Area, Integer > , Queryds
 //	public Page< Area > searchArea( @Param( "keyword" ) String keyword, Pageable pageable );
 
 	Area findByName( String name );
+
+	List<Area> findAreaByAtlasId(Integer atlasId);
 
 }

@@ -9,6 +9,7 @@ public class DaoFactoryImpl implements DaoFactory {
 
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
+	private ElementRepository elementRepository;
 	private AtlasRepository atlasRepository;
 	private AreaRepository areaRepository;
 	private CommentRepository commentRepository;
@@ -38,6 +39,17 @@ public class DaoFactoryImpl implements DaoFactory {
 	@Autowired
 	public void setRoleRepository( RoleRepository roleRepository ) {
 		this.roleRepository = roleRepository;
+	}
+
+	@Override
+	public ElementRepository getElementRepository( ) {
+		return elementRepository;
+	}
+
+	@Override
+	@Autowired
+	public void setElementRepository( ElementRepository elementRepository ) {
+		this.elementRepository = elementRepository;
 	}
 
 	@Override
