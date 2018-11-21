@@ -21,7 +21,6 @@ public class AreaForm extends ElementForm{
 	private String nearestCity;
 	private String access;
 	private String rockType;
-
 	private double gpsLatitude;
 	private double gpsLongitude;
 	private int altitude;

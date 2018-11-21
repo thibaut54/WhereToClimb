@@ -17,11 +17,10 @@
                     <div class="card-block">
                         <form autocomplete="off" th:action="@{/user/saveArea}" method="post" th:object="${areaForm}">
                             <input th:if="${areaForm.id!=null}" type="hidden" th:field="*{id}"/>
-                            <!--<div class="form-group" th:if="${areaForm.id==null}">-->
                             <div class="form-group" >
                                 <label>Concerned Atlas</label>
                                 <select th:field="${areaForm.atlas}" autofocus>
-                                    <option th:each="atlas:${session.atlasesFromConnectedUser}" th:value="${atlas.id}" th:text="${atlas.name}">
+                                    <option th:each="atlas:${atlases}" th:value="${atlas.id}" th:text="${atlas.name}">
                                     </option>
                                 </select>
                             </div>

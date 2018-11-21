@@ -9,4 +9,6 @@ public interface RouteManager {
 	void saveRoute( Route route );
 
 	void deleteRoute( Integer id );
+
+	Route createRoute( Route route );
 }

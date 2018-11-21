@@ -1,23 +1,14 @@
 package org.thibaut.wheretoclimb.webapp.validation.validator;
 
-import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.model.entity.User;
-import org.thibaut.wheretoclimb.webapp.validation.pojo.PasswordForm;
-import org.thibaut.wheretoclimb.webapp.validation.pojo.UserForm;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.AreaForm;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.CragForm;
 
 @Component
-public class PasswordValidator implements Validator {
-
-
-	@Autowired
-	private ManagerFactory managerFactory;
-
+public class CragValidator implements Validator {
 
 	/**
 	 * Can this {@link Validator} {@link #validate(Object, Errors) validate}
@@ -35,9 +26,8 @@ public class PasswordValidator implements Validator {
 	 */
 	@Override
 	public boolean supports( Class< ? > clazz ) {
-		return clazz == PasswordForm.class;
+		return clazz == CragForm.class;
 	}
-
 
 	/**
 	 * Validate the supplied {@code target} object, which must be
@@ -53,19 +43,15 @@ public class PasswordValidator implements Validator {
 	@Override
 	public void validate( Object target, Errors errors ) {
 
-		PasswordForm passwordForm = ( PasswordForm ) target;
+		CragForm cragForm = ( CragForm ) target;
 
-		if ( !( passwordForm.getNewPassword( ).matches( "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})" ) ) ) {
-			errors.rejectValue( "newPassword", "Pattern.passwordForm.password" );
-		}
-		if ( !( passwordForm.getNewPassword( ).equals( passwordForm.getNewPasswordConfirm( )  ) ) ) {
-			errors.rejectValue( "newPasswordConfirm", "Match.passwordForm.confirmPassword" );
-		}
+		ValidationUtils.rejectIfEmpty( errors, "name", "NotEmpty.elementForm.field" );
 
-		// Check the fields of AppUserForm.
-		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "currentPassword", "NotEmpty.passwordForm.field" );
-		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "newPassword", "NotEmpty.passwordForm.field" );
-		ValidationUtils.rejectIfEmptyOrWhitespace( errors, "newPasswordConfirm", "NotEmpty.passwordForm.field" );
+		if ( !( cragForm.getName( ).matches( "^[a-zA-Z0-9 ]{4,50}$" ) ) ) {
+			errors.rejectValue( "name", "Pattern.elementForm.name" );
+		}
+		if ( ( cragForm.getAccess( ).length() > 1000) ) {
+			errors.rejectValue( "access", "Pattern.cragForm.access" );
+		}
 	}
-
 }

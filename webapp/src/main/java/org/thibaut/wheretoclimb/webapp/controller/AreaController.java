@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -58,14 +59,13 @@ public class AreaController extends AbstractController {
 		User connectedUser = (User) httpSession.getAttribute( "connectedUser" );
 
 		if (connectedUser!=null){
-			putAreasFromUserInModel( model, connectedUser );
+			putAtlasFromUserInModel( model , httpSession );
+			putAreasFromUserInModel( model, httpSession );
 		}
 
 		Optional< Atlas > atlasOpt = Optional.ofNullable( getManagerFactory().getAtlasManager().findAtlasById( atlasId ) );
 
 		Page< Area > areas = new PageImpl<Area>( atlasOpt.get().getAreas(), PageRequest.of(page, size),atlasOpt.get().getAreas().size()) ;
-
-		isUserAdmin( model );
 
 		isCommented( model, atlasOpt.get() );
 
@@ -88,19 +88,20 @@ public class AreaController extends AbstractController {
 	public String  createArea( Model model,
 	                           HttpSession httpSession ){
 		model.addAttribute( "areaForm" , new AreaForm() );
-		model.addAttribute( "atlases" , getConnectedUser().get().getAtlases() );
-		model.addAttribute( "parentId" , 0 );
+		putAtlasFromUserInModel( model , httpSession );
 		return "view/createArea";
 	}
 
 
 	@PostMapping( "/user/saveArea" )
 	public String  saveArea( Model model,
-	                         @ModelAttribute("areaForm") @Valid AreaForm areaForm,
+	                         HttpSession httpSession,
+	                         @ModelAttribute("areaForm") @Validated AreaForm areaForm,
 	                         BindingResult result,
 	                         final RedirectAttributes redirectAttributes){
 
 		if( result.hasErrors() ){
+			putAtlasFromUserInModel( model , httpSession );
 			return "view/createArea";
 		}
 
@@ -121,7 +122,6 @@ public class AreaController extends AbstractController {
 					            .with( Area::setAltitude, areaForm.getAltitude( ) )
 					            .with( Area::setParkingAccess, areaForm.getParkingAccess( ) )
 								.build();
-
 			try {
 				newArea = getManagerFactory().getAreaManager().createArea(areaToCreate);
 			}
@@ -129,10 +129,9 @@ public class AreaController extends AbstractController {
 			catch (Exception e) {
 				log.error( "error occuring create/update an Area: " + areaForm.getName(), e );
 				model.addAttribute("errorMessage", "Error: " + e.getMessage());
+				putAtlasFromUserInModel( model , httpSession );
 				return "view/createArea";
 			}
-			redirectAttributes.addFlashAttribute("flashArea", newArea);
-
 		}
 		//If a user wants to edit an existing area
 		else if ( areaForm.getId() != null){
@@ -156,12 +155,11 @@ public class AreaController extends AbstractController {
 			catch (Exception e) {
 				log.error( "error occuring create/update an Area: " + areaForm.getName(), e );
 				model.addAttribute("errorMessage", "Error: " + e.getMessage());
+				putAtlasFromUserInModel( model , httpSession );
 				return "view/createArea";
 			}
-			redirectAttributes.addFlashAttribute("flashArea", newArea);
-
 		}
-
+		redirectAttributes.addFlashAttribute("flashArea", newArea);
 		return "redirect:/user/createAreaConfirm";
 	}
 
@@ -180,27 +178,15 @@ public class AreaController extends AbstractController {
 	}
 
 
-	@GetMapping( "/user/deleteArea" )
-	public String deleteArea(Integer id, Integer parentId, int page, int size){
+	@PostMapping( "/user/deleteArea/{id}/{parentId}/{page}/{size}" )
+	public String deleteArea(@PathVariable(name = "id") Integer id,
+	                         @PathVariable(name = "parentId") Integer parentId,
+	                         @PathVariable(name = "page") Integer page,
+	                         @PathVariable(name = "size") Integer size){
 		getManagerFactory().getAreaManager().deleteArea( id );
 		return "redirect:/public/showArea?atlasId=" + parentId + "&page=" + page + "&size=" + size ;
 	}
 
 
-	private void putAreasFromUserInModel( Model model, User userConnected ) {
-		List< Atlas > atlasesFromConnectedUser = getManagerFactory().getAtlasManager().findAtlasesByUserId( userConnected.getId() );
-		List<Area> areasFromConnectedUser = new ArrayList<>();
 
-		for ( Atlas atlas: atlasesFromConnectedUser ) {
-			areasFromConnectedUser.addAll( getManagerFactory().getAreaManager().findAreasByAtlasId( atlas.getId() ) );
-		}
-
-		List< Integer > areasId = new ArrayList<>( );
-		model.addAttribute( "areas", areasFromConnectedUser );
-
-		for ( Area area : areasFromConnectedUser ) {
-			areasId.add( area.getId( ) );
-		}
-		model.addAttribute( "areasId", areasId );
-	}
 }

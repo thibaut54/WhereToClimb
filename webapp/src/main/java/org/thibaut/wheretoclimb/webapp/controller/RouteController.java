@@ -1,18 +1,18 @@
 package org.thibaut.wheretoclimb.webapp.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.thibaut.wheretoclimb.model.entity.Area;
-import org.thibaut.wheretoclimb.model.entity.Atlas;
-import org.thibaut.wheretoclimb.model.entity.Crag;
-import org.thibaut.wheretoclimb.model.entity.Route;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thibaut.wheretoclimb.model.entity.*;
+import org.thibaut.wheretoclimb.util.GenericBuilder;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.RouteForm;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -22,10 +22,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@Slf4j
 public class RouteController extends AbstractController{
 
 	@GetMapping("/public/showRoute")
-	public String showRoute( Model model, Integer cragId,
+	public String showRoute( Model model,
+	                         Integer cragId,
+	                        HttpSession httpSession,
 	                        @RequestParam(name = "page", defaultValue = "0") int page,
 	                        @RequestParam(name = "size", defaultValue = "5") int size){
 
@@ -33,7 +36,11 @@ public class RouteController extends AbstractController{
 
 		Page< Route > routes = new PageImpl<Route>( cragOpt.get().getRoutes(), PageRequest.of(page, size), cragOpt.get().getRoutes().size()) ;
 
-		isUserAdmin( model );
+		User connectedUser = (User) httpSession.getAttribute( "connectedUser" );
+
+		if (connectedUser!=null){
+			putRoutesFromUserInModel( model , httpSession );
+		}
 
 		isCommented( model, cragOpt.get() );
 
@@ -49,52 +56,106 @@ public class RouteController extends AbstractController{
 
 
 	@GetMapping( "/user/createRoute" )
-	public String  createRoute( Model model /*, HttpSession httpSession*/ ){
-//		putUserInHttpSession( httpSession );
-		model.addAttribute( "route" , new Route() );
-		List< Atlas > atlases = getConnectedUser().get().getAtlases();
-		List< Area > areas = new ArrayList<>();
-		List< Crag > crags = new ArrayList<>();
-		for ( Atlas atlas: atlases ) {
-			areas.addAll( atlas.getAreas( ) );
-		}
-		for ( Area area: areas ) {
-			crags.addAll( area.getCrags() );
-		}
-		model.addAttribute( "crags" , crags );
+	public String  createRoute( Model model ,
+	                            HttpSession httpSession ){
+		model.addAttribute( "routeForm", new RouteForm() );
+		putRoutesFromUserInModel( model , httpSession );
 		getGradesAndVerticalities(model);
 		return "view/createRoute";
 	}
 
 
 	@PostMapping( "/user/saveRoute" )
-	public String  saveRoute( Model model, @Valid Route route, BindingResult result ){
+	public String  saveRoute( Model model,
+	                          HttpSession httpSession,
+	                          @ModelAttribute("routeForm") @Validated RouteForm routeForm,
+	                          BindingResult result,
+	                          final RedirectAttributes redirectAttributes ){
+
 		if(result.hasErrors()){
+			putRoutesFromUserInModel( model , httpSession );
+			getGradesAndVerticalities(model);
 			return "view/createRoute";
 		}
-		if( route.getId()==null ){
-			route.setCreateDate( LocalDateTime.now() );
-//			route.setCrag( getManagerFactory().getCragManager().findCragById( route.getParentCreateId() ) );
+
+		Route newRoute = null;
+
+		if( routeForm.getId()==null ) {
+			Route routeToCreate = GenericBuilder.of( Route::new )
+					                      .with( Route::setCreateDate, LocalDateTime.now( ) )
+					                      .with( Route::setCrag, routeForm.getCrag( ) )
+					                      .with( Route::setName, routeForm.getName( ) )
+					                      .with( Route::setGrade, routeForm.getGrade( ) )
+					                      .with( Route::setLength, routeForm.getLength( ) )
+					                      .with( Route::setNbAnchor, routeForm.getNbAnchor( ) )
+					                      .with( Route::setVerticality, routeForm.getVerticality( ) )
+					                      .with( Route::setStyle, routeForm.getStyle( ) )
+					                      .with( Route::setMultiPitch, routeForm.isMultiPitch( ) )
+					                      .build( );
+
+			try {
+				newRoute = getManagerFactory( ).getRouteManager( ).createRoute( routeToCreate );
+			}
+			// Other error!!
+			catch ( Exception e ) {
+				log.error( "error occuring create/update a route: " + routeForm.getName( ), e );
+				model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
+				getGradesAndVerticalities(model);
+				putCragsFromUserInModel( model, httpSession );
+				return "view/createRoute";
+			}
 		}
-		else if ( route.getId()!=null ){
-			route.setUpdateDate( LocalDateTime.now() );
+		//If a user wants to edit an existing route
+		else if ( routeForm.getId() != null) {
+			Route routeToUpdate = getManagerFactory( ).getRouteManager( ).findRouteById( routeForm.getId( ) );
+			routeToUpdate.setUpdateDate( LocalDateTime.now( ) );
+			routeToUpdate.setCrag( routeForm.getCrag() );
+			routeToUpdate.setName( routeForm.getName());
+			routeToUpdate.setGrade( routeForm.getGrade());
+			routeToUpdate.setLength( routeForm.getLength());
+			routeToUpdate.setNbAnchor( routeForm.getLength());
+			routeToUpdate.setVerticality( routeForm.getVerticality());
+			routeToUpdate.setStyle( routeForm.getStyle());
+			routeToUpdate.setMultiPitch( routeForm.isMultiPitch());
+			try {
+				newRoute = getManagerFactory( ).getRouteManager( ).createRoute( routeToUpdate );
+			}
+			// Other error!!
+			catch ( Exception e ) {
+				log.error( "error occuring create/update a route: " + routeForm.getName( ), e );
+				model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
+				getGradesAndVerticalities(model);
+				putCragsFromUserInModel( model, httpSession );
+				return "view/createRoute";
+			}
 		}
-		getManagerFactory().getRouteManager().saveRoute( route );
+		redirectAttributes.addFlashAttribute("flashRoute", newRoute);
+		return "view/createRouteConfirm";
+	}
+
+
+	@GetMapping("/user/createRouteConfirm")
+	public String createRouteConfirm(){
 		return "view/createRouteConfirm";
 	}
 
 
 	@GetMapping( "/admin/editRoute" )
 	public String editRoute( Model model, Integer id){
-		Route route = getManagerFactory().getRouteManager().findRouteById( id );
-		model.addAttribute( "route", route );
+		RouteForm routeForm = new RouteForm(getManagerFactory().getRouteManager().findRouteById( id ));
+		getGradesAndVerticalities(model);
+		model.addAttribute( "routeForm", routeForm );
 		return "view/createRoute";
 	}
 
 
-	@GetMapping( "/admin/deleteRoute" )
-	public String deleteRoute(Integer id, int page, int size){
+	@PostMapping( "/user/deleteRoute/{id}/{parentId}/{page}/{size}" )
+	public String deleteRoute(@PathVariable(name = "id") Integer id,
+	                         @PathVariable(name = "parentId") Integer parentId,
+	                         @PathVariable(name = "page") Integer page,
+	                         @PathVariable(name = "size") Integer size){
 		getManagerFactory().getRouteManager().deleteRoute( id );
-		return "redirect:/public/showRoute?cragId=" + id + "&page=" + page + "&size=" + size;
+		return "redirect:/public/showRoute?cragId=" + parentId + "&page=" + page + "&size=" + size ;
 	}
+
 }

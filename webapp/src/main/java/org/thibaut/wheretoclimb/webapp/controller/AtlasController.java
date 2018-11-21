@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -20,6 +21,8 @@ import org.thibaut.wheretoclimb.webapp.validation.validator.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @Transactional
@@ -63,7 +66,7 @@ public class AtlasController extends AbstractController {
 
 
 	@GetMapping( "/public/showAtlas" )
-	public String atlas( Model model,
+	public String showAtlas( Model model,
 	                     HttpSession httpSession,
 	                     @RequestParam( name = "page", defaultValue = "0" ) int page,
 	                     @RequestParam( name = "size", defaultValue = "5" ) int size,
@@ -71,7 +74,7 @@ public class AtlasController extends AbstractController {
 
 		Page< Atlas > atlases = getManagerFactory( ).getAtlasManager( ).searchAtlas( page, size, keyword );
 
-		isUserAdmin( model );
+		putAtlasFromUserInModel( model ,httpSession );
 
 		model.addAttribute( "atlases", atlases.getContent( ) );
 		model.addAttribute( "pages", new int[atlases.getTotalPages( )] );
@@ -87,9 +90,10 @@ public class AtlasController extends AbstractController {
 	public String myAtlas( Model model,
 	                       HttpSession httpSession ) {
 
-		Integer connectedUserId = (Integer ) httpSession.getAttribute( "connectedUserId" );
+//		Integer connectedUserId = (Integer ) httpSession.getAttribute( "connectedUserId" );
+//		model.addAttribute( "atlases" , getManagerFactory().getAtlasManager().findAtlasesByUserId( connectedUserId ));
 
-		model.addAttribute( "atlases" , getManagerFactory().getAtlasManager().findAtlasesByUserId( connectedUserId ));
+		putAtlasFromUserInModel( model, httpSession );
 
 		return "view/showAtlas";
 	}
@@ -104,7 +108,7 @@ public class AtlasController extends AbstractController {
 
 	@PostMapping( "/user/saveAtlas" )
 	public String saveAtlas( Model model,
-	                         @ModelAttribute("atlasForm") @Valid AtlasForm atlasForm,
+	                         @ModelAttribute("atlasForm") @Validated AtlasForm atlasForm,
 	                         BindingResult result,
 	                         final RedirectAttributes redirectAttributes ) {
 		if ( result.hasErrors( ) ) {
@@ -240,6 +244,8 @@ public class AtlasController extends AbstractController {
 	public String accessDenied( ) {
 		return "error/403";
 	}
+
+
 
 
 }

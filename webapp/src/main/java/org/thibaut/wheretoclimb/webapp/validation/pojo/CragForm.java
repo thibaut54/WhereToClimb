@@ -3,6 +3,8 @@ package org.thibaut.wheretoclimb.webapp.validation.pojo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.thibaut.wheretoclimb.model.entity.Area;
+import org.thibaut.wheretoclimb.model.entity.Crag;
 
 @Getter
 @Setter
@@ -11,11 +13,16 @@ public class CragForm extends ElementForm{
 
 //----------ATTRIBUTES----------
 
+	private Area area;
 	private String mapUrl;
 	private String access;
 	private int approachDuration;
-	//uploader le file sur le server, et stocker en bdd l'url
 
 
-
+	public CragForm( Crag crag ) {
+		setId( crag.getId() );
+		setName( crag.getName() );
+		this.access = crag.getAccess();
+		this.approachDuration = crag.getApproachDuration();
+	}
 }

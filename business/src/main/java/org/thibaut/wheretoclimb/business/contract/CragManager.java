@@ -10,6 +10,8 @@ public interface CragManager {
 
 //	Page< Crag > searchCragByNameAndCountryAndRegionAndDepartment( int page, int size, String typeObject , String name, String country, String region, String department, String city );
 
+	Crag createCrag( Crag crag );
+
 	void saveCrag( Crag crag );
 
 	void deleteCrag( Integer id );

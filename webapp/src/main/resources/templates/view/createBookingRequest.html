@@ -17,10 +17,7 @@
                 <div class="card-header">
                     <h5>Send an atlas booking request</h5>
                     <div class="card-block">
-                        <!--<form th:action="@{/user/saveBookingRequest(atlasId=${atlasId})}" method="post" th:object="${bookingRequestForm}">-->
-                        <!--th:action="@{'/user/deleteAtlas/' + ${atlas.id}}"-->
                         <form th:action="@{'/user/saveBookingRequest/' + ${atlasId}}" method="post" th:object="${bookingRequestForm}">
-                            <!--<input type="hidden" th:field="*{atlas}"/>-->
                             <div class="form-group">
                                 <label for="datepicker-start" class="col-form-label">Start date:</label>
                                 <input type="date" id="datepicker-start"  width="276" th:field="*{startDate}" />

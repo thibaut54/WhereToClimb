@@ -19,33 +19,42 @@
                         <h3>LIST OF CRAGS IN AREA: <span th:text="${area.name}"></span></h3>
                     </caption>
                     <thead>
-                    <tr>
-                        <th>NAME</th>
-                        <th>ACCESS</th>
-                        <th>CREATION DATE</th>
-                        <th>LAST UPDATE</th>
-                    </tr>
+                        <tr>
+                            <th th:if="${session.connectedUser!=null}"></th>
+                            <th>NAME</th>
+                            <th>ACCESS</th>
+                            <th>CREATION DATE</th>
+                            <th>LAST UPDATE</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="crag:${area.crags}">
-                        <td >
-                            <a th:text="${crag.name}" th:href="@{/public/showRoute(cragId=${crag.id})}"></a>
-                        </td>
-                        <td th:text="${crag.access}"></td>
-                        <td th:text="${crag.createDate}"></td>
-                        <td th:text="${crag.updateDate}"></td>
-                        <td th:if="${userIsAdmin}">
-                            <a th:href="@{/admin/editCrag(id=${crag.id})}">
-                                <i class="icon fas fa-pencil-alt"></i>
-                            </a>
-                        </td>
-                        <td th:if="${userIsAdmin}">
-                            <a  id="trash-ic" th:href="@{/admin/deleteCrag(id=${crag.id}, page=${currentPage}, size=${size})}"
-                                onclick="return confirm('Do you really want to delete this Area?')">
-                                <i class="icon fas fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
+                        <tr th:each="crag:${area.crags}">
+                            <td th:if="${session.connectedUser!=null}">
+                                <a th:href="@{/user/commentElement(elementId=${crag.id})}">
+                                    <i class="fas fa-comment-dots"></i>
+                                </a>
+                            </td>
+                            <td >
+                                <a th:text="${crag.name}" th:href="@{/public/showRoute(cragId=${crag.id})}"></a>
+                            </td>
+                            <td th:text="${crag.access}"></td>
+                            <td th:text="${#temporals.format(crag.createDate, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${#temporals.format(crag.updateDate, 'yyyy-MM-dd')}"></td>
+                            <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and cragsIds.contains(crag.id)))}">
+                                <td>
+                                    <a th:href="@{/user/editCrag(id=${crag.id})}">
+                                        <i class="icon fas fa-pencil-alt"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <form autocomplete="off" th:action="@{'/user/deleteCrag/' + ${crag.id}+'/'+${crag.area.id}+'/'+${currentPage}+'/'+${size}}" method="post">
+                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Crag?')">
+                                            <i class="icon fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </span>
+                        </tr>
                     </tbody>
                 </table>
             </article>

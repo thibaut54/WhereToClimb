@@ -6,13 +6,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.model.entity.Element;
-import org.thibaut.wheretoclimb.model.entity.Grade;
-import org.thibaut.wheretoclimb.model.entity.User;
-import org.thibaut.wheretoclimb.model.entity.Verticality;
+import org.thibaut.wheretoclimb.model.entity.*;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -40,6 +39,134 @@ public abstract class AbstractController {
 	@Autowired
 	public void setManagerFactory( ManagerFactory managerFactory ) {
 		this.managerFactory = managerFactory;
+	}
+
+
+	void putAtlasFromUserInModel( Model model, HttpSession httpSession ) {
+
+		if ( httpSession.getAttribute( "connectedUserId" )!=null ) {
+
+			List< Atlas > atlasesFromConnectedUser = getManagerFactory( ).getAtlasManager( ).findAtlasesByUserId( ( Integer ) httpSession.getAttribute( "connectedUserId" ) );
+			List< Integer > atlasesIds = new ArrayList<>( );
+			for ( Atlas atlas : atlasesFromConnectedUser ) {
+				atlasesIds.add( atlas.getId( ) );
+			}
+			//		List< Area > areasFromConnectedUser = new ArrayList<>();
+			//		List< Crag > cragFromConnectedUser = new ArrayList<>();
+			//		List< Route > routesFromConnectedUser = new ArrayList<>();
+			//		List< Pitch > pitchesFromConnectedUser = new ArrayList<>();
+			//		List< Integer > atlasesIds = new ArrayList<>( );
+			//		List< Integer > areasIds = new ArrayList<>( );
+			//		List< Integer > cragsIds = new ArrayList<>( );
+			//		List< Integer > routesIds = new ArrayList<>( );
+			//		List< Integer > pitchesIds = new ArrayList<>( );
+			//
+			//		for ( Atlas atlas: atlasesFromConnectedUser ) {
+			//			areasFromConnectedUser.addAll( atlas.getAreas( ) );
+			//		}
+			//		for ( Area area: areasFromConnectedUser) {
+			//			cragFromConnectedUser.addAll( area.getCrags( ) );
+			//		}
+			//		for ( Crag crag: cragFromConnectedUser) {
+			//			routesFromConnectedUser.addAll( crag.getRoutes( ) );
+			//		}
+			//		for ( Route route: routesFromConnectedUser) {
+			//			pitchesFromConnectedUser.addAll( route.getPitches( ) );
+			//		}
+			//
+			//		for ( Atlas atlas : atlasesFromConnectedUser ) {
+			//			atlasesIds.add( atlas.getId( ) );
+			//		}
+			//		for ( Area area: areasFromConnectedUser ) {
+			//			areasIds.add( area.getId( ) );
+			//		}
+			//		for ( Crag crag : cragFromConnectedUser) {
+			//			cragsIds.add( crag.getId( ) );
+			//		}
+			//		for ( Route route : routesFromConnectedUser) {
+			//			routesIds.add( route.getId( ) );
+			//		}
+			//		for ( Pitch pitch: pitchesFromConnectedUser) {
+			//			pitchesIds.add( pitch.getId( ) );
+			//		}
+
+			model.addAttribute( "atlases", atlasesFromConnectedUser );
+			//		httpsession.setAttribute( "areasFromConnectedUser" , areasFromConnectedUser );
+			//		httpsession.setAttribute( "cragFromConnectedUser" , cragFromConnectedUser );
+			//		httpsession.setAttribute( "routesFromConnectedUser" , atlasesFromConnectedUser );
+			//		httpsession.setAttribute( "atlasesFromConnectedUser" , pitchesFromConnectedUser );
+			model.addAttribute( "atlasesIds", atlasesIds );
+			//		httpsession.setAttribute( "areasIds" , areasIds);
+			//		httpsession.setAttribute( "cragsIds" , cragsIds);
+			//		httpsession.setAttribute( "routesIds" , routesIds);
+			//		httpsession.setAttribute( "pitchesIds" , pitchesIds);
+
+		}
+	}
+
+	void putAreasFromUserInModel( Model model, HttpSession httpSession ) {
+		List< Atlas > atlasesFromUser = getManagerFactory().getAtlasManager().findAtlasesByUserId( (Integer) httpSession.getAttribute("connectedUserId") );
+		List<Area> areasFromUser = new ArrayList<>();
+
+		for ( Atlas atlas: atlasesFromUser ) {
+			areasFromUser.addAll( getManagerFactory().getAreaManager().findAreasByAtlasId( atlas.getId() ) );
+		}
+
+		List< Integer > areasId = new ArrayList<>( );
+		model.addAttribute( "areas", areasFromUser );
+
+		for ( Area area : areasFromUser ) {
+			areasId.add( area.getId( ) );
+		}
+		model.addAttribute( "areasIds", areasId );
+	}
+
+
+	void putCragsFromUserInModel( Model model, HttpSession httpSession ) {
+		List< Atlas > atlasesFromUser = getManagerFactory().getAtlasManager().findAtlasesByUserId( (Integer) httpSession.getAttribute("connectedUserId") );
+		List<Area> areasFromUser = new ArrayList<>();
+		List< Crag > cragsFromUser = new ArrayList<>();
+
+		for ( Atlas atlas: atlasesFromUser ) {
+			areasFromUser.addAll( getManagerFactory().getAreaManager().findAreasByAtlasId( atlas.getId() ) );
+		}
+		for ( Area area: areasFromUser) {
+			cragsFromUser.addAll( area.getCrags( ) );
+		}
+
+		List< Integer > cragsIds = new ArrayList<>( );
+		for ( Crag crag : cragsFromUser) {
+			cragsIds.add( crag.getId( ) );
+		}
+		model.addAttribute( "crags", cragsFromUser);
+		model.addAttribute( "cragsIds", cragsIds);
+
+	}
+
+
+	void putRoutesFromUserInModel( Model model, HttpSession httpSession ) {
+		List< Atlas > atlasesFromUser = getManagerFactory().getAtlasManager().findAtlasesByUserId( (Integer) httpSession.getAttribute("connectedUserId") );
+		List<Area> areasFromUser = new ArrayList<>();
+		List< Crag > cragsFromUser = new ArrayList<>();
+		List< Route > routesFromUser = new ArrayList<>();
+
+		for ( Atlas atlas: atlasesFromUser ) {
+			areasFromUser.addAll( getManagerFactory().getAreaManager().findAreasByAtlasId( atlas.getId() ) );
+		}
+		for ( Area area: areasFromUser) {
+			cragsFromUser.addAll( area.getCrags( ) );
+		}
+		for ( Crag crag: cragsFromUser) {
+			routesFromUser.addAll( crag.getRoutes( ) );
+		}
+
+		List< Integer > routesIds = new ArrayList<>( );
+		for ( Route route : routesFromUser) {
+			routesIds.add( route.getId( ) );
+		}
+		model.addAttribute( "routesFromUser", routesFromUser);
+		model.addAttribute( "routesIds", routesIds);
+
 	}
 
 

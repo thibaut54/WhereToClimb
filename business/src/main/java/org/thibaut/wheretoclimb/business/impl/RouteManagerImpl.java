@@ -33,4 +33,9 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager {
 		getDaoFactory().getCommentRepository().deleteAll( findRouteById( id ).getComments() );
 		getDaoFactory().getRouteRepository().deleteById( id );
 	}
+
+	@Override
+	public Route createRoute( Route route ){
+		return getDaoFactory().getRouteRepository().save( route );
+	}
 }
