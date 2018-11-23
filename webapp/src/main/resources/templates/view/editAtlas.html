@@ -1,51 +1,64 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout/layout.html">
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+      <!--xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+      <!--layout:decorate="layout/layout.html">-->
 
-    <head>
-        <div th:insert="fragment/bootstrapCDN :: head"></div>
-
-        <link rel="stylesheet" type="text/css" media="all"
-              th:href="@{/static/css/atlas.css}" href="../static/css/atlas.css"/>
-
-    </head>
+    <!--<div layout:fragment="customCSS">-->
+        <!--<link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/createAtlas.css}" />-->
+    <!--</div>-->
 
 
-    <body>
-        <div layout:fragment="content">
-            <div class="container spacer col-md-6 col-xs-12">
-
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Create new Atlas</h5>
-                        <div class="card-block">
-                            <form th:action="@{/user/saveAtlas}" method="post">
-                                <div class="form-group">
-                                    <label>Atlas name</label>
-                                    <input type="text" class="form-control" placeholder="The name of your atlas"
-                                           th:field="${atlas.name}"/>
-                                    <span class="error-field" th:errors="${atlas.name}"></span>
-                                    <small id="atlasHelp" class="form-text text-muted">
-                                        A good idea would be to name the atlas as the title of the atlas book that you may have.</small>
-                                </div>
-                                <div class="form-group">
-                                    <label>Country</label>
-                                    <input type="text" class="form-control" placeholder="The country concerned by the atlas"
-                                           th:field="${atlas.country}"/>
-                                    <span class="error-field" th:errors="${atlas.country}"></span>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-
-    </body>
-
-</html>
+    <!--<div layout:fragment="content">-->
+        <!--<div class="container spacer col-md-6 col-xs-12">-->
+            <!--<div class="card">-->
+                <!--<div class="card-header">-->
+                    <!--<h5>Edit Atlas</h5>-->
+                    <!--<div class="card-block">-->
+                        <!--<form th:action="@{/user/saveAtlas}" method="post" th:object="${atlas}">-->
+                                <!--<input th:if="${edit}" type="hidden" th:field="*{id}"/>-->
+                                <!--<input th:if="${edit}" type="hidden" th:field="*{createDate}"/>-->
+                                <!--<input th:if="${edit}" type="hidden" th:field="*{comments}"/>-->
+                                <!--<input th:if="${edit}" type="hidden" th:field="*{user}"/>-->
+                                <!--<input th:if="${edit}" type="hidden" th:field="*{areas}"/>-->
+                                <!--<input th:if="${edit}" type="hidden" th:field="*{bookingRequests}"/>-->
+                            <!--<div class="form-group">-->
+                                <!--<label>Atlas name</label>-->
+                                <!--<input type="text" class="form-control" placeholder="The name of your atlas"-->
+                                       <!--th:field="*{name}"/>-->
+                                <!--<span class="error-field" th:errors="*{name}"></span>-->
+                                <!--<small id="atlasHelp" class="form-text text-muted">-->
+                                    <!--A good idea would be to name the atlas as the title of the atlas book that you may have.</small>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label>Country</label>-->
+                                <!--<input type="text" class="form-control" placeholder="The country concerned by the atlas"-->
+                                       <!--th:field="*{country}"/>-->
+                                <!--<span class="error-field" th:errors="*{country}"></span>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label>Region</label>-->
+                                <!--<input name="inputTxt" type="text" class="form-control" placeholder="The country concerned by the atlas"-->
+                                       <!--th:field="*{region}"/>-->
+                                <!--<span class="error-field" th:errors="*{region}"></span>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label>Department</label>-->
+                                <!--<input name="inputTxt" type="text" class="form-control" placeholder="If relevant, the department concerned by the atlas"-->
+                                       <!--th:field="*{department}"/>-->
+                                <!--<span class="error-field" th:errors="*{department}"></span>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label>Can be borrowed?</label>-->
+                                <!--<select th:field="*{available}">-->
+                                    <!--<option value="true">Yes</option>-->
+                                    <!--<option value="false">No</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<button type="submit" class="btn btn-primary">Save</button>-->
+                        <!--</form>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</html>-->

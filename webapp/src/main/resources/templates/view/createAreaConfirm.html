@@ -4,7 +4,7 @@
       layout:decorate="layout/layout.html">
 
     <div layout:fragment="customCSS">
-        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/atlas.css}" />
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/area.css}" />
     </div>
 
 
@@ -15,13 +15,17 @@
                 <div class="card-header">
                     <h5>Confirmation</h5>
                     <div class="card-block">
+                        <!--<div class="form-group">-->
+                            <!--<label>Concerned atlas:</label>-->
+                            <!--<label th:text="${area.atlas.id}"></label>-->
+                        <!--</div>-->
                         <div class="form-group">
-                            <label>Atlas name:</label>
-                            <label th:text="${atlas.name}"></label>
+                            <label>Area name:</label>
+                            <label th:text="${flashArea.name}"></label>
                         </div>
                         <div class="form-group">
-                            <label>Country:</label>
-                            <label th:text="${atlas.country}"></label>
+                            <label>Area nearest city:</label>
+                            <label th:text="${flashArea.nearestCity}"></label>
                         </div>
                     </div>
                 </div>

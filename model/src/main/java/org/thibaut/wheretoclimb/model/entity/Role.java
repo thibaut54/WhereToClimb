@@ -1,6 +1,9 @@
 package org.thibaut.wheretoclimb.model.entity;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 public class Role {
 
@@ -22,9 +24,12 @@ public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private String role;
+
 	@ManyToMany(mappedBy = "roles")
 	private List< User > users;
+
+	private String role;
+
 
 
 //----------CONSTRUCTORS----------

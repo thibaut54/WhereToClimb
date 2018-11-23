@@ -1,12 +1,11 @@
 
+@import url(common.css);
+
 caption {
     padding: 10px;
     caption-side: top;
 }
 
-h3{
-    color: darkorange;
-}
 
 #search-btn{
     width: 150px;
@@ -21,8 +20,4 @@ h3{
 
 .error-field {
     color: red;
-}
-
-.listArea{
-    margin-top: 40px;
 }

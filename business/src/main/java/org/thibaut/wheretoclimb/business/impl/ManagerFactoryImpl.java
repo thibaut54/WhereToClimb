@@ -17,6 +17,8 @@ public class ManagerFactoryImpl implements ManagerFactory {
 	private CragManager cragManager;
 	private RouteManager routeManager;
 	private PitchManager pitchManager;
+	private ElementManager elementManager;
+	private CommentManager commentManager;
 
 	@Override
 	public UserManager getUserManager( ) {
@@ -118,5 +120,28 @@ public class ManagerFactoryImpl implements ManagerFactory {
 	@Autowired
 	public void setPitchManager( PitchManager pitchManager ) {
 		this.pitchManager = pitchManager;
+	}
+
+
+	@Override
+	public ElementManager getElementManager( ) {
+		return elementManager;
+	}
+
+	@Override
+	@Autowired
+	public void setElementManager( ElementManager elementManager ) {
+		this.elementManager = elementManager;
+	}
+
+	@Override
+	public CommentManager getCommentManager( ) {
+		return commentManager;
+	}
+
+	@Override
+	@Autowired
+	public void setCommentManager( CommentManager commentManager ) {
+		this.commentManager = commentManager;
 	}
 }

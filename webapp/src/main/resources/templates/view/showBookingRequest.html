@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all"
+              th:href="@{/static/css/atlas.css}" />
+    </div>
+
+
+    <div layout:fragment="content">
+        <div class="container">
+            <table class="listAtlas table table-bordered table-striped table-condensed">
+                <caption>
+                    <h3>BOOKING REQUEST RECEIVED FROM OTHER MEMBERS</h3>
+                </caption>
+                <thead>
+                    <tr>
+                        <th>ATLAS NAME</th>
+                        <th>START DATE OF BORROWING</th>
+                        <th>END DATE OF BORROWING</th>
+                        <th>MEMBER WHO ASKED</th>
+                        <th>MESSAGE</th>
+                        <th>MEMBER EMAIL</th>
+                        <th>ACCEPTED</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="request:${bookingRequestsReceived}">
+                        <td >
+                            <a th:text="${request.atlas.name}" ></a>
+                        </td>
+                        <td th:text="${request.startDate}"></td>
+                        <td th:text="${request.endDate}"></td>
+                        <td th:text="${request.user.userName}"></td>
+                        <td th:text="${request.message}"></td>
+                        <td th:if="${request.user.emailVisible}" th:text="${request.user.email}"></td>
+                        <td th:if="${!request.user.emailVisible}">NC</td>
+                        <td th:if="${request.accepted}">YES</td>
+                        <td th:if="${!request.accepted}">NO</td>
+                        <td th:if="${!request.accepted}">
+                            <form autocomplete="off" th:action="@{'/user/acceptBookingRequest/' + ${request.id}}" method="post">
+                                <button type="submit" class="btn btn-primary">
+                                    Accept
+                                    <a  id="accept" onclick="return confirm('Do you really want to accept this request?')">
+                                        <i class="fas fa-check-circle"></i>
+                                    </a>
+                                </button>
+                            </form>
+                        </td>
+                        <td th:if="${request.accepted}">
+                            <form autocomplete="off" th:action="@{'/user/refuseBookingRequest/' + ${request.id}}" method="post">
+                                <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Refuse!">
+                                    Refuse
+                                    <a  id="refuse" onclick="return confirm('Do you really want to refuse this request?')">
+                                        <i class="fas fa-ban"></i>
+                                    </a>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="listAtlas table table-bordered table-striped table-condensed">
+                <caption>
+                    <h3>BOOKING REQUEST SENT TO OTHER MEMBERS</h3>
+                </caption>
+                <thead>
+                    <tr>
+                        <th>ATLAS NAME</th>
+                        <th>ACCEPTED</th>
+                        <th>START DATE OF BORROWING</th>
+                        <th>END DATE OF BORROWING</th>
+                        <th>OWNER</th>
+                        <th>MESSAGE YOU SEND</th>
+                        <th>MEMBER EMAIL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="request:${bookingRequestsSent}">
+                        <td >
+                            <a th:text="${request.atlas.name}" ></a>
+                        </td>
+                        <td th:if="${request.accepted}">YES</td>
+                        <td th:if="${!request.accepted}">NO</td>
+                        <td th:text="${request.startDate}"></td>
+                        <td th:text="${request.endDate}"></td>
+                        <td th:text="${request.atlas.user.userName}"></td>
+                        <td th:text="${request.message}"></td>
+                        <td th:if="${request.atlas.user.emailVisible}" th:text="${request.atlas.user.email}"></td>
+                        <td th:if="${!request.atlas.user.emailVisible}">NC</td>
+                        <td>
+                            <form autocomplete="off" th:action="@{'/user/deleteBookingRequest/' + ${request.id}}" method="post">
+                                <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Request?')">
+                                    <i class="icon fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</html>

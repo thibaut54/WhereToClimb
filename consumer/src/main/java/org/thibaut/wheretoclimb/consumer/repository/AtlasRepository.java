@@ -7,15 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
+
+import java.util.List;
 
 @Repository
 public interface AtlasRepository  extends JpaRepository< Atlas, Integer > , QuerydslPredicateExecutor <Atlas> {
 
-	public Atlas findByName( String name );
+	Atlas findByName( String name );
 
 	@Query("SELECT atlas FROM Atlas atlas WHERE LOWER(atlas.name) LIKE :keyword")
-	public Page< Atlas > searchAtlas( @Param( "keyword" ) String keyword, Pageable pageable );
+	Page< Atlas > searchAtlas( @Param( "keyword" ) String keyword, Pageable pageable );
+
+	List<Atlas> findAtlasByUserId(Integer userId);
 
 }

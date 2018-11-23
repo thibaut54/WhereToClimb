@@ -6,11 +6,13 @@ import java.util.List;
 
 public interface UserManager {
 
-	public List< User > getUsers();
+	List< User > getUsers( );
 
 	User findByUserName( String username );
 
 	User findByEmail( String email );
 
 	User createUser( User user );
+
+	User findById( Integer id );
 }

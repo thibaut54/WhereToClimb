@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.thibaut.wheretoclimb.business.contract.RoleManager;
 import org.thibaut.wheretoclimb.consumer.repository.RoleRepository;
+import org.thibaut.wheretoclimb.model.entity.Role;
 
 import java.util.List;
 
 @Component
-public class RoleManagerImpl implements RoleManager {
+public class RoleManagerImpl extends AbstractManager implements RoleManager {
 
 	@Autowired
 	private RoleRepository roleRepository;
@@ -24,6 +25,11 @@ public class RoleManagerImpl implements RoleManager {
 			throw e;
 		}
 		return roles;
+	}
+
+	@Override
+	public List<Role> findRoleByRoleName( String roleName ){
+		return getDaoFactory().getRoleRepository().findRolesByRoleContains( roleName );
 	}
 
 }

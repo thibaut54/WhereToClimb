@@ -6,103 +6,78 @@
 
     <div layout:fragment="customCSS">
         <link rel="stylesheet" type="text/css" media="all"
-              th:href="@{/static/css/crag.css}" />
+              th:href="@{/static/css/area.css}" />
     </div>
 
 
     <div layout:fragment="content">
         <div class="container">
-            <section class="row">
-                <article class="col-lg-8">
+            <ul class="row" id="breadcrumbs">
+                <li><a th:href="@{/public/showAtlas}">List of all atlases</a></li>
+                <li><a href="#">Atlas: <span th:text="${atlas.name}"></span></a></li>
+            </ul>
+            <div class="row">
+                <div class="col-lg-8">
                     <table class="listArea table table-bordered table-striped table-condensed">
                         <caption>
-                            <h3>LIST OF AREAS IN ATLAS: <span th:text="${atlas.name}"></span></h3>
-                            <button th:if="${atlas.available}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bookModal">Ask for borrow this Atlas</button>
-
-                            <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Booking request to: @
-                                                <span th:text="${atlas.user.userName}"></span></h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form th:action="@{/user/saveBookingRequest(atlasId=${atlas.id})}" method="post">
-                                                <div class="form-group">
-                                                    <label for="datepicker-start" class="col-form-label">Start date:</label>
-                                                    <input id="datepicker-start"  width="276" th:field="${bookingRequest.startDate}" />
-                                                    <script>
-                                                        $('#datepicker-start').datepicker({
-                                                            uiLibrary: 'bootstrap4'
-                                                        });
-                                                    </script>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="datepicker-end" class="col-form-label">End date:</label>
-                                                    <input id="datepicker-end" th:field="${bookingRequest.endDate}" width="276" />
-                                                    <script>
-                                                        $('#datepicker-end').datepicker({
-                                                            uiLibrary: 'bootstrap4'
-                                                        });
-                                                    </script>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="message-text" th:field="${bookingRequest.message}" class="col-form-label">Add a message:</label>
-                                                    <textarea class="form-control" id="message-text" ></textarea>
-                                                </div>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" >Send request</button>
-                                            </form>
-                                        </div>
-                                        <!--<div class="modal-footer">-->
-                                            <!---->
-                                        <!--</div>-->
-                                    </div>
-                                </div>
-                            </div>
-
+                            <h5>LIST OF AREAS</h5>
+                            <a th:if="${atlas.available && session.connectedUser!=null && !atlasesIds.contains(atlas.id)}" class="btn btn-primary" th:href="@{/user/createBookingRequest(atlasId=${atlas.id})}" role="button">Ask for borrow this Atlas</a>
                         </caption>
                         <thead>
                             <tr>
+                                <th th:if="${session.connectedUser!=null}"></th>
                                 <th>NAME</th>
-                                <th>LOCALITY</th>
+                                <th>NEAREST CITY</th>
+                                <th>ACCESS</th>
+                                <th>ROCK TYPE</th>
                                 <th>APPROACH DURATION</th>
+                                <th>ALTITUDE</th>
+                                <th>PARKING ACCESS</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="area:${atlas.areas}">
+                                <td th:if="${session.connectedUser!=null}">
+                                    <a th:href="@{/user/commentElement(elementId=${area.id})}">
+                                        <i class="fas fa-comment-dots"></i>
+                                    </a>
+                                </td>
                                 <td >
                                     <a th:text="${area.name}" th:href="@{/public/showCrag(areaId=${area.id})}"></a>
                                 </td>
-                                <td th:text="${area.locality}"></td>
-                                <td th:text="${area.approachDuration}+' minutes'"></td>
-                                <td th:if="${userIsAdmin}">
-                                    <a th:href="@{/admin/editArea(id=${area.id})}">
-                                        <i class="icon fas fa-pencil-alt"></i>
-                                    </a>
-                                </td>
-                                <td th:if="${userIsAdmin}">
-                                    <!--<a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size}, keyword=${keyword})}"-->
-                                        <!--onclick="return confirm('Do you really want to delete this Area?')">-->
-                                        <!--<i class="icon fas fa-trash"></i>-->
-                                    <!--</a>-->
-                                    <a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size})}"
-                                        onclick="return confirm('Do you really want to delete this Area?')">
-                                        <i class="icon fas fa-trash"></i>
-                                    </a>
-                                </td>
+                                <td th:text="${area.nearestCity}"></td>
+                                <td th:text="${area.access.isEmpty()}?'${area.access}':'NC'"></td>
+                                <td th:if="${area.rockType!=null}" th:text="${area.rockType}"></td>
+                                <td th:if="${area.rockType==null}" th:text="NC"></td>
+                                <td th:if="${area.approachDuration!=null}" th:text="${area.approachDuration}"></td>
+                                <td th:if="${area.approachDuration==null}" th:text="NC"></td>
+                                <td th:if="${area.altitude!=null}" th:text="${area.altitude}"></td>
+                                <td th:if="${area.altitude==null}" th:text="NC"></td>
+                                <td th:if="${area.parkingAccess!=null}" th:text="${area.parkingAccess}"></td>
+                                <td th:if="${area.parkingAccess==null}" th:text="NC"></td>
+                                <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and areasIds.contains(area.id)))}">
+                                    <td>
+                                        <a th:href="@{/user/editArea(id=${area.id})}">
+                                            <i class="icon fas fa-pencil-alt"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form autocomplete="off" th:action="@{'/user/deleteArea/' + ${area.id}+'/'+${area.atlas.id}+'/'+${currentPage}+'/'+${size}}" method="post">
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Area?')">
+                                                <i class="icon fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </span>
                             </tr>
                         </tbody>
                     </table>
-                </article>
-                <aside th:if="${elementIsCommented}">
+                </div>
+                <div th:if="${elementIsCommented}">
+                    <h4>Comments</h4>
                     <div th:each="comment:${atlas.comments}" class="card">
                         <div class="card-header">
-                            <span th:text="${comment.title}"></span>
+                            <span th:text="'Title: '+${comment.title}+' | Author: '+${comment.user.userName}+' | Posted: ' +${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></span>
                         </div>
                         <div class="card-body">
                             <p class="card-text">
@@ -110,22 +85,15 @@
                             </p>
                         </div>
                     </div>
-                </aside>
-            <!--</div>-->
-            </section>
-            <!--<div class="container col-lg-8">-->
+                </div>
+            </div>
             <footer class="row container">
-                <!--<ul class="nav nav-pills">-->
                 <ul class="pagination">
                     <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
-                    <!--<li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page">-->
                         <a class="page-link" th:href="@{/public/showArea(atlasId=${atlas.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
                         </a>
-                        <!--<a class="page-link" th:href="@{/public/showArea(page=${status.index}, size=${size})}" th:text="${status.index}+1" >-->
-                        <!--</a>-->
                     </li>
                 </ul>
-            <!--</div>-->
             </footer>
         </div>
     </div>

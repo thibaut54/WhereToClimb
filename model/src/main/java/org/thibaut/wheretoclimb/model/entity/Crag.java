@@ -1,6 +1,9 @@
 package org.thibaut.wheretoclimb.model.entity;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,39 +18,22 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode( callSuper = true )
 public class Crag extends Element {
 
 //----------ATTRIBUTES----------
 
-//	@ManyToMany(mappedBy = "crags")
-//	private List< Atlas > atlases;
-	@OneToMany/*(mappedBy = "crag", fetch = FetchType.LAZY)*/
-	@JoinColumn(name = "crag_id")
+	@ManyToOne
+	@JoinColumn(name = "area_id")
+	private Area area;
+
+	@OneToMany(mappedBy = "crag" , cascade=CascadeType.REMOVE)
 	private List< Route > routes;
-	@OneToMany/*(mappedBy = "crag", fetch = FetchType.LAZY)*/
-	@JoinColumn(name = "crag_id")
-	private List< Parking > parkings;
-	@OneToOne(mappedBy = "crag")
-	private GpsCoordinates cragGps;
-	private String mapUrl;
-	private String locality;
-	private Integer approachDuration;
+
+	private String access;
+	private int approachDuration;
 	//uploader le file sur le server, et stocker en bdd l'url
 
-
-//----------CONSTRUCTORS----------
-
-
-//	public Crag( List< Atlas > atlases, List< Route > routes, List< Parking > parkings,
-//	             GpsCoordinates cragGps, String mapUrl ) {
-//		this.atlases = atlases;
-//		this.routes = routes;
-//		this.parkings = parkings;
-//		this.cragGps = cragGps;
-//		this.mapUrl = mapUrl;
-//	}
 
 
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/createAtlas.css}" />
+    </div>
+
+
+    <div layout:fragment="content">
+        <div class="container spacer col-md-6 col-xs-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 th:if="${cragForm.id==null}">Create new Crag</h5>
+                    <h5 th:if="${cragForm.id!=null}">Edit Crag</h5>
+                    <div class="card-block">
+                        <form autocomplete="off" th:action="@{/user/saveCrag}" method="post" th:object="${cragForm}">
+                            <input th:if="${cragForm.id!=null}" type="hidden" th:field="*{id}"/>
+                            <div class="form-group">
+                                <label>Concerned Area</label>
+                                <select th:field="*{area}">
+                                    <option th:each="area:${areas}" th:value="${area.id}" th:text="${area.name}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="The name of the crag"
+                                       th:field="*{name}" autofocus/>
+                                <span class="error-field" th:errors="*{name}"></span>
+                                <small id="atlasHelp" class="form-text text-muted">
+                                    A good idea would be to name the crag with its official name.</small>
+                            </div>
+                            <div class="autocomplete form-group">
+                                <label>Approach duration in minuts</label>
+                                <input id="myInput" name="inputTxt" type="number" class="form-control" placeholder="The walking time before reaching the crag"
+                                       th:field="*{approachDuration}"/>
+                                <span class="error-field" th:errors="*{approachDuration}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Access information</label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="A brief description of how to find the crag"
+                                       th:field="*{access}"/>
+                                <span class="error-field" th:errors="*{access}"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</html>

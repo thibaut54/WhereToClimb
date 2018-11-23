@@ -9,9 +9,9 @@ public class DaoFactoryImpl implements DaoFactory {
 
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
+	private ElementRepository elementRepository;
 	private AtlasRepository atlasRepository;
 	private AreaRepository areaRepository;
-	private MessageRepository messageRepository;
 	private CommentRepository commentRepository;
 	private BookingRequestRepository bookingRequestRepository;
 	private CragRepository cragRepository;
@@ -42,6 +42,17 @@ public class DaoFactoryImpl implements DaoFactory {
 	}
 
 	@Override
+	public ElementRepository getElementRepository( ) {
+		return elementRepository;
+	}
+
+	@Override
+	@Autowired
+	public void setElementRepository( ElementRepository elementRepository ) {
+		this.elementRepository = elementRepository;
+	}
+
+	@Override
 	public AtlasRepository getAtlasRepository( ) {
 		return atlasRepository;
 	}
@@ -61,17 +72,6 @@ public class DaoFactoryImpl implements DaoFactory {
 	@Autowired
 	public void setAreaRepository( AreaRepository areaRepository ) {
 		this.areaRepository = areaRepository;
-	}
-
-	@Override
-	public MessageRepository getMessageRepository( ) {
-		return messageRepository;
-	}
-
-	@Override
-	@Autowired
-	public void setMessageRepository( MessageRepository messageRepository ) {
-		this.messageRepository = messageRepository;
 	}
 
 	@Override

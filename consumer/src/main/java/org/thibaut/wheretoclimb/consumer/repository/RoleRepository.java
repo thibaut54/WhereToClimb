@@ -15,11 +15,13 @@ public interface RoleRepository extends JpaRepository< Role, Integer > {
 //			       "INNER JOIN User user ON user.roles.id = role.id " +
 //			       "WHERE user.userName =:username ")
 	@Query("SELECT r.role FROM Role r JOIN r.users u WHERE u.userName =:username")
-	public List<String> findRoleByUserName( @Param( "username" ) String username );
+	List<String> findRoleByUserName( @Param( "username" ) String username );
 
 	@Query("SELECT r.role FROM Role r JOIN r.users u WHERE u.email =:email")
-	public List<String> findRoleByEmail( @Param( "email" ) String email );
+	List<String> findRoleByEmail( @Param( "email" ) String email );
 
-//	@Query("SELECT r.role FROM Role r WHERE r.role =:role")
-	public Role findByRoleLike( String role );
+	//	@Query("SELECT r.role FROM Role r WHERE r.role =:role")
+	List<Role> findRolesByRoleContains( String role );
+
+	Role findByRoleLike( String role );
 }

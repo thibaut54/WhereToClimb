@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/layout.html">
 
@@ -18,7 +19,11 @@
                 </caption>
                 <thead>
                     <tr>
+                        <th th:if="${session.connectedUser!=null}"></th>
                         <th>NAME</th>
+                        <th>COUNTRY</th>
+                        <th>REGION</th>
+                        <th>DEPARTMENT</th>
                         <th>CAN BE BORROWED</th>
                         <th>COMMENTS</th>
                         <th>CREATION DATE</th>
@@ -27,30 +32,41 @@
                 </thead>
                 <tbody>
                     <tr th:each="atlas:${atlases}">
+                        <td th:if="${session.connectedUser!=null}">
+                            <a th:href="@{/user/commentElement(elementId=${atlas.id})}">
+                                <i class="fas fa-comment-dots"></i>
+                            </a>
+                        </td>
                         <td >
                             <a th:text="${atlas.name}" th:href="@{/public/showArea(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
                         </td>
+                        <td th:text="${atlas.country}"></td>
+                        <td th:text="${atlas.region}"></td>
+                        <td th:text="${atlas.department!=null}?'${atlas.department}':'NC'"></td>
                         <div th:if="${atlas.available}">
-                            <td>Yes </td>
-                            <!--<td>Yes <a><i class="fas fa-hand-holding"></i></a></td>-->
+                            <td>Yes</td>
                         </div>
                         <div th:if="${!atlas.available}">
                             <td>No</td>
                         </div>
                         <td th:text="${atlas.getComments().size()}"></td>
-                        <td th:text="${atlas.createDate}"></td>
+                        <td th:text="${#temporals.format(atlas.createDate, 'yyyy-MM-dd')}"></td>
                         <td th:text="${atlas.user.userName}"></td>
-                        <td th:if="${userIsAdmin}">
-                            <a th:href="@{/admin/editAtlas(id=${atlas.id})}">
-                                <i class="icon fas fa-pencil-alt"></i>
-                            </a>
-                        </td>
-                        <td th:if="${userIsAdmin}">
-                            <a  id="trash-ic" th:href="@{/admin/deleteAtlas(id=${atlas.id}, page=${currentPage}, size=${size}, keyword=${keyword})}"
-                            onclick="return confirm('Do you really want to delete this Atlas?')">
-                                <i class="icon fas fa-trash"></i>
-                            </a>
-                        </td>
+                        <span th:if="${session.connectedUser!=null
+                        and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and atlasesIds.contains(atlas.id)))}">
+                            <td>
+                                <a th:href="@{/user/editAtlas(id=${atlas.id})}" onclick="return confirm('Do you really want to modify this Atlas?')">
+                                    <i class="icon fas fa-pencil-alt"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <form autocomplete="off" th:action="@{'/user/deleteAtlas/' + ${atlas.id}}" method="post">
+                                    <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Atlas?')">
+                                            <i class="icon fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </span>
                     </tr>
                 </tbody>
             </table>

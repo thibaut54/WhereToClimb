@@ -12,49 +12,56 @@
 
     <div class="advancedSearchBar" layout:fragment="content">
         <div class="container" >
-            <form th:action="@{/public/advancedSearch}" method="get">
+            <form th:action="@{/public/advancedSearch(searchIn=${searchIn})}" method="get">
                 <div class="row input-group">
                     <div class="btn-group btn-group-toggle" id="radio-btn" data-toggle="buttons">
                         <h5>Search in  </h5>
-                        <label class="btn btn-secondary active">
-                            <input type="radio" name="searchIn" value="Atlas" id="Atlas" autocomplete="off"> Atlas
+                        <label th:class="${searchIn}=='Atlas'?'btn btn-secondary active':'btn btn-secondary'">
+                            <input th:if="${searchIn}!='Atlas'" type="radio" name="searchIn" value="Atlas"  autocomplete="off">
+                            <input th:if="${searchIn}=='Atlas'" type="radio" name="searchIn" value="Atlas"  autocomplete="off" checked> Atlas
                         </label>
-                        <label class="btn btn-secondary">
-                            <input type="radio" name="searchIn" value="Area" id="Area" autocomplete="off"> Area
+                        <label th:class="${searchIn}=='Area'?'btn btn-secondary active':'btn btn-secondary'">
+                            <input th:if="${searchIn}!='Area'" type="radio" name="searchIn" value="Area"  autocomplete="off">
+                            <input th:if="${searchIn}=='Area'" type="radio" name="searchIn" value="Area"  autocomplete="off" checked> Area
                         </label>
-                        <label class="btn btn-secondary">
-                            <input type="radio" name="searchIn" value="Crag" id="Crag" autocomplete="off"> Crag
+                        <label th:class="${searchIn}=='Crag'?'btn btn-secondary active':'btn btn-secondary'">
+                            <input th:if="${searchIn}!='Crag'" type="radio" name="searchIn" value="Crag"  autocomplete="off">
+                            <input th:if="${searchIn}=='Crag'" type="radio" name="searchIn" value="Crag"  autocomplete="off" checked> Crag
                         </label>
-                        <label class="btn btn-secondary">
-                            <input type="radio" name="searchIn" value="Route" id="Route" autocomplete="off"> Route
+                        <label th:class="${searchIn}=='Route'?'btn btn-secondary active':'btn btn-secondary'">
+                            <input th:if="${searchIn}!='Route'" type="radio" name="searchIn" value="Route"  autocomplete="off">
+                            <input th:if="${searchIn}=='Route'" type="radio" name="searchIn" value="Route"  autocomplete="off" checked> Route
                         </label>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <label for="name">Name</label>
                             <input id="name" class="form-control border-secondary py-2" type="search" name="name" placeholder="search"/>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <label for="country">Country</label>
                             <input id="country" class="form-control border-secondary py-2" type="search" name="country" placeholder="search"/>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <label for="region">Region</label>
                             <input id="region" class="form-control border-secondary py-2" type="search" name="region" placeholder="search"/>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <label for="department">Department</label>
                             <input id="department" class="form-control border-secondary py-2" type="search" name="department" placeholder="search"/>
                         </div>
-                    </div>
-                    <div class="row input-group-append">
-                        <div class="col-lg-12">
+                        <div class="col-lg-2">
+                            <label for="city">City</label>
+                            <input id="city" class="form-control border-secondary py-2" type="search" name="city" placeholder="search"/>
+                        </div>
+                        <div class="col-lg-2">
+                            <!--input-group-append-->
+                            <label for="city"> </label>
                             <button id="search-btn" class="btn btn-outline-secondary" type="submit" >
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
                     </div>
-
                 </div>
             </form>
             <div th:if="${!searchHasResults}" class="row">No result found</div>
@@ -65,7 +72,7 @@
                     </caption>
                     <thead>
                     <tr>
-                        <th>NAME</th>
+                        <th>NAME OF ATLAS</th>
                         <th>CAN BE BORROWED</th>
                         <th>CREATION DATE</th>
                         <th>OWNER</th>
@@ -82,7 +89,7 @@
                         <div th:if="${!atlas.available}">
                             <td>No</td>
                         </div>
-                        <td th:text="${atlas.createDate}"></td>
+                        <td th:text="${#temporals.format(atlas.createDate, 'yyyy-MM-dd')}"></td>
                         <td th:text="${atlas.user.userName}"></td>
                         <td th:if="${userIsAdmin}">
                             <a th:href="@{/admin/editAtlas(id=${atlas.id})}">
@@ -107,7 +114,7 @@
                     <thead>
                     <tr>
                         <th>NAME</th>
-                        <th>LOCALITY</th>
+                        <th>NEAREST CITY</th>
                         <th>APPROACH DURATION</th>
                     </tr>
                     </thead>
@@ -116,7 +123,7 @@
                         <td >
                             <a th:text="${area.name}" th:href="@{/public/showCrag(areaId=${area.id})}"></a>
                         </td>
-                        <td th:text="${area.locality}"></td>
+                        <td th:text="${area.nearestCity}"></td>
                         <td th:text="${area.approachDuration}+' minutes'"></td>
                         <td th:if="${userIsAdmin}">
                             <a th:href="@{/admin/editArea(id=${area.id})}">
@@ -124,10 +131,6 @@
                             </a>
                         </td>
                         <td th:if="${userIsAdmin}">
-                            <!--<a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size}, keyword=${keyword})}"-->
-                            <!--onclick="return confirm('Do you really want to delete this Area?')">-->
-                            <!--<i class="icon fas fa-trash"></i>-->
-                            <!--</a>-->
                             <a  id="trash-ic" th:href="@{/admin/deleteArea(id=${area.id}, page=${currentPage}, size=${size})}"
                                 onclick="return confirm('Do you really want to delete this Area?')">
                                 <i class="icon fas fa-trash"></i>
@@ -137,14 +140,101 @@
                     </tbody>
                 </table>
             </div>
-            <div class="row">
-                <ul class="pagination">
-                    <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
-                        <a class="page-link" th:href="@{/public/advancedSearch(page=${status.index}, size=${size}, name=${name}, country=${country}, region=${region}, department=${department})}" th:text="${status.index}+1" >
+            <div th:if="${searchHasResults && searchIn=='Crag'}" class="row">
+                <table class="listAtlas table table-bordered table-striped table-condensed">
+                    <caption>
+                        <h3>RESULTS</h3>
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>ACCESS</th>
+                        <th>NUMBER OF ROUTES</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="crag:${results}">
+                        <td >
+                            <a th:text="${crag.name}" th:href="@{/public/showRoute(cragId=${crag.id})}"></a>
+                        </td>
+                        <td th:text="${crag.access}"></td>
+                        <!--<td th:text="${crag.routes.size()}+' minutes'"></td>-->
+                        <td th:inline="text">[[${crag.routes.size()}]]></td>
+                        <td th:if="${userIsAdmin}">
+                            <a th:href="@{/admin/editCrag(id=${crag.id})}">
+                                <i class="icon fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <td th:if="${userIsAdmin}">
+                            <a  id="trash-ic" th:href="@{/admin/deleteCrag(id=${crag.id}, page=${currentPage}, size=${size})}"
+                                onclick="return confirm('Do you really want to delete this Area?')">
+                                <i class="icon fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${searchHasResults && searchIn=='Route'}" class="row">
+                <table class="listAtlas table table-bordered table-striped table-condensed">
+                    <caption>
+                        <h3>RESULTS</h3>
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>GRADE</th>
+                        <th>LENGTH</th>
+                        <th>VERTICALITY</th>
+                        <th>STYLE</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="route:${results}">
+                        <td >
+                            <a th:text="${route.name}" th:href="@{/public/showPitch(routeId=${route.id})}"></a>
+                        </td>
+                        <td th:text="${route.grade}"></td>
+                        <td th:text="${route.length}+' meters'"></td>
+                        <td th:text="${route.verticality}"></td>
+                        <td th:text="${route.style}"></td>
+                        <td th:if="${userIsAdmin}">
+                            <a th:href="@{/admin/editRoute(id=${route.id})}">
+                                <i class="icon fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <td th:if="${userIsAdmin}">
+                            <a  id="trash-ic" th:href="@{/admin/deleteRoute(id=${route.id}, page=${currentPage}, size=${size})}"
+                                onclick="return confirm('Do you really want to delete this Area?')">
+                                <i class="icon fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--<div th:if="${results.size() > 0}" class="pagination"-->
+                 <!--th:each="pageNumber : ${pageNumbers}">-->
+                <!--<a class="page-link" th:href="@{/public/advancedSearch(page=${pageNumber},size=${results.size()}, searchIn=${searchIn}, name=${name}, country=${country}, region=${region}, department=${department}, city=${city})}"-->
+                   <!--th:text="${pageNumber}" th:class="${pageNumber==resultNumber + 1} ? active"></a>-->
+            <!--</div>-->
+            <div class="container">
+                <ul th:if="${results.size() > 0}" class="pagination list-inline" >
+                    <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                        <a class="page-link" th:href="@{/public/advancedSearch(page=${pageNumber},size=${results.size()}, searchIn=${searchIn}, name=${name}, country=${country}, region=${region}, department=${department}, city=${city})}"
+                           th:text="${pageNumber}" th:class="${pageNumber==resultNumber + 1} ? active">
                         </a>
                     </li>
                 </ul>
             </div>
+            <!--<div class="row">-->
+                <!--<ul class="pagination">-->
+                    <!--<li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">-->
+                        <!--<a class="page-link" th:href="@{/public/advancedSearch(page=${status.index}, size=${size}, searchIn=${searchIn}, name=${name}, country=${country}, region=${region}, department=${department}, city=${city})}" th:text="${status.index}+1" >-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
         </div>
 
 

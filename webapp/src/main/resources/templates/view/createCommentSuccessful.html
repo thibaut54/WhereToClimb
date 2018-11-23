@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/crag.css}" />
+    </div>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h2>You have successfully posted your comment!</h2>
+                    <div class="card-block">
+                        <div class="form-group">
+                            <label>Comment title</label>
+                            <label th:text="${flashComment.title}"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</html>

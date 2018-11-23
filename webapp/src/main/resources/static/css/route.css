@@ -1,4 +1,6 @@
 
+@import url(common.css);
+
 caption {
     padding: 10px;
     caption-side: top;
@@ -7,3 +9,4 @@ caption {
 h3{
     color: darkorange;
 }
+

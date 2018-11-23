@@ -1,27 +1,28 @@
 package org.thibaut.wheretoclimb.business.contract;
 
 import org.springframework.data.domain.Page;
-import org.thibaut.wheretoclimb.model.entity.Area;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 
-public interface AtlasManager {
+import java.util.List;
 
-//	public List< Atlas > getAtlases();
+public interface AtlasManager {
 
 	Page< Atlas > getAtlases( int page, int size );
 
 	Page< Atlas > searchAtlas( int page, int size, String keyword );
 
-	Page<Atlas> searchAtlasByNameAndCountryAndRegionAndDepartment( int page, int size, String name, String country, String region, String department );
-
 	void deleteAtlas( Integer id );
 
 	void saveAtlas( Atlas atlas );
 
-	Atlas findById( Integer id );
+	Atlas findAtlasById( Integer id );
 
-	Atlas findByName( String name );
+	Atlas findAtlasByName( String name );
+
+	List<Atlas> findAtlasesByUserId( Integer userId );
 
 	void saveBookingRequest( Integer atlasId, BookingRequest bookingRequest );
+
+	Atlas createAtlas( Atlas atlasToCreate );
 }

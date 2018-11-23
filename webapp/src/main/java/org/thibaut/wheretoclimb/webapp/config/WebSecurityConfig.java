@@ -3,28 +3,38 @@ package org.thibaut.wheretoclimb.webapp.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.thibaut.wheretoclimb.model.entity.User;
 import org.thibaut.wheretoclimb.webapp.security.UserDetailsServiceImpl;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 import javax.sql.DataSource;
+import java.util.Enumeration;
 
 @Configuration
-//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 
 	@Autowired
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+	@Autowired
 	private DataSource dataSource;
+
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder;
+		return new BCryptPasswordEncoder();
 	}
 
 	@Autowired
@@ -34,15 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// And Setting PassswordEncoder
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 
-
 	}
 
-//	@Override
-//	public void configure( WebSecurity webSecurity) throws Exception {
-//		webSecurity.ignoring()
-//				// ignore all URLs that start with /resources/ or /static/
-//				.antMatchers("/resources/**", "/css/**");
-//	}
 
 	@Override
 	protected void configure( HttpSecurity http ) throws Exception {
@@ -71,7 +74,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().and().formLogin()//
 				// Submit URL of login page.
 				.loginProcessingUrl("/j_spring_security_check") // Submit URL
-				.loginPage("/public/login").defaultSuccessUrl("/public/showAtlas")//
+				.loginPage("/public/login")
+				.defaultSuccessUrl("/public/showAtlas")//
+				.successHandler( customAuthenticationSuccessHandler )
 				.failureUrl("/public/login?error=true")//
 				.usernameParameter("username")//
 				.passwordParameter("password")

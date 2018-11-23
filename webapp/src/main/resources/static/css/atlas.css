@@ -18,51 +18,11 @@ h3{
     color: red;
 }
 
-/*.spacer{*/
-    /*margin-top: 40px;*/
-/*}*/
-
-
-/*.navbar{*/
-    /*margin-bottom: 40px;*/
-/*}*/
-
-
-/*.navbar-dark{*/
-    /*background-color: darkorange;*/
-/*}*/
-
-
-.listAtlas{
-    margin-top: 40px;
-}
-
 .icon{
     alignment: center;
     align-items: center;
 }
 
-/*.container {*/
-    /*padding-right: 15px;*/
-    /*padding-left: 15px;*/
-    /*margin-right: auto;*/
-    /*margin-left: auto;*/
-/*}*/
-
-/*@media (min-width: 768px) {*/
-    /*.container {*/
-        /*width: 750px;*/
-    /*}*/
-/*}*/
-
-/*@media (min-width: 992px) {*/
-    /*.container {*/
-        /*width: 970px;*/
-    /*}*/
-/*}*/
-
-/*@media (min-width: 1200px) {*/
-    /*.container {*/
-        /*width: 1170px;*/
-    /*}*/
-/*}*/
+table {
+    font-size:70%;
+}

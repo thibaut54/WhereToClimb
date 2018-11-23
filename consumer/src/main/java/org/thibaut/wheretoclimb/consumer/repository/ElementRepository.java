@@ -6,4 +6,6 @@ import org.thibaut.wheretoclimb.model.entity.Element;
 
 @Repository
 public interface ElementRepository extends JpaRepository< Element, Integer > {
+
+	public Element findElementById(Integer elementId);
 }

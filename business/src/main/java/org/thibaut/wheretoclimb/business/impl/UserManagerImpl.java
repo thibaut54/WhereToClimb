@@ -9,7 +9,6 @@ import org.thibaut.wheretoclimb.model.entity.Role;
 import org.thibaut.wheretoclimb.model.entity.User;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -21,14 +20,11 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 	@Autowired
 	private PasswordManager passwordManager;
 
+
 	@Override
 	public List< User > getUsers( ) {
 
-		System.out.println( "In USERMANAGER, getUsers() method" );
-
 		List<User> users = getDaoFactory().getUserRepository().findAll();
-
-		users.forEach( user -> System.out.println( user.toString() )  );
 
 		return users;
 	}
@@ -61,20 +57,20 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 
 	@Override
 	public User createUser( User user ) {
-
-		String encrytedPassword = passwordManager.crypt(user.getPassword());
-
-		user.setPassword( encrytedPassword );
-
-		Collection< Role > roles = new ArrayList<>();
-
-		roles.add( getDaoFactory().getRoleRepository().findByRoleLike( "%USER" ) );
-
-//		user.setUserRoles( ( List< Role > ) roles );
-		user.setRoles( ( List< Role > ) roles );
-		this.getDaoFactory().getUserRepository().save( user );
+		getDaoFactory().getUserRepository().save( user );
 		return user;
 	}
 
+
+	@Override
+	public User findById( Integer id ){
+		User user = null;
+		try {
+			user = getDaoFactory().getUserRepository().findById( id ).get();
+		} catch (Exception e) {
+			throw e;
+		}
+		return user;
+	}
 
 }

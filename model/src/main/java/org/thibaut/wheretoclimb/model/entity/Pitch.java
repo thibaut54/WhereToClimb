@@ -1,15 +1,11 @@
 package org.thibaut.wheretoclimb.model.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import javax.persistence.*;
 
 /**
  * Used to define a part of a route, when this one is made up of
@@ -21,19 +17,20 @@ import java.util.ArrayList;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
-//@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode
 public class Pitch extends Element {
 
 //----------ATTRIBUTES----------
+
+	@ManyToOne
+	@JoinColumn(name = "route_id")
+	private Route route;
 
 	private String grade;
 	private int length;
 	private int nbAnchor;
 	private String verticality;
 	private String style;
-
-
 
 
 }

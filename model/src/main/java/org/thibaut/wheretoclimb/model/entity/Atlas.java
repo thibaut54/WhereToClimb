@@ -3,9 +3,11 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -17,47 +19,27 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString( exclude = {"areas" , "bookingRequests" , "user"})
 //@EqualsAndHashCode( callSuper = true )
 public class Atlas extends Element {
 
 //----------ATTRIBUTES----------
 
-	@ManyToMany
-	@JoinTable(
-		name = "areas_in_atlases",
-		joinColumns = { @JoinColumn(name = "atlas_id") },
-		inverseJoinColumns = { @JoinColumn(name = "area_id") } )
+	@OneToMany(mappedBy = "atlas", cascade=CascadeType.REMOVE)
 	private List< Area > areas;
-//	@NotNull
-	private String scale;
+
 	private String country;
+
 	private String region;
+
 	private String department;
+
 	private boolean available;
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	@OneToMany(mappedBy = "atlas", cascade = CascadeType.ALL)
-//	@JoinColumn(name = "atlas_id")
+
+	@OneToMany(mappedBy = "atlas" , cascade=CascadeType.REMOVE)
 	private List<BookingRequest> bookingRequests;
-
-
-/*//----------CONSTRUCTORS----------
-
-
-	public Atlas( String name, LocalDateTime createDate, LocalDateTime updateDate,
-	              ArrayList< Comment > commentList, boolean available, String country, String scale, String region, User user) {
-		super( name, createDate, updateDate, commentList );
-		this.available = available;
-		this.country = country;
-		this.user = user;
-		this.region = region;
-		this.scale = scale;
-	}*/
-
-
-//----------METHODS----------
-
 
 }

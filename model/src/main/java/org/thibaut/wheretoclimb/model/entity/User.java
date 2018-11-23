@@ -3,10 +3,11 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -24,89 +25,41 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
 	private String email;
-	@OneToMany/*(mappedBy = "user")*/
-	@JoinColumn(name = "user_id")
+
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "user" , cascade=CascadeType.REMOVE)
 	private List< Atlas > atlases;
-	@OneToMany/*(mappedBy = "user")*/
-	@JoinColumn(name = "user_emitter_id")
-	private List< Communication > communications;
-//	@OneToMany
-//	@JoinColumn/*(name = "user_emitter_id")*/
-//	private Collection<Comment> comments;
-	private String password;
-	private String firstName;
-	private String lastName;
-	private String userName;
-	private String gender;
-	private boolean enabled;
-	private String confirmationToken;
-	private boolean emailVisible;
-	private LocalDateTime createAccountDate;
-	private LocalDateTime dateOfBirth;
-	private String gradeMax;
-	private String gradeFirstAttempt;
-	private String gradeAverage;
+
+	@OneToMany(mappedBy = "user" , cascade=CascadeType.REMOVE)
+	private List< Comment > comments;
+
 	@ManyToMany
 	@JoinTable(
 			name = "roles_of_users",
 			joinColumns = { @JoinColumn(name = "user_id") },
 			inverseJoinColumns = { @JoinColumn(name = "role_id") } )
 	private List< Role > roles;
-	@OneToMany/*(mappedBy = "user")*/
-	@JoinColumn(name = "user_recipient_id")
-	private List<Message> messages;
-	@OneToMany/*(mappedBy = "user")*/
-	@JoinColumn(name = "user_emitter_id")
+
+	@OneToMany(mappedBy = "user" , cascade=CascadeType.REMOVE)
 	private List<BookingRequest> bookingRequests;
 
+	private String password;
+	private String firstName;
+	private String lastName;
+	private String userName;
+	private String gender;
+	private boolean emailVisible;
+	private LocalDateTime createAccountDate;
+
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	private LocalDate dateOfBirth;
+	private String gradeAverage;
 
 //----------CONSTRUCTORS----------
 
 	public User() {
 		super();
-		this.enabled=false;
-	}
-
-	public User( String gender,
-	             String firstName,
-	             String lastName,
-	             String userName,
-	             String email,
-	             LocalDateTime createAccountDate ) {
-		this.gender = gender;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.email = email;
-		this.createAccountDate = createAccountDate;
-	}
-
-	public User( String email,
-	             String password,
-	             String firstName,
-	             String lastName,
-	             String userName,
-	             String gender,
-	             boolean emailVisible,
-	             LocalDateTime createAccountDate/*,
-	             Date dateOfBirth,
-	             String gradeMax,
-	             String gradeFirstAttempt,
-	             String gradeAverage*/ ) {
-		this.email = email;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.gender = gender;
-		this.enabled = enabled;
-		this.emailVisible = emailVisible;
-		this.createAccountDate = createAccountDate;
-//		this.dateOfBirth = dateOfBirth;
-//		this.gradeMax = gradeMax;
-//		this.gradeFirstAttempt = gradeFirstAttempt;
-//		this.gradeAverage = gradeAverage;
 	}
 
 
