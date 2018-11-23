@@ -3,6 +3,7 @@ package org.thibaut.wheretoclimb.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,7 +24,7 @@ public class Atlas extends Element {
 
 //----------ATTRIBUTES----------
 
-	@OneToMany(mappedBy = "atlas")
+	@OneToMany(mappedBy = "atlas", cascade=CascadeType.REMOVE)
 	private List< Area > areas;
 
 	private String country;
@@ -38,7 +39,7 @@ public class Atlas extends Element {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "atlas")
+	@OneToMany(mappedBy = "atlas" , cascade=CascadeType.REMOVE)
 	private List<BookingRequest> bookingRequests;
 
 }

@@ -25,16 +25,13 @@ public class Area extends Element {
 	@JoinColumn(name = "atlas_id")
 	private Atlas atlas;
 
-	@OneToMany(mappedBy = "area")
+	@OneToMany(mappedBy = "area" , cascade=CascadeType.REMOVE)
 	private List< Crag > crags;
 
 	private int approachDuration;
 	private String nearestCity;
 	private String access;
 	private String rockType;
-
-	private double gpsLatitude;
-	private double gpsLongitude;
 	private int altitude;
 	private String parkingAccess;
 

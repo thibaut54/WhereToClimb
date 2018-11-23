@@ -90,9 +90,6 @@ public class AtlasController extends AbstractController {
 	public String myAtlas( Model model,
 	                       HttpSession httpSession ) {
 
-//		Integer connectedUserId = (Integer ) httpSession.getAttribute( "connectedUserId" );
-//		model.addAttribute( "atlases" , getManagerFactory().getAtlasManager().findAtlasesByUserId( connectedUserId ));
-
 		putAtlasFromUserInModel( model, httpSession );
 
 		return "view/showAtlas";

@@ -4,86 +4,89 @@
       layout:decorate="layout/layout.html">
 
 
-<div layout:fragment="customCSS">
-    <link rel="stylesheet" type="text/css" media="all"
-          th:href="@{/static/css/crag.css}" />
-</div>
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all"
+              th:href="@{/static/css/crag.css}" />
+    </div>
 
 
-<div layout:fragment="content">
-    <div class="container">
-        <section class="row">
-            <article class="col-lg-8">
-                <table class="listArea table table-bordered table-striped table-condensed">
-                    <caption>
-                        <h3>LIST OF CRAGS IN AREA: <span th:text="${area.name}"></span></h3>
-                    </caption>
-                    <thead>
-                        <tr>
-                            <th th:if="${session.connectedUser!=null}"></th>
-                            <th>NAME</th>
-                            <th>ACCESS</th>
-                            <th>CREATION DATE</th>
-                            <th>LAST UPDATE</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="crag:${area.crags}">
-                            <td th:if="${session.connectedUser!=null}">
-                                <a th:href="@{/user/commentElement(elementId=${crag.id})}">
-                                    <i class="fas fa-comment-dots"></i>
-                                </a>
-                            </td>
-                            <td >
-                                <a th:text="${crag.name}" th:href="@{/public/showRoute(cragId=${crag.id})}"></a>
-                            </td>
-                            <td th:text="${crag.access}"></td>
-                            <td th:text="${#temporals.format(crag.createDate, 'yyyy-MM-dd')}"></td>
-                            <td th:text="${#temporals.format(crag.updateDate, 'yyyy-MM-dd')}"></td>
-                            <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and cragsIds.contains(crag.id)))}">
-                                <td>
-                                    <a th:href="@{/user/editCrag(id=${crag.id})}">
-                                        <i class="icon fas fa-pencil-alt"></i>
+    <div layout:fragment="content">
+        <div class="container">
+            <ul class="row" id="breadcrumbs">
+                <li><a th:href="@{/public/showAtlas}">List of all atlases</a></li>
+                <li><a th:href="@{/public/showArea(atlasId=${area.atlas.id})}">Atlas: <span th:text="${area.atlas.name}"></span></a></li>
+                <li><a href="#">Area: <span th:text="${area.name}"></span></a></li>
+            </ul>
+            <div class="row">
+                <div class="col-lg-8">
+                    <table class="listArea table table-bordered table-striped table-condensed">
+                        <caption>
+                            <h5>LIST OF CRAGS</h5>
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th th:if="${session.connectedUser!=null}"></th>
+                                <th>NAME</th>
+                                <th>ACCESS</th>
+                                <th>NUMBER OF FILLED IN ROUTES</th>
+                                <th>CREATION DATE</th>
+                                <th>LAST UPDATE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="crag:${area.crags}">
+                                <td th:if="${session.connectedUser!=null}">
+                                    <a th:href="@{/user/commentElement(elementId=${crag.id})}">
+                                        <i class="fas fa-comment-dots"></i>
                                     </a>
                                 </td>
-                                <td>
-                                    <form autocomplete="off" th:action="@{'/user/deleteCrag/' + ${crag.id}+'/'+${crag.area.id}+'/'+${currentPage}+'/'+${size}}" method="post">
-                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Crag?')">
-                                            <i class="icon fas fa-trash"></i>
-                                        </button>
-                                    </form>
+                                <td >
+                                    <a th:text="${crag.name}" th:href="@{/public/showRoute(cragId=${crag.id})}"></a>
                                 </td>
-                            </span>
-                        </tr>
-                    </tbody>
-                </table>
-            </article>
-            <aside th:if="${elementIsCommented}">
-                <div th:each="comment:${area.comments}" class="card">
-                    <div class="card-header">
-                        <span th:text="${comment.title}"></span>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            <span th:text="${comment.content}"></span>
-                        </p>
+                                <td th:text="${crag.access}"></td>
+                                <td th:text="${crag.routes.size()}"></td>
+                                <td th:text="${#temporals.format(crag.createDate, 'yyyy-MM-dd')}"></td>
+                                <td th:text="${#temporals.format(crag.updateDate, 'yyyy-MM-dd')}"></td>
+                                <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and cragsIds.contains(crag.id)))}">
+                                    <td>
+                                        <a th:href="@{/user/editCrag(id=${crag.id})}">
+                                            <i class="icon fas fa-pencil-alt"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form autocomplete="off" th:action="@{'/user/deleteCrag/' + ${crag.id}+'/'+${crag.area.id}+'/'+${currentPage}+'/'+${size}}" method="post">
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Crag?')">
+                                                <i class="icon fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </span>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${elementIsCommented}">
+                    <div th:each="comment:${area.comments}" class="card">
+                        <div class="card-header">
+                            <span th:text="'Title: '+${comment.title}+' | Author: '+${comment.user.userName}+' | Posted: ' +${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <span th:text="${comment.content}"></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </aside>
-            <!--</div>-->
-        </section>
-        <!--<div class="container col-lg-8">-->
-        <footer class="row">
-            <!--<ul class="nav nav-pills">-->
-            <ul class="pagination">
-                <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
-                    <a class="page-link" th:href="@{/public/showCrag(areaId=${area.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
-                    </a>
-                </li>
-            </ul>
-            <!--</div>-->
-        </footer>
+            </div>
+            <footer class="row">
+                <ul class="pagination">
+                    <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
+                        <a class="page-link" th:href="@{/public/showCrag(areaId=${area.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
+                        </a>
+                    </li>
+                </ul>
+            </footer>
+        </div>
     </div>
-</div>
 
 </html>

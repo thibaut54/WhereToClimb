@@ -20,6 +20,8 @@ public interface RoleRepository extends JpaRepository< Role, Integer > {
 	@Query("SELECT r.role FROM Role r JOIN r.users u WHERE u.email =:email")
 	List<String> findRoleByEmail( @Param( "email" ) String email );
 
-//	@Query("SELECT r.role FROM Role r WHERE r.role =:role")
-Role findByRoleLike( String role );
+	//	@Query("SELECT r.role FROM Role r WHERE r.role =:role")
+	List<Role> findRolesByRoleContains( String role );
+
+	Role findByRoleLike( String role );
 }

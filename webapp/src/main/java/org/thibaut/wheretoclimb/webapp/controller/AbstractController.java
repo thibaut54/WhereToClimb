@@ -46,60 +46,14 @@ public abstract class AbstractController {
 
 		if ( httpSession.getAttribute( "connectedUserId" )!=null ) {
 
-			List< Atlas > atlasesFromConnectedUser = getManagerFactory( ).getAtlasManager( ).findAtlasesByUserId( ( Integer ) httpSession.getAttribute( "connectedUserId" ) );
+			List< Atlas > atlasesFromUser = getManagerFactory( ).getAtlasManager( ).findAtlasesByUserId( ( Integer ) httpSession.getAttribute( "connectedUserId" ) );
 			List< Integer > atlasesIds = new ArrayList<>( );
-			for ( Atlas atlas : atlasesFromConnectedUser ) {
+			for ( Atlas atlas : atlasesFromUser ) {
 				atlasesIds.add( atlas.getId( ) );
 			}
-			//		List< Area > areasFromConnectedUser = new ArrayList<>();
-			//		List< Crag > cragFromConnectedUser = new ArrayList<>();
-			//		List< Route > routesFromConnectedUser = new ArrayList<>();
-			//		List< Pitch > pitchesFromConnectedUser = new ArrayList<>();
-			//		List< Integer > atlasesIds = new ArrayList<>( );
-			//		List< Integer > areasIds = new ArrayList<>( );
-			//		List< Integer > cragsIds = new ArrayList<>( );
-			//		List< Integer > routesIds = new ArrayList<>( );
-			//		List< Integer > pitchesIds = new ArrayList<>( );
-			//
-			//		for ( Atlas atlas: atlasesFromConnectedUser ) {
-			//			areasFromConnectedUser.addAll( atlas.getAreas( ) );
-			//		}
-			//		for ( Area area: areasFromConnectedUser) {
-			//			cragFromConnectedUser.addAll( area.getCrags( ) );
-			//		}
-			//		for ( Crag crag: cragFromConnectedUser) {
-			//			routesFromConnectedUser.addAll( crag.getRoutes( ) );
-			//		}
-			//		for ( Route route: routesFromConnectedUser) {
-			//			pitchesFromConnectedUser.addAll( route.getPitches( ) );
-			//		}
-			//
-			//		for ( Atlas atlas : atlasesFromConnectedUser ) {
-			//			atlasesIds.add( atlas.getId( ) );
-			//		}
-			//		for ( Area area: areasFromConnectedUser ) {
-			//			areasIds.add( area.getId( ) );
-			//		}
-			//		for ( Crag crag : cragFromConnectedUser) {
-			//			cragsIds.add( crag.getId( ) );
-			//		}
-			//		for ( Route route : routesFromConnectedUser) {
-			//			routesIds.add( route.getId( ) );
-			//		}
-			//		for ( Pitch pitch: pitchesFromConnectedUser) {
-			//			pitchesIds.add( pitch.getId( ) );
-			//		}
 
-			model.addAttribute( "atlases", atlasesFromConnectedUser );
-			//		httpsession.setAttribute( "areasFromConnectedUser" , areasFromConnectedUser );
-			//		httpsession.setAttribute( "cragFromConnectedUser" , cragFromConnectedUser );
-			//		httpsession.setAttribute( "routesFromConnectedUser" , atlasesFromConnectedUser );
-			//		httpsession.setAttribute( "atlasesFromConnectedUser" , pitchesFromConnectedUser );
+			model.addAttribute( "atlases", atlasesFromUser );
 			model.addAttribute( "atlasesIds", atlasesIds );
-			//		httpsession.setAttribute( "areasIds" , areasIds);
-			//		httpsession.setAttribute( "cragsIds" , cragsIds);
-			//		httpsession.setAttribute( "routesIds" , routesIds);
-			//		httpsession.setAttribute( "pitchesIds" , pitchesIds);
 
 		}
 	}
@@ -123,6 +77,7 @@ public abstract class AbstractController {
 
 
 	void putCragsFromUserInModel( Model model, HttpSession httpSession ) {
+
 		List< Atlas > atlasesFromUser = getManagerFactory().getAtlasManager().findAtlasesByUserId( (Integer) httpSession.getAttribute("connectedUserId") );
 		List<Area> areasFromUser = new ArrayList<>();
 		List< Crag > cragsFromUser = new ArrayList<>();
@@ -164,9 +119,38 @@ public abstract class AbstractController {
 		for ( Route route : routesFromUser) {
 			routesIds.add( route.getId( ) );
 		}
-		model.addAttribute( "routesFromUser", routesFromUser);
+		model.addAttribute( "routes", routesFromUser);
 		model.addAttribute( "routesIds", routesIds);
 
+	}
+
+
+	void putPitchesFromUserInModel( Model model, HttpSession httpSession ){
+		List< Atlas > atlasesFromUser = getManagerFactory().getAtlasManager().findAtlasesByUserId( (Integer) httpSession.getAttribute("connectedUserId") );
+		List<Area> areasFromUser = new ArrayList<>();
+		List< Crag > cragsFromUser = new ArrayList<>();
+		List< Route > routesFromUser = new ArrayList<>();
+		List< Pitch > pitchesFromUser = new ArrayList<>();
+
+		for ( Atlas atlas: atlasesFromUser ) {
+			areasFromUser.addAll( getManagerFactory().getAreaManager().findAreasByAtlasId( atlas.getId() ) );
+		}
+		for ( Area area: areasFromUser) {
+			cragsFromUser.addAll( area.getCrags( ) );
+		}
+		for ( Crag crag: cragsFromUser) {
+			routesFromUser.addAll( crag.getRoutes( ) );
+		}
+		for ( Route route: routesFromUser) {
+			pitchesFromUser.addAll( route.getPitches( ) );
+		}
+
+		List< Integer > pitchesIds = new ArrayList<>( );
+		for ( Pitch pitch: pitchesFromUser ) {
+			pitchesIds.add( pitch.getId( ) );
+		}
+		model.addAttribute( "pitches", pitchesFromUser);
+		model.addAttribute( "pitchesIds", pitchesIds);
 	}
 
 
@@ -178,31 +162,6 @@ public abstract class AbstractController {
 	void putUserInHttpSession( Model model, HttpSession httpSession ) {
 
 			httpSession.setAttribute( "user" , getManagerFactory().getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
-	}
-
-
-	Optional<User> getConnectedUser(){
-		return Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
-	}
-
-
-	void isUserAdmin( Model model ){
-		//Get the connected user
-		Optional<User> userConnectedOpt = Optional.ofNullable( this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()) );
-
-		final boolean[] isAdmin = { false };
-		model.addAttribute( "userIsAdmin" , isAdmin[0] );
-
-		//If there is a connected user, put a boolean at true in the model
-		if( userConnectedOpt.isPresent() ){
-
-			User userConnected = userConnectedOpt.get();
-
-			userConnected.getRoles().forEach( role -> isAdmin[0] = role.getRole( ).equals( "ROLE_ADMIN" ) );
-
-			model.addAttribute( "userIsAdmin" , isAdmin[0] );
-
-		}
 	}
 
 

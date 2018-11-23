@@ -14,7 +14,6 @@ public class CragForm extends ElementForm{
 //----------ATTRIBUTES----------
 
 	private Area area;
-	private String mapUrl;
 	private String access;
 	private int approachDuration;
 

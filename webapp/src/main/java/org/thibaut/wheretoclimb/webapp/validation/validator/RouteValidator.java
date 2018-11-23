@@ -1,18 +1,14 @@
 package org.thibaut.wheretoclimb.webapp.validation.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.thibaut.wheretoclimb.business.contract.ManagerFactory;
-import org.thibaut.wheretoclimb.webapp.validation.pojo.AtlasForm;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.CragForm;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.RouteForm;
 
 @Component
-public class AtlasValidator implements Validator {
-
-	@Autowired
-	private ManagerFactory managerFactory;
+public class RouteValidator implements Validator {
 
 	/**
 	 * Can this {@link Validator} {@link #validate(Object, Errors) validate}
@@ -30,7 +26,7 @@ public class AtlasValidator implements Validator {
 	 */
 	@Override
 	public boolean supports( Class< ? > clazz ) {
-		return clazz == AtlasForm.class;
+		return clazz == RouteForm.class;
 	}
 
 	/**
@@ -47,15 +43,15 @@ public class AtlasValidator implements Validator {
 	@Override
 	public void validate( Object target, Errors errors ) {
 
-		AtlasForm atlasForm = ( AtlasForm ) target;
+		RouteForm routeForm = ( RouteForm ) target;
 
 		ValidationUtils.rejectIfEmpty( errors, "name", "NotEmpty.elementForm.field" );
-		ValidationUtils.rejectIfEmpty( errors, "country", "NotEmpty.elementForm.field" );
-		ValidationUtils.rejectIfEmpty( errors, "region", "NotEmpty.elementForm.field" );
 
-		if ( !( atlasForm.getCountry( ).matches( "^[a-zA-Z ]{4,50}$" ) ) ) {
-			errors.rejectValue( "country", "Pattern.elementForm.name" );
+		if ( !( routeForm.getName( ).matches( "^[a-zA-Z0-9 ]{4,50}$" ) ) ) {
+			errors.rejectValue( "name", "Pattern.elementForm.name" );
 		}
-
+		if ( !routeForm.getStyle( ).equals("") && ! routeForm.getStyle( ).matches( "^[a-zA-Z ]{4,50}$" ) ) {
+			errors.rejectValue( "style", "Pattern.routeForm.style" );
+		}
 	}
 }

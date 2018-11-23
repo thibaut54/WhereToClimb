@@ -127,4 +127,11 @@ public class BookingRequestController extends AbstractController {
 		getManagerFactory( ).getBookingRequestManager( ).saveBookingRequest( bookingRequest );
 		return "redirect:/user/showBookingRequest";
 	}
+
+
+	@PostMapping( "/user/deleteBookingRequest/{id}" )
+	public String deleteBookingRequest(@PathVariable(name = "id") Integer id){
+		getManagerFactory().getBookingRequestManager().deleteBookingRequest( id );
+		return "redirect:/user/showBookingRequest";
+	}
 }

@@ -57,13 +57,13 @@ public class TestApplication implements CommandLineRunner {
 
 		//-----CLEAN DB
 		this.commentRepository.deleteAll();
-		this.elementRepository.deleteAll();
+		this.bookingRequestRepository.deleteAll();
 		this.pitchRepository.deleteAll();
 		this.routeRepository.deleteAll();
 		this.cragRepository.deleteAll();
 		this.areaRepository.deleteAll();
 		this.atlasRepository.deleteAll();
-		this.bookingRequestRepository.deleteAll();
+		this.elementRepository.deleteAll();
 		this.userRepository.deleteAll();
 		this.roleRepository.deleteAll();
 
@@ -88,7 +88,7 @@ public class TestApplication implements CommandLineRunner {
 							.with(User::setGender, "male")
 							.with(User::setFirstName, "John")
 							.with(User::setLastName, "Doe")
-							.with(User::setUserName, "Another")
+							.with(User::setUserName, "TheJohn")
 							.with(User::setEmail, "john@gmail.com")
 							.with(User::setCreateAccountDate, LocalDateTime.now())
 							.with(User::setPassword, passwordManager.crypt( "1235"))
@@ -147,104 +147,38 @@ public class TestApplication implements CommandLineRunner {
 								.with( Atlas::setUser, users.get( 0 ))
 								.build();
 		Atlas atlas2 = GenericBuilder.of( Atlas::new )
-								.with( Atlas::setName, "Grimper en Region1" )
+								.with( Atlas::setName, "Grimper en Rhône-Alpes" )
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
-								.with( Atlas::setCountry, "USA")
+								.with( Atlas::setCountry, "France")
 								.with( Atlas::setRegion, "Rhône-Alpes")
 								.with( Atlas::setUser, users.get( 0 ))
 								.build();
 		Atlas atlas3 = GenericBuilder.of( Atlas::new )
-								.with( Atlas::setName, "Grimper en Region2" )
+								.with( Atlas::setName, "Climb in USA" )
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, true)
-								.with( Atlas::setCountry, "MOON")
-								.with( Atlas::setRegion, "Lorraine")
-								.with( Atlas::setUser, users.get( 0 ))
+								.with( Atlas::setCountry, "USA")
+								.with( Atlas::setRegion, "Arizona")
+								.with( Atlas::setUser, users.get( 1 ))
 								.build();
 		Atlas atlas4 = GenericBuilder.of( Atlas::new )
-								.with( Atlas::setName, "Grimper en Region3" )
+								.with( Atlas::setName, "Grimper en Ile de France" )
 								.with( Atlas::setCreateDate, LocalDateTime.now() )
 								.with( Atlas::setAvailable, false)
 								.with( Atlas::setCountry, "France")
-								.with( Atlas::setRegion, "PACA")
+								.with( Atlas::setRegion, "IDF")
 								.with( Atlas::setUser, users.get( 1 ))
-								.build();
-		Atlas atlas5 = GenericBuilder.of( Atlas::new )
-								.with( Atlas::setName, "Grimper en Region4" )
-								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, true)
-								.with( Atlas::setCountry, "France")
-								.with( Atlas::setRegion, "PACA")
-								.with( Atlas::setUser, users.get( 1 ))
-								.build();
-		Atlas atlas6 = GenericBuilder.of( Atlas::new )
-								.with( Atlas::setName, "Grimper en Region5" )
-								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, true)
-								.with( Atlas::setCountry, "France")
-								.with( Atlas::setRegion, "Languedoc-Roussillon")
-								.with( Atlas::setUser, users.get( 1 ))
-								.build();
-		Atlas atlas7 = GenericBuilder.of( Atlas::new )
-								.with( Atlas::setName, "Grimper en Region6" )
-								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, true)
-								.with( Atlas::setCountry, "France")
-								.with( Atlas::setRegion, "Languedoc-Roussillon")
-								.with( Atlas::setUser, users.get( 2 ))
-								.build();
-		Atlas atlas8 = GenericBuilder.of( Atlas::new )
-								.with( Atlas::setName, "Grimper en Region7" )
-								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, false)
-								.with( Atlas::setCountry, "France")
-								.with( Atlas::setRegion, "Midi-Pyrénées")
-								.with( Atlas::setUser, users.get( 2 ))
-								.build();
-		Atlas atlas9 = GenericBuilder.of( Atlas::new )
-								.with( Atlas::setName, "Grimper en Region8" )
-								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, true)
-								.with( Atlas::setCountry, "France")
-								.with( Atlas::setRegion, "Midi-Pyrénées")
-								.with( Atlas::setUser, users.get( 2 ))
-								.build();
-		Atlas atlas10 = GenericBuilder.of( Atlas::new )
-								.with( Atlas::setName, "Grimper en Region9" )
-								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, true)
-								.with( Atlas::setCountry, "France")
-								.with( Atlas::setRegion, "Midi-Pyrénées")
-								.with( Atlas::setUser, users.get( 2 ))
-								.build();
-		Atlas atlas11 = GenericBuilder.of( Atlas::new )
-								.with( Atlas::setName, "Grimper en Region10" )
-								.with( Atlas::setCreateDate, LocalDateTime.now() )
-								.with( Atlas::setAvailable, false)
-								.with( Atlas::setCountry, "France")
-								.with( Atlas::setRegion, "PACA")
-								.with( Atlas::setUser, users.get( 2 ))
 								.build();
 
 
 
 		List< Atlas > atlases = new ArrayList<Atlas>();
 
-//		atlas1.setAreas( areas );
-//		atlas2.setAreas( areas2 );
 		atlases.add( atlas1 );
 		atlases.add( atlas2 );
 		atlases.add( atlas3 );
 		atlases.add( atlas4 );
-		atlases.add( atlas5 );
-		atlases.add( atlas6 );
-		atlases.add( atlas7 );
-		atlases.add( atlas8 );
-		atlases.add( atlas9 );
-		atlases.add( atlas10 );
-		atlases.add( atlas11 );
-
 
 		this.atlasRepository.saveAll( atlases );
 
@@ -282,7 +216,7 @@ public class TestApplication implements CommandLineRunner {
 				            .with( Area::setAtlas, atlas2 )
 				            .build());
 		areas2.add( GenericBuilder.of( Area::new )
-				            .with( Area::setName, "SecteurTest" )
+				            .with( Area::setName, "AreaTest" )
 				            .with( Area::setCreateDate, LocalDateTime.now() )
 				            .with( Area::setUpdateDate, LocalDateTime.now() )
 				            .with( Area::setApproachDuration, 5 )
@@ -350,7 +284,6 @@ public class TestApplication implements CommandLineRunner {
 				            .with( Route::setGrade, "6a")
 				            .with( Route::setLength, 20)
 				            .with( Route::setNbAnchor, 9)
-				            .with( Route::setMultiPitch, true)
 				            .with( Route::setVerticality, "Léger dévers")
 				            .with( Route::setCrag, crags.get( 0 ))
 				            .build());
@@ -361,7 +294,6 @@ public class TestApplication implements CommandLineRunner {
 				            .with( Route::setGrade, "6c")
 				            .with( Route::setLength, 20)
 				            .with( Route::setNbAnchor, 9)
-				            .with( Route::setMultiPitch, false)
 				            .with( Route::setVerticality, "Verticale")
 				            .with( Route::setCrag, crags.get( 0 ))
 				            .build());
@@ -372,7 +304,6 @@ public class TestApplication implements CommandLineRunner {
 				            .with( Route::setGrade, "7a")
 				            .with( Route::setLength, 20)
 				            .with( Route::setNbAnchor, 9)
-				            .with( Route::setMultiPitch, false)
 				            .with( Route::setVerticality, "Verticale")
 				            .with( Route::setCrag, crags.get( 1 ))
 				            .build());
@@ -405,15 +336,6 @@ public class TestApplication implements CommandLineRunner {
 
 		this.pitchRepository.saveAll( pitches );
 
-//		QAtlas qAtlas = QAtlas.atlas;
-//
-//		List <Atlas> atlases1 = (this.atlasManager.searchAtlasByNameAndCountryAndRegionAndDepartment( 0 , 5 , "Grimper" , "France" , null, null  )).getContent();
-//
-//		System.out.println( " TEST REQUETE QUERYDSL" );
-//		System.out.println( "Taille de la liste :" + atlases1.size() );
-//		atlases1.forEach( System.out::println );
-//		System.out.println( " FIN DU TEST REQUETE QUERYDSL" );
-
 
 		//-----POPULATE COMMENT
 
@@ -445,20 +367,6 @@ public class TestApplication implements CommandLineRunner {
 				.build());
 
 		this.bookingRequestRepository.saveAll( bookingRequests );
-
-
-		//Pourquoi ça ne fonctionne pas ?
-//		this.atlasRepository.findAtlasByName( "Grimper en Lorraine" ).setUser( ( ( ArrayList< User> ) users ).get( 0 ) );
-
-
-
-//		users.forEach( (user -> System.out.println( user.toString() ) ) );
-
-//		List<String> test = this.roleRepository.findRoleByUserName( "Admin" );
-//		test.forEach( System.out::println );
-
-
-//		test.forEach( str-> System.out.println( str ) );
 
 	}
 

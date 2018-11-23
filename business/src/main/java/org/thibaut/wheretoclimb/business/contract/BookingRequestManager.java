@@ -9,4 +9,6 @@ public interface BookingRequestManager {
 	BookingRequest createBookingRequest( BookingRequest bookingRequest );
 
 	BookingRequest findBookingRequestById( Integer id );
+
+	void deleteBookingRequest( Integer id );
 }

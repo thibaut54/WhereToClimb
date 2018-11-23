@@ -36,14 +36,12 @@ public class AdvancedSearchController extends AbstractController{
 	                       @RequestParam(name = "city", defaultValue = "") String city){
 
 		page.ifPresent(p -> currentPage = p);
-//		size.ifPresent(s -> PAGE_SIZE = s);
 
 		model.addAttribute( "searchIn", searchIn );
 		model.addAttribute( "searchHasResults" , false );
 
 
 		Page< ? > result = getManagerFactory().getElementManager().searchElementByNameAndCountryAndRegionAndDepartmentAndCity( PageRequest.of(currentPage - 1, PAGE_SIZE ), searchIn, name, country, region, department, city );
-//		Page< ? > result = getManagerFactory().getElementManager().searchElementByNameAndCountryAndRegionAndDepartmentAndCity( PageRequest.of(page.get()-1, size.get() ), searchIn, name, country, region, department, city );
 		model.addAttribute( "searchHasResults" , !result.getContent().isEmpty() );
 		model.addAttribute( "results", result.getContent() );
 		model.addAttribute( "resultNumber", result.getNumber() );
@@ -57,9 +55,6 @@ public class AdvancedSearchController extends AbstractController{
 			model.addAttribute("pageNumbers", pageNumbers);
 		}
 
-
-		isUserAdmin( model );
-
 		model.addAttribute( "connectedUser" , this.managerFactory.getUserManager().findByUserName( SecurityContextHolder.getContext().getAuthentication().getName()));
 		model.addAttribute( "size", size );
 		model.addAttribute( "currentPage", page );
@@ -68,8 +63,6 @@ public class AdvancedSearchController extends AbstractController{
 		model.addAttribute( "region", region );
 		model.addAttribute( "department", department );
 		model.addAttribute( "city", city);
-
-		System.out.println( "Search in: " + searchIn );
 
 		return "view/advancedSearch";
 	}

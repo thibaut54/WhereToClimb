@@ -1,6 +1,7 @@
 package org.thibaut.wheretoclimb.webapp.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -8,11 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thibaut.wheretoclimb.model.entity.*;
 import org.thibaut.wheretoclimb.util.GenericBuilder;
+import org.thibaut.wheretoclimb.webapp.validation.pojo.AreaForm;
 import org.thibaut.wheretoclimb.webapp.validation.pojo.RouteForm;
+import org.thibaut.wheretoclimb.webapp.validation.validator.RouteValidator;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -24,6 +28,24 @@ import java.util.Optional;
 @Controller
 @Slf4j
 public class RouteController extends AbstractController{
+
+	@Autowired
+	private RouteValidator routeValidator;
+
+	// Set a form validator
+	@InitBinder
+	protected void initBinder( WebDataBinder dataBinder ) {
+		// Form target
+		Object target = dataBinder.getTarget( );
+		if ( target == null ) {
+			return;
+		}
+
+		if ( target.getClass( ) == RouteForm.class ) {
+			dataBinder.setValidator( routeValidator );
+		}
+	}
+
 
 	@GetMapping("/public/showRoute")
 	public String showRoute( Model model,
@@ -59,7 +81,7 @@ public class RouteController extends AbstractController{
 	public String  createRoute( Model model ,
 	                            HttpSession httpSession ){
 		model.addAttribute( "routeForm", new RouteForm() );
-		putRoutesFromUserInModel( model , httpSession );
+		putCragsFromUserInModel( model ,httpSession );
 		getGradesAndVerticalities(model);
 		return "view/createRoute";
 	}
@@ -79,9 +101,10 @@ public class RouteController extends AbstractController{
 		}
 
 		Route newRoute = null;
+		Route routeToSave = null;
 
 		if( routeForm.getId()==null ) {
-			Route routeToCreate = GenericBuilder.of( Route::new )
+			routeToSave = GenericBuilder.of( Route::new )
 					                      .with( Route::setCreateDate, LocalDateTime.now( ) )
 					                      .with( Route::setCrag, routeForm.getCrag( ) )
 					                      .with( Route::setName, routeForm.getName( ) )
@@ -90,47 +113,33 @@ public class RouteController extends AbstractController{
 					                      .with( Route::setNbAnchor, routeForm.getNbAnchor( ) )
 					                      .with( Route::setVerticality, routeForm.getVerticality( ) )
 					                      .with( Route::setStyle, routeForm.getStyle( ) )
-					                      .with( Route::setMultiPitch, routeForm.isMultiPitch( ) )
 					                      .build( );
-
-			try {
-				newRoute = getManagerFactory( ).getRouteManager( ).createRoute( routeToCreate );
-			}
-			// Other error!!
-			catch ( Exception e ) {
-				log.error( "error occuring create/update a route: " + routeForm.getName( ), e );
-				model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
-				getGradesAndVerticalities(model);
-				putCragsFromUserInModel( model, httpSession );
-				return "view/createRoute";
-			}
 		}
 		//If a user wants to edit an existing route
 		else if ( routeForm.getId() != null) {
-			Route routeToUpdate = getManagerFactory( ).getRouteManager( ).findRouteById( routeForm.getId( ) );
-			routeToUpdate.setUpdateDate( LocalDateTime.now( ) );
-			routeToUpdate.setCrag( routeForm.getCrag() );
-			routeToUpdate.setName( routeForm.getName());
-			routeToUpdate.setGrade( routeForm.getGrade());
-			routeToUpdate.setLength( routeForm.getLength());
-			routeToUpdate.setNbAnchor( routeForm.getLength());
-			routeToUpdate.setVerticality( routeForm.getVerticality());
-			routeToUpdate.setStyle( routeForm.getStyle());
-			routeToUpdate.setMultiPitch( routeForm.isMultiPitch());
-			try {
-				newRoute = getManagerFactory( ).getRouteManager( ).createRoute( routeToUpdate );
-			}
-			// Other error!!
-			catch ( Exception e ) {
-				log.error( "error occuring create/update a route: " + routeForm.getName( ), e );
-				model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
-				getGradesAndVerticalities(model);
-				putCragsFromUserInModel( model, httpSession );
-				return "view/createRoute";
-			}
+			routeToSave = getManagerFactory( ).getRouteManager( ).findRouteById( routeForm.getId( ) );
+			routeToSave.setUpdateDate( LocalDateTime.now( ) );
+			routeToSave.setCrag( routeForm.getCrag() );
+			routeToSave.setName( routeForm.getName());
+			routeToSave.setGrade( routeForm.getGrade());
+			routeToSave.setLength( routeForm.getLength());
+			routeToSave.setNbAnchor( routeForm.getLength());
+			routeToSave.setVerticality( routeForm.getVerticality());
+			routeToSave.setStyle( routeForm.getStyle());
+		}
+		try {
+			newRoute = getManagerFactory( ).getRouteManager( ).createRoute( routeToSave );
+		}
+		// Other error!!
+		catch ( Exception e ) {
+			log.error( "error occuring create/update a route: " + routeForm.getName( ), e );
+			model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
+			getGradesAndVerticalities(model);
+			putCragsFromUserInModel( model, httpSession );
+			return "view/createRoute";
 		}
 		redirectAttributes.addFlashAttribute("flashRoute", newRoute);
-		return "view/createRouteConfirm";
+		return "redirect:/user/createRouteConfirm";
 	}
 
 
@@ -140,9 +149,12 @@ public class RouteController extends AbstractController{
 	}
 
 
-	@GetMapping( "/admin/editRoute" )
-	public String editRoute( Model model, Integer id){
+	@GetMapping( "/user/editRoute" )
+	public String editRoute( Model model,
+	                         HttpSession httpSession,
+	                         Integer id){
 		RouteForm routeForm = new RouteForm(getManagerFactory().getRouteManager().findRouteById( id ));
+		putCragsFromUserInModel( model, httpSession );
 		getGradesAndVerticalities(model);
 		model.addAttribute( "routeForm", routeForm );
 		return "view/createRoute";

@@ -21,6 +21,9 @@
                     <tr>
                         <th th:if="${session.connectedUser!=null}"></th>
                         <th>NAME</th>
+                        <th>COUNTRY</th>
+                        <th>REGION</th>
+                        <th>DEPARTMENT</th>
                         <th>CAN BE BORROWED</th>
                         <th>COMMENTS</th>
                         <th>CREATION DATE</th>
@@ -37,6 +40,9 @@
                         <td >
                             <a th:text="${atlas.name}" th:href="@{/public/showArea(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
                         </td>
+                        <td th:text="${atlas.country}"></td>
+                        <td th:text="${atlas.region}"></td>
+                        <td th:text="${atlas.department!=null}?'${atlas.department}':'NC'"></td>
                         <div th:if="${atlas.available}">
                             <td>Yes</td>
                         </div>

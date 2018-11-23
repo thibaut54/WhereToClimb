@@ -28,10 +28,10 @@ public class User {
 
 	private String email;
 
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "user" , cascade=CascadeType.REMOVE)
 	private List< Atlas > atlases;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user" , cascade=CascadeType.REMOVE)
 	private List< Comment > comments;
 
 	@ManyToMany
@@ -41,7 +41,7 @@ public class User {
 			inverseJoinColumns = { @JoinColumn(name = "role_id") } )
 	private List< Role > roles;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user" , cascade=CascadeType.REMOVE)
 	private List<BookingRequest> bookingRequests;
 
 	private String password;

@@ -21,8 +21,6 @@ public class AreaForm extends ElementForm{
 	private String nearestCity;
 	private String access;
 	private String rockType;
-	private double gpsLatitude;
-	private double gpsLongitude;
 	private int altitude;
 	private String parkingAccess;
 
@@ -34,8 +32,6 @@ public class AreaForm extends ElementForm{
 		this.nearestCity = area.getNearestCity();
 		this.access = area.getAccess();
 		this.rockType = area.getRockType();
-		this.gpsLatitude = area.getGpsLatitude();
-		this.gpsLongitude = area.getGpsLongitude();
 		this.altitude = area.getAltitude();
 		this.parkingAccess = area.getParkingAccess();
 	}

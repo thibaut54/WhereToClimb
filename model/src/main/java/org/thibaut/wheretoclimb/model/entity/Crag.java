@@ -27,10 +27,9 @@ public class Crag extends Element {
 	@JoinColumn(name = "area_id")
 	private Area area;
 
-	@OneToMany(mappedBy = "crag")
+	@OneToMany(mappedBy = "crag" , cascade=CascadeType.REMOVE)
 	private List< Route > routes;
 
-	private String mapUrl;
 	private String access;
 	private int approachDuration;
 	//uploader le file sur le server, et stocker en bdd l'url

@@ -28,16 +28,13 @@ public class Route extends Element {
 	@JoinColumn(name = "crag_id")
 	private Crag crag;
 
-	@OneToMany/*(mappedBy = "route", fetch = FetchType.LAZY)*/
-	@JoinColumn(name = "route_id")
+	@OneToMany(mappedBy = "route" , cascade=CascadeType.REMOVE)
 	private List< Pitch > pitches;
 
 	private String grade;
 	private int length;
 	private int nbAnchor;
-	private boolean multiPitch;
 	private String verticality;
 	private String style;
-	private int parentCreateId;
 
 }

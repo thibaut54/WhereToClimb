@@ -91,6 +91,13 @@
                         <td th:text="${request.message}"></td>
                         <td th:if="${request.atlas.user.emailVisible}" th:text="${request.atlas.user.email}"></td>
                         <td th:if="${!request.atlas.user.emailVisible}">NC</td>
+                        <td>
+                            <form autocomplete="off" th:action="@{'/user/deleteBookingRequest/' + ${request.id}}" method="post">
+                                <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Request?')">
+                                    <i class="icon fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>

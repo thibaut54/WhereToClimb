@@ -117,8 +117,6 @@ public class AreaController extends AbstractController {
 					            .with( Area::setApproachDuration, areaForm.getApproachDuration( ) )
 					            .with( Area::setAccess, areaForm.getAccess( ) )
 					            .with( Area::setRockType, areaForm.getRockType( ) )
-					            .with( Area::setGpsLatitude, areaForm.getGpsLatitude( ) )
-					            .with( Area::setGpsLongitude, areaForm.getGpsLongitude( ) )
 					            .with( Area::setAltitude, areaForm.getAltitude( ) )
 					            .with( Area::setParkingAccess, areaForm.getParkingAccess( ) )
 								.build();
@@ -143,8 +141,6 @@ public class AreaController extends AbstractController {
 			areaToUpdate.setApproachDuration( areaForm.getApproachDuration( ));
 			areaToUpdate.setAccess( areaForm.getAccess(  ));
 			areaToUpdate.setRockType( areaForm.getRockType(  ));
-			areaToUpdate.setGpsLatitude( areaForm.getGpsLatitude(  ));
-			areaToUpdate.setGpsLongitude( areaForm.getGpsLongitude(  ));
 			areaToUpdate.setAltitude( areaForm.getAltitude(  ));
 			areaToUpdate.setParkingAccess( areaForm.getParkingAccess(  ));
 
@@ -171,8 +167,11 @@ public class AreaController extends AbstractController {
 
 
 	@GetMapping( "/user/editArea" )
-	public String editArea( Model model, Integer id){
+	public String editArea( Model model,
+	                        HttpSession httpSession,
+	                        Integer id){
 		AreaForm areaForm = new AreaForm( getManagerFactory().getAreaManager().findAreaById( id ));
+		putAtlasFromUserInModel( model, httpSession );
 		model.addAttribute( "areaForm", areaForm );
 		return "view/createArea";
 	}

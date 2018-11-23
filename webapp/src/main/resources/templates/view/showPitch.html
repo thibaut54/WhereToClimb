@@ -11,48 +11,63 @@
 
 
 <div layout:fragment="content">
+
+
     <div class="container">
-        <section class="row">
-            <article class="col-lg-8">
+        <ul class="row" id="breadcrumbs">
+            <li><a th:href="@{/public/showAtlas}">List of all atlases</a></li>
+            <li><a th:href="@{/public/showArea(atlasId=${route.crag.area.atlas.id})}">Atlas: <span th:text="${route.crag.area.atlas.name}"></span></a></li>
+            <li><a th:href="@{/public/showCrag(areaId=${route.crag.area.id})}">Area: <span th:text="${route.crag.area.name}"></span></a></li>
+            <li><a th:href="@{/public/showRoute(cragId=${route.crag.id})}">Crag: <span th:text="${route.crag.name}"></span></a></li>
+            <li><a href="#">Route: <span th:text="${route.name}"></span></a></li>
+        </ul>
+        <div class="row">
+            <div class="col-lg-8">
                 <table class="listArea table table-bordered table-striped table-condensed">
                     <caption>
-                        <h3>LIST OF PITCHES IN ROUTE: <span th:text="${route.name}"></span></h3>
+                        <h5>LIST OF PITCHES</h5>
                     </caption>
                     <thead>
-                    <tr>
-                        <th>NAME</th>
-                        <th>GRADE</th>
-                        <th>LENGTH</th>
-                        <th>METERS BETWEEN ANCHORS</th>
-                        <th>VERTICALITY</th>
-                    </tr>
+                        <tr>
+                            <th>NAME</th>
+                            <th>GRADE</th>
+                            <th>LENGTH</th>
+                            <th>METERS BETWEEN ANCHORS</th>
+                            <th>VERTICALITY</th>
+                            <th>STYLE</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="pitch:${pitches}">
-                        <td th:text="${pitch.name}"></td>
-                        <td th:text="${pitch.grade}"></td>
-                        <td th:text="${pitch.length}"></td>
-                        <td th:text="${(pitch.length)/(pitch.nbAnchor+1)}"></td>
-                        <td th:text="${pitch.verticality}"></td>
-                        <td th:if="${userIsAdmin}">
-                            <a th:href="@{/admin/editPitch(id=${pitch.id})}">
-                                <i class="icon fas fa-pencil-alt"></i>
-                            </a>
-                        </td>
-                        <td th:if="${userIsAdmin}">
-                            <a  id="trash-ic" th:href="@{/admin/deletePitch(id=${pitch.id}, page=${currentPage}, size=${size})}"
-                                onclick="return confirm('Do you really want to delete this Pitch?')">
-                                <i class="icon fas fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
+                        <tr th:each="pitch:${pitches}">
+                            <td th:text="${pitch.name}"></td>
+                            <td th:text="${pitch.grade}"></td>
+                            <td th:text="${pitch.length}+' meters'"></td>
+                            <td th:text="${(pitch.length)/(pitch.nbAnchor+1)}"></td>
+                            <td th:text="${pitch.verticality}"></td>
+                            <td th:text="${pitch.style}"></td>
+                            <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and pitchesIds.contains(pitch.id)))}">
+                                <td>
+                                    <a th:href="@{/user/editPitch(id=${pitch.id})}">
+                                        <i class="icon fas fa-pencil-alt"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <form autocomplete="off" th:action="@{'/user/deletePitch/' + ${pitch.id}+'/'+${pitch.route.id}+'/'+${currentPage}+'/'+${size}}" method="post">
+                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Pitch?')">
+                                            <i class="icon fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </span>
+                        </tr>
                     </tbody>
                 </table>
-            </article>
-            <aside th:if="${elementIsCommented}">
-                <div th:each="comment:${pitch.comments}" class="card">
+            </div>
+            <div th:if="${elementIsCommented}">
+                <h6>COMMENTS</h6>
+                <div th:each="comment:${route.comments}" class="card">
                     <div class="card-header">
-                        <span th:text="${comment.title}"></span>
+                        <span th:text="'Title: '+${comment.title}+' | Author: '+${comment.user.userName}+' | Posted: ' +${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></span>
                     </div>
                     <div class="card-body">
                         <p class="card-text">
@@ -60,21 +75,15 @@
                         </p>
                     </div>
                 </div>
-            </aside>
-            <!--</div>-->
-        </section>
-        <!--<div class="container col-lg-8">-->
+            </div>
+        </div>
         <footer class="row">
-            <!--<ul class="nav nav-pills">-->
             <ul class="pagination">
                 <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
-                    <!--<a class="page-link" th:href="@{/public/showCrag(cragId=${crag.id}, page=${status.index}, size=${size})}" th:text="${status.index}+1" >-->
-                    <!--</a>-->
                     <a class="page-link" th:href="@{/public/showPitch(routeId=${route.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
                     </a>
                 </li>
             </ul>
-            <!--</div>-->
         </footer>
     </div>
 </div>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thibaut.wheretoclimb.business.contract.PasswordManager;
+import org.thibaut.wheretoclimb.model.entity.Role;
 import org.thibaut.wheretoclimb.model.entity.User;
 import org.thibaut.wheretoclimb.util.GenericBuilder;
 import org.thibaut.wheretoclimb.webapp.validation.pojo.PasswordForm;
@@ -19,6 +20,8 @@ import org.thibaut.wheretoclimb.webapp.validation.validator.PasswordValidator;
 import org.thibaut.wheretoclimb.webapp.validation.validator.UserValidator;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -84,6 +87,7 @@ public class RegisterController extends AbstractController {
 
 		// Validate result
 		if ( result.hasErrors( ) ) {
+			getGradesAndVerticalities(model);
 			return "view/register";
 		}
 
@@ -94,6 +98,7 @@ public class RegisterController extends AbstractController {
 		if ( userForm.getId( ) == null ) {
 			User userToCreate = GenericBuilder.of( User::new )
 					                    .with( User::setEmail, userForm.getEmail( ) )
+					                    .with( User::setRoles, getManagerFactory().getRoleManager().findRoleByRoleName( "USER" ) )
 					                    .with( User::setPassword, passwordManager.crypt( userForm.getPassword( ) ) )
 					                    .with( User::setFirstName, userForm.getFirstName( ) )
 					                    .with( User::setLastName, userForm.getLastName( ) )
@@ -111,11 +116,11 @@ public class RegisterController extends AbstractController {
 			catch ( Exception e ) {
 				log.error( "error occuring create/update user account: " + userForm.getUserName( ), e );
 				model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
+				getGradesAndVerticalities(model);
 				return "view/register";
 			}
 			redirectAttributes.addFlashAttribute( "flashUser", newUser );
 
-//			return "redirect:/public/registerSuccessful";
 		}
 		//If a member wants to edit his account datas
 		else if ( userForm.getId( ) != null ) {
@@ -136,6 +141,7 @@ public class RegisterController extends AbstractController {
 			catch ( Exception e ) {
 				log.error( "error occuring update/update user account: " + userForm.getUserName( ), e );
 				model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
+				getGradesAndVerticalities(model);
 				return "view/register";
 			}
 			redirectAttributes.addFlashAttribute( "flashUser", newUser );

@@ -8,7 +8,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -32,7 +36,7 @@ import java.util.List;
 
 
 @Component
-public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
 	private ManagerFactory managerFactory;
@@ -43,12 +47,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	                                    Authentication authentication)
 			throws IOException, ServletException {
 
-//		String userName = "";
+
 		HttpSession httpSession = request.getSession();
-//		Collection< GrantedAuthority > authorities = null;
 
 		if(authentication.getPrincipal() instanceof Principal ) {
-//			userName = ((Principal)authentication.getPrincipal()).getName();
 			httpSession.setAttribute("role", "none");
 		}
 		else {
@@ -65,61 +67,14 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	private void putElementFromUserInSession( HttpSession httpsession ) {
 		User userSpringSecu = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		org.thibaut.wheretoclimb.model.entity.User user = managerFactory.getUserManager().findByUserName(userSpringSecu.getUsername());
-//		Hibernate.initialize(user);
 		List< Atlas > atlasesFromConnectedUser = managerFactory.getAtlasManager().findAtlasesByUserId( user.getId() );
 		List< Integer > atlasesIds = new ArrayList<>();
 		for ( Atlas atlas : atlasesFromConnectedUser ) {
 			atlasesIds.add( atlas.getId( ) );
 		}
-//		List< Area > areasFromConnectedUser = new ArrayList<>();
-//		List< Crag > cragFromConnectedUser = new ArrayList<>();
-//		List< Route > routesFromConnectedUser = new ArrayList<>();
-//		List< Pitch > pitchesFromConnectedUser = new ArrayList<>();
-//		List< Integer > atlasesIds = new ArrayList<>( );
-//		List< Integer > areasIds = new ArrayList<>( );
-//		List< Integer > cragsIds = new ArrayList<>( );
-//		List< Integer > routesIds = new ArrayList<>( );
-//		List< Integer > pitchesIds = new ArrayList<>( );
-//
-//		for ( Atlas atlas: atlasesFromConnectedUser ) {
-//			areasFromConnectedUser.addAll( atlas.getAreas( ) );
-//		}
-//		for ( Area area: areasFromConnectedUser) {
-//			cragFromConnectedUser.addAll( area.getCrags( ) );
-//		}
-//		for ( Crag crag: cragFromConnectedUser) {
-//			routesFromConnectedUser.addAll( crag.getRoutes( ) );
-//		}
-//		for ( Route route: routesFromConnectedUser) {
-//			pitchesFromConnectedUser.addAll( route.getPitches( ) );
-//		}
-//
-//		for ( Atlas atlas : atlasesFromConnectedUser ) {
-//			atlasesIds.add( atlas.getId( ) );
-//		}
-//		for ( Area area: areasFromConnectedUser ) {
-//			areasIds.add( area.getId( ) );
-//		}
-//		for ( Crag crag : cragFromConnectedUser) {
-//			cragsIds.add( crag.getId( ) );
-//		}
-//		for ( Route route : routesFromConnectedUser) {
-//			routesIds.add( route.getId( ) );
-//		}
-//		for ( Pitch pitch: pitchesFromConnectedUser) {
-//			pitchesIds.add( pitch.getId( ) );
-//		}
 
 		httpsession.setAttribute( "atlasesFromConnectedUser" , atlasesFromConnectedUser );
-//		httpsession.setAttribute( "areasFromConnectedUser" , areasFromConnectedUser );
-//		httpsession.setAttribute( "cragFromConnectedUser" , cragFromConnectedUser );
-//		httpsession.setAttribute( "routesFromConnectedUser" , atlasesFromConnectedUser );
-//		httpsession.setAttribute( "atlasesFromConnectedUser" , pitchesFromConnectedUser );
 		httpsession.setAttribute( "atlasesIds" , atlasesIds );
-//		httpsession.setAttribute( "areasIds" , areasIds);
-//		httpsession.setAttribute( "cragsIds" , cragsIds);
-//		httpsession.setAttribute( "routesIds" , routesIds);
-//		httpsession.setAttribute( "pitchesIds" , pitchesIds);
 
 	}
 }

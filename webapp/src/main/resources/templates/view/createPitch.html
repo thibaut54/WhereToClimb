@@ -12,17 +12,14 @@
         <div class="container spacer col-md-6 col-xs-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 th:if="${pitch.id==null}">Create new Pitch</h5>
-                    <h5 th:if="${pitch.id!=null}">Edit Pitch</h5>
+                    <h5 th:if="${pitchForm.id==null}">Create new Pitch</h5>
+                    <h5 th:if="${pitchForm.id!=null}">Edit Pitch</h5>
                     <div class="card-block">
-                        <form autocomplete="off" th:action="@{/user/savePitch}" method="post" th:object="${pitch}">
-                            <input th:if="${pitch.id!=null}" type="hidden" th:field="*{id}"/>
-                            <input th:if="${pitch.id!=null}" type="hidden" th:field="*{createDate}"/>
-                            <input th:if="${pitch.id!=null}" type="hidden" th:field="*{comments}"/>
-                            <input th:if="${pitch.id!=null}" type="hidden" th:field="*{route}"/>
+                        <form autocomplete="off" th:action="@{/user/savePitch}" method="post" th:object="${pitchForm}">
+                            <input th:if="${pitchForm.id!=null}" type="hidden" th:field="*{id}"/>
                             <div class="form-group">
                                 <label>Concerned Route</label>
-                                <select th:field="${pitch.route}" autofocus>
+                                <select th:field="*{route}" autofocus>
                                     <option th:each="route:${routes}" th:value="${route.id}" th:text="${route.name}">
                                     </option>
                                 </select>
@@ -60,7 +57,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Climbing style</label>
-                                <input name="inputTxt" type="text" class="form-control" placeholder="Ex: physical, technical, equilibrium?..."
+                                <input name="inputTxt" type="text" class="form-control" placeholder="Ex: physical, technical, equilibrium?"
                                        th:field="*{style}"/>
                                 <span class="error-field" th:errors="*{style}"></span>
                             </div>

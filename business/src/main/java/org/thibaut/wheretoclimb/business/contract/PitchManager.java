@@ -8,4 +8,6 @@ public interface PitchManager {
 	Pitch findPitchById( Integer id );
 
 	void deletePitch( Integer id );
+
+	Pitch createPitch( Pitch pitch );
 }

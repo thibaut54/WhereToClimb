@@ -118,7 +118,6 @@ public class CragController extends AbstractController {
 				putAreasFromUserInModel( model, httpSession );
 				return "view/createCrag";
 			}
-//			crag.setArea( getManagerFactory().getAreaManager().findAreaById( crag.getParentCreateId() ) );
 		}
 		else if ( cragForm.getId()!=null ){
 			Crag cragToUpdate = getManagerFactory().getCragManager().findCragById( cragForm.getId() );

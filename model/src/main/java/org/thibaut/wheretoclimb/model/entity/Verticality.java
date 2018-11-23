@@ -5,6 +5,7 @@ import java.util.List;
 
 public abstract class Verticality {
 	private final static  List<String> verticalities = Arrays.asList(
+	"unknown",
 	"very less than vertical",
 	"sligthly less than vertical",
 	"vertical",

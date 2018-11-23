@@ -40,4 +40,9 @@ public class BookingRequestManagerImpl extends AbstractManager implements Bookin
 		return null;
 	}
 
+
+	@Override
+	public void deleteBookingRequest( Integer id ){
+		getDaoFactory().getBookingRequestRepository().deleteById( id );
+	}
 }

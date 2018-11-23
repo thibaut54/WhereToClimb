@@ -12,18 +12,14 @@
         <div class="container spacer col-md-6 col-xs-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 th:if="${route.id==null}">Create new Route</h5>
-                    <h5 th:if="${route.id!=null}">Edit Route</h5>
+                    <h5 th:if="${routeForm.id==null}">Create new Route</h5>
+                    <h5 th:if="${routeForm.id!=null}">Edit Route</h5>
                     <div class="card-block">
-                        <form autocomplete="off" th:action="@{/user/saveRoute}" method="post" th:object="${route}">
-                            <input th:if="${route.id!=null}" type="hidden" th:field="*{id}"/>
-                            <input th:if="${route.id!=null}" type="hidden" th:field="*{createDate}"/>
-                            <input th:if="${route.id!=null}" type="hidden" th:field="*{comments}"/>
-                            <input th:if="${route.id!=null}" type="hidden" th:field="*{crag}"/>
-                            <input th:if="${route.id!=null}" type="hidden" th:field="*{pitches}"/>
-                            <div class="form-group" th:if="${route.id==null}">
+                        <form autocomplete="off" th:action="@{/user/saveRoute}" method="post" th:object="${routeForm}">
+                            <input th:if="${routeForm.id!=null}" type="hidden" th:field="*{id}"/>
+                            <div class="form-group">
                                 <label>Concerned Crag</label>
-                                <select th:field="${route.crag}" autofocus>
+                                <select th:field="*{crag}" autofocus>
                                     <option th:each="crag:${crags}" th:value="${crag.id}" th:text="${crag.name}">
                                     </option>
                                 </select>
@@ -31,8 +27,8 @@
                             <div class="form-group">
                                 <label>Name</label>
                                 <input name="inputTxt" type="text" class="form-control" placeholder="The name of the route"
-                                       th:field="${route.name}"/>
-                                <span class="error-field" th:errors="${route.name}"></span>
+                                       th:field="*{name}"/>
+                                <span class="error-field" th:errors="*{name}"></span>
                             </div>
                             <div class="form-group">
                                 <label>Grade</label>
@@ -61,18 +57,9 @@
                             </div>
                             <div class="form-group">
                                 <label>Climbing style</label>
-                                <input name="inputTxt" type="text" class="form-control" placeholder="Ex: physical, technical, equilibrium?..."
-                                       th:field="${route.style}"/>
-                                <span class="error-field" th:errors="${route.style}"></span>
-                                <small id="atlasHelp" class="form-text text-muted">
-                                    A good idea would be to name the crag with its official name.</small>
-                            </div>
-                            <div class="form-group">
-                                <label>The route has multiple pitch?</label>
-                                <select th:field="*{multiPitch}">
-                                    <option value="true">Yes</option>
-                                    <option value="false">No</option>
-                                </select>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="Ex: physical, technical, equilibrium?"
+                                       th:field="*{style}"/>
+                                <span class="error-field" th:errors="*{style}"></span>
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>

@@ -21,7 +21,6 @@ public class RouteForm extends ElementForm{
 	private String grade;
 	private int length;
 	private int nbAnchor;
-	private boolean multiPitch;
 	private String verticality;
 	private String style;
 	private Crag crag;
@@ -34,6 +33,5 @@ public class RouteForm extends ElementForm{
 		this.crag=  route.getCrag();
 		this.verticality = route.getVerticality();
 		this.style = route.getStyle();
-		this.multiPitch = route.isMultiPitch();
 	}
 }
