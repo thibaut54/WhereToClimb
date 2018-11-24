@@ -48,6 +48,7 @@ public class AdvancedSearchController extends AbstractController{
 		model.addAttribute( "pages", new int[result.getTotalPages()] );
 
 		int totalPages = result.getTotalPages();
+
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
 					                            .boxed()
@@ -66,6 +67,5 @@ public class AdvancedSearchController extends AbstractController{
 
 		return "view/advancedSearch";
 	}
-
 
 }

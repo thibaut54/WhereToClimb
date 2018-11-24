@@ -158,8 +158,7 @@
                             <a th:text="${crag.name}" th:href="@{/public/showRoute(cragId=${crag.id})}"></a>
                         </td>
                         <td th:text="${crag.access}"></td>
-                        <!--<td th:text="${crag.routes.size()}+' minutes'"></td>-->
-                        <td th:inline="text">[[${crag.routes.size()}]]></td>
+                        <td th:inline="text">[[${crag.routes.size()}]]</td>
                         <td th:if="${userIsAdmin}">
                             <a th:href="@{/admin/editCrag(id=${crag.id})}">
                                 <i class="icon fas fa-pencil-alt"></i>

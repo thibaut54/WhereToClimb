@@ -113,10 +113,11 @@ public class AtlasController extends AbstractController {
 		}
 
 		Atlas newAtlas = null;
+		Atlas atlasToSave = null;
 
 		//Create new Atlas
 		if ( atlasForm.getId( ) == null ) {
-			Atlas atlasToCreate = GenericBuilder.of( Atlas::new )
+			atlasToSave = GenericBuilder.of( Atlas::new )
 					                      .with( Atlas::setUser, getManagerFactory( ).getUserManager( ).findByUserName( SecurityContextHolder.getContext( ).getAuthentication( ).getName( ) ) )
 					                      .with( Atlas::setName, atlasForm.getName( ) )
 					                      .with( Atlas::setCountry, atlasForm.getCountry( ) )
@@ -125,36 +126,28 @@ public class AtlasController extends AbstractController {
 					                      .with( Atlas::setAvailable, atlasForm.isAvailable( ) )
 					                      .with( Atlas::setCreateDate, LocalDateTime.now() )
 					                      .build();
-			try {
-				newAtlas = getManagerFactory( ).getAtlasManager( ).createAtlas( atlasToCreate );
-			}
-			// Other error!!
-			catch ( Exception e ) {
-				log.error( "error occuring create/update atlas: " + atlasForm.getId() + "/" + atlasForm.getName( ), e );
-				model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
-				return "view/createAtlas";
-			}
 
 		}
 		else if ( atlasForm.getId( ) != null ) {
 
-			Atlas updatedAtlas = getManagerFactory().getAtlasManager().findAtlasById( atlasForm.getId() );
-			updatedAtlas.setUpdateDate( LocalDateTime.now() );
-			updatedAtlas.setName( atlasForm.getName() );
-			updatedAtlas.setCountry( atlasForm.getCountry() );
-			updatedAtlas.setRegion( atlasForm.getRegion() );
-			updatedAtlas.setDepartment( atlasForm.getDepartment() );
-			updatedAtlas.setAvailable( atlasForm.isAvailable() );
+			atlasToSave = getManagerFactory().getAtlasManager().findAtlasById( atlasForm.getId() );
+			atlasToSave.setUpdateDate( LocalDateTime.now() );
+			atlasToSave.setName( atlasForm.getName() );
+			atlasToSave.setCountry( atlasForm.getCountry() );
+			atlasToSave.setRegion( atlasForm.getRegion() );
+			atlasToSave.setDepartment( atlasForm.getDepartment() );
+			atlasToSave.setAvailable( atlasForm.isAvailable() );
 
-			try {
-				newAtlas = getManagerFactory( ).getAtlasManager( ).createAtlas( updatedAtlas );
-			}
-			// Other error!!
-			catch ( Exception e ) {
-				log.error( "error occuring create/update atlas: " + atlasForm.getId() + "/" + atlasForm.getName( ), e );
-				model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
-				return "view/createAtlas";
-			}
+		}
+
+		try {
+			newAtlas = getManagerFactory( ).getAtlasManager( ).createAtlas( atlasToSave );
+		}
+		// Other error!!
+		catch ( Exception e ) {
+			log.error( "error occuring create/update atlas: " + atlasForm.getId() + "/" + atlasForm.getName( ), e );
+			model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
+			return "view/createAtlas";
 		}
 
 		redirectAttributes.addFlashAttribute( "flashAtlas", newAtlas);

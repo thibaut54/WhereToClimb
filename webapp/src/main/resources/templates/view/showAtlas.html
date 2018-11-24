@@ -42,7 +42,7 @@
                         </td>
                         <td th:text="${atlas.country}"></td>
                         <td th:text="${atlas.region}"></td>
-                        <td th:text="${atlas.department!=null}?'${atlas.department}':'NC'"></td>
+                        <td th:text="${atlas.department!=null}?${atlas.department}:'NC'"></td>
                         <div th:if="${atlas.available}">
                             <td>Yes</td>
                         </div>

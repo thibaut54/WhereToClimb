@@ -19,6 +19,7 @@ import org.thibaut.wheretoclimb.webapp.validation.pojo.UserForm;
 import org.thibaut.wheretoclimb.webapp.validation.validator.PasswordValidator;
 import org.thibaut.wheretoclimb.webapp.validation.validator.UserValidator;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -199,9 +200,9 @@ public class RegisterController extends AbstractController {
 
 
 	@GetMapping( "/user/editAccount" )
-	public String editAccount( Model model ) {
+	public String editAccount( Model model , HttpSession httpSession ) {
 
-		UserForm userForm = new UserForm( Optional.ofNullable( getManagerFactory( ).getUserManager( ).findByUserName( SecurityContextHolder.getContext( ).getAuthentication( ).getName( ) ) ).get( ) );
+		UserForm userForm = new UserForm( getManagerFactory( ).getUserManager( ).findById( ( Integer ) httpSession.getAttribute( "connectedUserId" ) ));
 
 		model.addAttribute( "userForm", userForm );
 
