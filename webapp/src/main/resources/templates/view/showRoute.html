@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all"
+              th:href="@{/static/css/route.css}" />
+    </div>
+
+
+    <div layout:fragment="content">
+        <div class="container">
+            <ul class="row" id="breadcrumbs">
+                <li><a th:href="@{/public/showAtlas}">List of all atlases</a></li>
+                <li><a th:href="@{/public/showArea(atlasId=${crag.area.atlas.id})}">Atlas: <span th:text="${crag.area.atlas.name}"></span></a></li>
+                <li><a th:href="@{/public/showCrag(areaId=${crag.area.id})}">Area: <span th:text="${crag.area.name}"></span></a></li>
+                <li><a>Crag: <span th:text="${crag.name}"></span></a></li>
+            </ul>
+            <div class="row">
+                <div class="col-lg-8">
+                    <table class="listArea table table-bordered table-striped table-condensed">
+                        <caption>
+                            <h5>LIST OF ROUTES</h5>
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th th:if="${session.connectedUser!=null}"></th>
+                                <th>NAME</th>
+                                <th>NUMBER OF PITCH</th>
+                                <th>GRADE</th>
+                                <th>LENGTH</th>
+                                <th>METERS BETWEEN ANCHORS</th>
+                                <th>VERTICALITY</th>
+                                <th>STYLE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="route:${routes}">
+                                <td th:if="${session.connectedUser!=null}">
+                                    <a th:href="@{/user/commentElement(elementId=${route.id})}" data-toggle="tooltip" data-placement="top" title="Comment this Route">
+                                        <i class="fas fa-comment-dots"></i>
+                                    </a>
+                                </td>
+                                <td >
+                                    <a th:if="${!route.pitches.isEmpty()}" th:text="${route.name}" th:href="@{/public/showPitch(routeId=${route.id})}"></a>
+                                    <a th:if="${route.pitches.isEmpty()}" th:text="${route.name}"></a>
+                                </td>
+                                <td th:text="${route.pitches.isEmpty()}?'1':${route.pitches.size()}"></td>
+                                <td th:text="${route.grade}"></td>
+                                <td th:text="${route.length}+' meters'"></td>
+                                <td th:text="${(route.length)/(route.nbAnchor+1)}"></td>
+                                <td th:text="${route.verticality}"></td>
+                                <td th:text="${#strings.isEmpty(route.style)}?'NC':${route.style}"></td>
+                                <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and routesIds.contains(route.id)))}">
+                                    <td>
+                                        <a th:href="@{/user/editRoute(id=${route.id})}" data-toggle="tooltip" data-placement="top" title="Edit this Route">
+                                            <i class="icon fas fa-pencil-alt"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form autocomplete="off" th:action="@{'/user/deleteRoute/' + ${route.id}+'/'+${route.crag.id}+'/'+${currentPage}+'/'+${size}}" method="post">
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Route?')" data-toggle="tooltip" data-placement="top" title="Delete this Route">
+                                                <i class="icon fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </span>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${crag.comments.isEmpty()}">
+                    <h6>COMMENTS</h6>
+                    <div th:each="comment:${crag.comments}" class="card">
+                        <div class="card-header">
+                            <span th:if="${session.connectedUser!=null and session.role.contains('ROLE_ADMIN')}">
+                                <form autocomplete="off" th:action="@{'/admin/deleteComment/'+${comment.id}}" method="post">
+                                    <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Delete this comment" onclick="return confirm('Do you really want to delete this Comment?')">
+                                        <i class="icon fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </span>
+                            <span th:text="'Title: '+${comment.title}+' | Author: '+${comment.user.userName}+' | Posted: ' +${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <span th:text="${comment.content}"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="row">
+                <ul class="pagination">
+                    <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
+                        <a class="page-link" th:href="@{/public/showRoute(cragId=${crag.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
+                        </a>
+                    </li>
+                </ul>
+            </footer>
+        </div>
+    </div>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/createAtlas.css}" />
+    </div>
+
+    <div layout:fragment="content">
+        <div class="container spacer col-md-6 col-xs-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Write new comment</h5>
+                    <div class="card-block">
+                        <form autocomplete="off" th:action="@{'/user/saveComment/' + ${elementId}}" method="post" th:object="${commentForm}">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input name="inputTxt" type="text" class="form-control"
+                                       th:field="*{title}" autofocus/>
+                                <span class="error-field" th:errors="*{title}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Comment</label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="Write your comment here"
+                                       th:field="*{content}"/>
+                                <span class="error-field" th:errors="*{content}"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</html>

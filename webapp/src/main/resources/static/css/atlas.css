@@ -1,0 +1,25 @@
+
+caption {
+    padding: 10px;
+    caption-side: top;
+}
+
+h3{
+    color: darkorange;
+}
+
+#trash-ic{
+    align-items: center;
+    align-content: center;
+    alignment: center;
+}
+
+
+.icon{
+    alignment: center;
+    align-items: center;
+}
+
+table {
+    font-size:70%;
+}

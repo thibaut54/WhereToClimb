@@ -1,0 +1,14 @@
+caption {
+    padding: 10px;
+    caption-side: top;
+}
+
+h3{
+    color: darkorange;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

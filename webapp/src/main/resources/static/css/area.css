@@ -1,0 +1,22 @@
+
+@import url(common.css);
+
+caption {
+    padding: 10px;
+    caption-side: top;
+}
+
+#search-btn{
+    width: 150px;
+    /*background-color: #1F7AF9;*/
+}
+
+#trash-ic{
+    align-items: center;
+    align-content: center;
+    alignment: center;
+}
+
+.error-field {
+    color: red;
+}

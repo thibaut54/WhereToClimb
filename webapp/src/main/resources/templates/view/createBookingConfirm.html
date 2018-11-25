@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/atlas.css}" />
+    </div>
+
+
+    <div layout:fragment="content">
+        <div class="container">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Confirmation</h5>
+                    <div class="card-block">
+                        <div class="form-group">
+                            <label>Atlas requested:</label>
+                            <label th:text="${bookingRequestFlash.atlas.name}"></label>
+                        </div>
+                        <div class="form-group">
+                            <label>Start date:</label>
+                            <label th:text="${bookingRequestFlash.startDate}"></label>
+                        </div>
+                        <div class="form-group">
+                            <label>End date:</label>
+                            <label th:text="${bookingRequestFlash.endDate}"></label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</html>

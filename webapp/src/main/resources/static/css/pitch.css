@@ -1,0 +1,14 @@
+
+@import url(common.css);
+
+h3{
+    color: darkorange;
+
+}
+
+caption {
+    padding: 10px;
+    caption-side: top;
+}
+
+

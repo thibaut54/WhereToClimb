@@ -1,0 +1,15 @@
+.nav{
+    position: fixed;
+}
+
+.navbar{
+    margin-bottom: 40px;
+}
+
+.navbar-dark{
+    background-color: darkorange;
+}
+
+#search-btn{
+    width: 150px;
+}

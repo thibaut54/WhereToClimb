@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all"
+              th:href="@{/static/css/area.css}" />
+    </div>
+
+
+    <div layout:fragment="content">
+        <div class="container">
+            <ul class="row" id="breadcrumbs">
+                <li><a th:href="@{/public/showAtlas}">List of all atlases</a></li>
+                <li><a href="#">Atlas: <span th:text="${atlas.name}"></span></a></li>
+            </ul>
+            <div class="row">
+                <div class="col-lg-8">
+                    <table class="listArea table table-bordered table-striped table-condensed">
+                        <caption>
+                            <h5>LIST OF AREAS</h5>
+                            <a th:if="${atlas.available && session.connectedUser!=null && !atlasesIds.contains(atlas.id)}" class="btn btn-primary" th:href="@{/user/createBookingRequest(atlasId=${atlas.id})}" role="button">Ask for borrow this Atlas</a>
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th th:if="${session.connectedUser!=null}"></th>
+                                <th>NAME</th>
+                                <th>NEAREST CITY</th>
+                                <th>ACCESS</th>
+                                <th>ROCK TYPE</th>
+                                <th>APPROACH DURATION</th>
+                                <th>ALTITUDE</th>
+                                <th>PARKING ACCESS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="area:${atlas.areas}">
+                                <td th:if="${session.connectedUser!=null}">
+                                    <a th:href="@{/user/commentElement(elementId=${area.id})}" data-toggle="tooltip" data-placement="top" title="Comment this area">
+                                        <i class="fas fa-comment-dots"></i>
+                                    </a>
+                                </td>
+                                <td >
+                                    <a th:text="${area.name}" th:href="@{/public/showCrag(areaId=${area.id})}"></a>
+                                </td>
+                                <td th:text="${area.nearestCity}"></td>
+                                <td th:text="${area.access==null or area.access.equals('')}?'NC':${area.access}"></td>
+                                <td th:text="${area.rockType==null or area.rockType.equals('')}?'NC':${area.rockType}"></td>
+                                <td th:text="${area.approachDuration}+' minutes'"></td>
+                                <td th:text="${area.altitude}+' meters'"></td>
+                                <td th:text="${area.parkingAccess==null or area.parkingAccess.equals('')}?'NC':${area.parkingAccess}"></td>
+                                <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and areasIds.contains(area.id)))}">
+                                    <td>
+                                        <a th:href="@{/user/editArea(id=${area.id})}" data-toggle="tooltip" data-placement="top" title="Edit this area">
+                                            <i class="icon fas fa-pencil-alt"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form autocomplete="off" th:action="@{'/user/deleteArea/' + ${area.id}+'/'+${area.atlas.id}+'/'+${currentPage}+'/'+${size}}" method="post">
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Area?')" data-toggle="tooltip" data-placement="top" title="Delete this area">
+                                                <i class="icon fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </span>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${!atlas.comments.isEmpty()}">
+                    <h4>Comments</h4>
+                    <div th:each="comment:${atlas.comments}" class="card">
+                        <div class="card-header">
+                            <span th:if="${session.connectedUser!=null and session.role.contains('ROLE_ADMIN')}">
+                                <form autocomplete="off" th:action="@{'/admin/deleteComment/'+${comment.id}}" method="post">
+                                    <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Delete this comment" onclick="return confirm('Do you really want to delete this Comment?')">
+                                        <i class="icon fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </span>
+                            <span th:text="'Title: '+${comment.title}+' | Author: '+${comment.user.userName}+' | Posted: ' +${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></span>
+
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <span th:text="${comment.content}"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="row container">
+                <ul class="pagination">
+                    <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
+                        <a class="page-link" th:href="@{/public/showArea(atlasId=${atlas.id},page=${status.index}, size=${size})}" th:text="${status.index}+1" >
+                        </a>
+                    </li>
+                </ul>
+            </footer>
+        </div>
+    </div>
+
+</html>

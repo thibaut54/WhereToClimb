@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/createAtlas.css}" />
+    </div>
+
+
+    <div layout:fragment="content">
+        <div class="container spacer col-md-6 col-xs-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 th:if="${areaForm.id==null}">Create new Area</h5>
+                    <h5 th:if="${areaForm.id!=null}">Edit Area</h5>
+                    <div class="card-block">
+                        <form autocomplete="off" th:action="@{/user/saveArea}" method="post" th:object="${areaForm}">
+                            <input th:if="${areaForm.id!=null}" type="hidden" th:field="*{id}"/>
+                            <div class="form-group" >
+                                <label>Concerned Atlas</label>
+                                <select th:field="*{atlas}" autofocus>
+                                    <option th:each="atlas:${atlases}" th:value="${atlas.id}" th:text="${atlas.name}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="The name of the area"
+                                       th:field="*{name}" autofocus/>
+                                <span class="error-field" th:errors="*{name}"></span>
+                                <small id="atlasHelp" class="form-text text-muted">
+                                    Please refer to the official area's name.</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Nearest city</label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="The area's nearest city"
+                                       th:field="*{nearestCity}"/>
+                                <span class="error-field" th:errors="*{nearestCity}"></span>
+                            </div>
+                            <div class="autocomplete form-group">
+                                <label>Approach duration in minutes</label>
+                                <input id="myInput" name="inputTxt" type="number" class="form-control" placeholder="The walking time before reaching the area"
+                                       th:field="*{approachDuration}"/>
+                                <span class="error-field" th:errors="*{approachDuration}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Access information</label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="A brief description of how to find the climbing area"
+                                       th:field="*{access}"/>
+                                <span class="error-field" th:errors="*{access}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Cliff rock type</label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="Which kind of rock the cliff is made of"
+                                       th:field="*{rockType}"/>
+                                <span class="error-field" th:errors="*{rockType}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Altitude </label>
+                                <input name="inputTxt" type="number" class="form-control"
+                                       th:field="*{altitude}"/>
+                                <span class="error-field" th:errors="*{altitude}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Parking access information </label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="Which kind of rock the cliff is made of"
+                                       th:field="*{parkingAccess}"/>
+                                <span class="error-field" th:errors="*{parkingAccess}"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</html>

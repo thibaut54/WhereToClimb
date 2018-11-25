@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/createAtlas.css}" />
+    </div>
+
+
+    <div layout:fragment="content">
+        <div class="container spacer col-md-6 col-xs-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 th:if="${atlasForm.id==null}">Create new Atlas</h5>
+                    <h5 th:if="${atlasForm.id!=null}">Edit Atlas</h5>
+                    <div class="card-block">
+                        <form autocomplete="off" th:action="@{/user/saveAtlas}" method="post" th:object="${atlasForm}">
+                            <input th:if="${atlasForm.id!=null}" type="hidden" th:field="*{id}"/>
+                            <div class="form-group">
+                                <label>Atlas name</label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="The name of your atlas"
+                                       th:field="*{name}" autofocus/>
+                                <span class="error-field" th:errors="*{name}"></span>
+                                <small id="atlasHelp" class="form-text text-muted">
+                                    A good idea would be to name the atlas as the title of the atlas book that you may have.</small>
+                            </div>
+                            <div class="autocomplete form-group">
+                                <label>Country</label>
+                                <input id="myInput" name="myCountry" type="text" class="form-control" placeholder="The country concerned by the atlas"
+                                       th:field="*{country}"/>
+                                <span class="error-field" th:errors="*{country}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Region</label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="The country concerned by the atlas"
+                                       th:field="*{region}"/>
+                                <span class="error-field" th:errors="*{region}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Department</label>
+                                <input name="inputTxt" type="text" class="form-control" placeholder="If relevant, the department concerned by the atlas"
+                                       th:field="*{department}"/>
+                                <span class="error-field" th:errors="*{department}"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Can be borrowed?</label>
+                                <select th:field="*{available}">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" language="javascript" src="../../static/js/countryAutocomplete.js"></script>
+    </div>
+
+</html>

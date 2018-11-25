@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all"
+              th:href="@{/static/css/atlas.css}" />
+    </div>
+
+
+    <div layout:fragment="content">
+        <div class="container">
+            <table class="listAtlas table table-bordered table-striped table-condensed">
+                <caption>
+                    <h3>LIST OF ALL ATLASES</h3>
+                </caption>
+                <thead>
+                    <tr>
+                        <th th:if="${session.connectedUser!=null}"></th>
+                        <th>NAME</th>
+                        <th>COUNTRY</th>
+                        <th>REGION</th>
+                        <th>DEPARTMENT</th>
+                        <th>CAN BE BORROWED</th>
+                        <th>COMMENTS</th>
+                        <th>CREATION DATE</th>
+                        <th>OWNER</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="atlas:${atlases}">
+                        <td th:if="${session.connectedUser!=null}">
+                            <a th:href="@{/user/commentElement(elementId=${atlas.id})}" data-toggle="tooltip" data-placement="top" title="Comment this atlas">
+                                <i class="fas fa-comment-dots"></i>
+                            </a>
+                        </td>
+                        <td >
+                            <a th:text="${atlas.name}" th:href="@{/public/showArea(atlasId=${atlas.id}, atlasName=${atlas.name})}"></a>
+                        </td>
+                        <td th:text="${atlas.country}"></td>
+                        <td th:text="${atlas.region}"></td>
+                        <td th:text="${atlas.department!=null}?${atlas.department}:'NC'"></td>
+                        <div th:if="${atlas.available}">
+                            <td>Yes</td>
+                        </div>
+                        <div th:if="${!atlas.available}">
+                            <td>No</td>
+                        </div>
+                        <td th:text="${atlas.getComments().size()}"></td>
+                        <td th:text="${#temporals.format(atlas.createDate, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${atlas.user.userName}"></td>
+                        <span th:if="${session.connectedUser!=null
+                        and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and atlasesIds.contains(atlas.id)))}">
+                            <td>
+                                <a th:href="@{/user/editAtlas(id=${atlas.id})}" onclick="return confirm('Do you really want to modify this Atlas?')" data-toggle="tooltip" data-placement="top" title="Edit this atlas">
+                                    <i class="icon fas fa-pencil-alt"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <form autocomplete="off" th:action="@{'/user/deleteAtlas/' + ${atlas.id}}" method="post">
+                                    <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Atlas?')" data-toggle="tooltip" data-placement="top" title="Delete this atlas">
+                                            <i class="icon fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </span>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <ul class="pagination">
+                <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
+                    <a class="page-link" th:href="@{/public/showAtlas(page=${status.index}, size=${size}, keyword=${keyword})}" th:text="${status.index}+1" >
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</html>
