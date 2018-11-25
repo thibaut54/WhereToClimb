@@ -15,6 +15,11 @@ ul{
     list-style: none;
 }
 
+.error-field {
+    color: red;
+}
+
+
 #breadcrumbs{
     overflow: hidden;
     width: 100%;

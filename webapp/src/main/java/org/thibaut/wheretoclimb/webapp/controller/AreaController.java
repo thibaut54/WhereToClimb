@@ -87,6 +87,9 @@ public class AreaController extends AbstractController {
 	@GetMapping( "/user/createArea" )
 	public String  createArea( Model model,
 	                           HttpSession httpSession ){
+		if(getConnectedUser( httpSession ).getAtlases().isEmpty()){
+			return "error/noAtlas";
+		}
 		model.addAttribute( "areaForm" , new AreaForm() );
 		putAtlasFromUserInModel( model , httpSession );
 		return "view/createArea";
@@ -106,10 +109,11 @@ public class AreaController extends AbstractController {
 		}
 
 		Area newArea = null;
+		Area areaToSave = null;
 
 		//If a user wants to create a new Area
 		if ( areaForm.getId() == null) {
-			Area areaToCreate = GenericBuilder.of( Area::new )
+			areaToSave = GenericBuilder.of( Area::new )
 					            .with( Area::setCreateDate, LocalDateTime.now())
 					            .with( Area::setAtlas, areaForm.getAtlas() )
 					            .with( Area::setName, areaForm.getName( ) )
@@ -120,40 +124,31 @@ public class AreaController extends AbstractController {
 					            .with( Area::setAltitude, areaForm.getAltitude( ) )
 					            .with( Area::setParkingAccess, areaForm.getParkingAccess( ) )
 								.build();
-			try {
-				newArea = getManagerFactory().getAreaManager().createArea(areaToCreate);
-			}
-			// Other error!!
-			catch (Exception e) {
-				log.error( "error occuring create/update an Area: " + areaForm.getName(), e );
-				model.addAttribute("errorMessage", "Error: " + e.getMessage());
-				putAtlasFromUserInModel( model , httpSession );
-				return "view/createArea";
-			}
 		}
 		//If a user wants to edit an existing area
 		else if ( areaForm.getId() != null){
-			Area areaToUpdate = getManagerFactory().getAreaManager().findAreaById( areaForm.getId() );
-			areaToUpdate.setUpdateDate( LocalDateTime.now());
-			areaToUpdate.setAtlas( areaForm.getAtlas(  ));
-			areaToUpdate.setName( areaForm.getName(  ));
-			areaToUpdate.setNearestCity( areaForm.getNearestCity( ));
-			areaToUpdate.setApproachDuration( areaForm.getApproachDuration( ));
-			areaToUpdate.setAccess( areaForm.getAccess(  ));
-			areaToUpdate.setRockType( areaForm.getRockType(  ));
-			areaToUpdate.setAltitude( areaForm.getAltitude(  ));
-			areaToUpdate.setParkingAccess( areaForm.getParkingAccess(  ));
+			areaToSave = getManagerFactory().getAreaManager().findAreaById( areaForm.getId() );
+			areaToSave.setUpdateDate( LocalDateTime.now());
+			areaToSave.setAtlas( areaForm.getAtlas(  ));
+			areaToSave.setName( areaForm.getName(  ));
+			areaToSave.setNearestCity( areaForm.getNearestCity( ));
+			areaToSave.setApproachDuration( areaForm.getApproachDuration( ));
+			areaToSave.setAccess( areaForm.getAccess(  ));
+			areaToSave.setRockType( areaForm.getRockType(  ));
+			areaToSave.setAltitude( areaForm.getAltitude(  ));
+			areaToSave.setParkingAccess( areaForm.getParkingAccess(  ));
 
-			try {
-				newArea = getManagerFactory().getAreaManager().createArea(areaToUpdate);
-			}
-			// Other error!!
-			catch (Exception e) {
-				log.error( "error occuring create/update an Area: " + areaForm.getName(), e );
-				model.addAttribute("errorMessage", "Error: " + e.getMessage());
-				putAtlasFromUserInModel( model , httpSession );
-				return "view/createArea";
-			}
+		}
+
+		try {
+			newArea = getManagerFactory().getAreaManager().createArea(areaToSave);
+		}
+		// Other error!!
+		catch (Exception e) {
+			log.error( "error occuring create/update an Area: " + areaForm.getName(), e );
+			model.addAttribute("errorMessage", "Error: " + e.getMessage());
+			putAtlasFromUserInModel( model , httpSession );
+			return "view/createArea";
 		}
 		redirectAttributes.addFlashAttribute("flashArea", newArea);
 		return "redirect:/user/createAreaConfirm";

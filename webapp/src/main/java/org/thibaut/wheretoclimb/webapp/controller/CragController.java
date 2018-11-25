@@ -68,6 +68,7 @@ public class CragController extends AbstractController {
 		isCommented( model, areaOpt.get() );
 
 		areaOpt.ifPresent( atlas -> model.addAttribute( "area", areaOpt.get() ) );
+		model.addAttribute( "area" , areaOpt.get());
 		model.addAttribute( "crags" , crags );
 		model.addAttribute( "pages", new int[crags.getTotalPages()] );
 		model.addAttribute( "size", size );
@@ -80,8 +81,23 @@ public class CragController extends AbstractController {
 	@GetMapping( "/user/createCrag" )
 	public String  createCrag( Model model,
 	                           HttpSession httpSession ){
+		List<Atlas> atlases = getConnectedUser( httpSession ).getAtlases();
+		List<Area> areas = new ArrayList<>();
+		boolean hasArea = false;
+		for ( Atlas atlas: atlases ) {
+			if(!atlas.getAreas().isEmpty()){
+				hasArea = true;
+				break;
+			}
+		}
+		if(!hasArea){
+			return "error/noArea";
+		}
 		model.addAttribute( "cragForm" , new CragForm() );
 		putAreasFromUserInModel( model, httpSession );
+		if ( ! model.containsAttribute( "areas" ) ){
+			return "error/noArea";
+		}
 		return "view/createCrag";
 	}
 
@@ -99,43 +115,35 @@ public class CragController extends AbstractController {
 		}
 
 		Crag newCrag = null;
+		Crag cragTosave = null;
 
 		if( cragForm.getId()==null ){
-			Crag cragToCreate = GenericBuilder.of( Crag::new )
+			cragTosave = GenericBuilder.of( Crag::new )
 					.with( Crag::setCreateDate, LocalDateTime.now())
 					.with( Crag::setArea, cragForm.getArea())
 					.with( Crag::setName, cragForm.getName())
 					.with( Crag::setAccess, cragForm.getAccess())
 					.with( Crag::setApproachDuration, cragForm.getApproachDuration())
 					.build();
-			try {
-				newCrag = getManagerFactory().getCragManager().createCrag(cragToCreate);
-			}
-			// Other error!!
-			catch (Exception e) {
-				log.error( "error occuring create/update a Crag: " + cragForm.getName(), e );
-				model.addAttribute("errorMessage", "Error: " + e.getMessage());
-				putAreasFromUserInModel( model, httpSession );
-				return "view/createCrag";
-			}
+
 		}
 		else if ( cragForm.getId()!=null ){
-			Crag cragToUpdate = getManagerFactory().getCragManager().findCragById( cragForm.getId() );
-			cragToUpdate.setArea( cragForm.getArea() );
-			cragToUpdate.setName( cragForm.getName() );
-			cragToUpdate.setUpdateDate( LocalDateTime.now() );
-			cragToUpdate.setApproachDuration( cragForm.getApproachDuration() );
-			cragToUpdate.setAccess( cragForm.getAccess() );
-			try {
-				newCrag = getManagerFactory().getCragManager().createCrag(cragToUpdate);
-			}
-			// Other error!!
-			catch (Exception e) {
-				log.error( "error occuring create/update a Crag: " + cragForm.getName(), e );
-				model.addAttribute("errorMessage", "Error: " + e.getMessage());
-				putAreasFromUserInModel( model, httpSession );
-				return "view/createCrag";
-			}
+			cragTosave = getManagerFactory().getCragManager().findCragById( cragForm.getId() );
+			cragTosave.setArea( cragForm.getArea() );
+			cragTosave.setName( cragForm.getName() );
+			cragTosave.setUpdateDate( LocalDateTime.now() );
+			cragTosave.setApproachDuration( cragForm.getApproachDuration() );
+			cragTosave.setAccess( cragForm.getAccess() );
+		}
+		try {
+			newCrag = getManagerFactory().getCragManager().createCrag(cragTosave);
+		}
+		// Other error!!
+		catch (Exception e) {
+			log.error( "error occuring create/update a Crag: " + cragForm.getName(), e );
+			model.addAttribute("errorMessage", "Error: " + e.getMessage());
+			putAreasFromUserInModel( model, httpSession );
+			return "view/createCrag";
 		}
 		redirectAttributes.addFlashAttribute("flashCrag", newCrag);
 		return "redirect:/user/createCragConfirm";

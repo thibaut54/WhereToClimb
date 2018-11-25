@@ -50,20 +50,6 @@ public class AtlasController extends AbstractController {
 		}
 	}
 
-	// Set a form validator
-	@InitBinder
-	protected void initBinderComment( WebDataBinder dataBinder ) {
-		// Form target
-		Object target = dataBinder.getTarget( );
-		if ( target == null ) {
-			return;
-		}
-
-		if ( target.getClass( ) == CommentForm.class ) {
-			dataBinder.setValidator( commentValidator);
-		}
-	}
-
 
 	@GetMapping( "/public/showAtlas" )
 	public String showAtlas( Model model,
@@ -175,58 +161,6 @@ public class AtlasController extends AbstractController {
 	public String deleteAtlas( @PathVariable(name = "id") Integer id) {
 		getManagerFactory( ).getAtlasManager( ).deleteAtlas( id );
 		return "redirect:/public/showAtlas";
-	}
-
-
-	@GetMapping( "/user/commentElement" )
-	public String commentElement( Model model, Integer elementId ) {
- 		model.addAttribute( "commentForm", new CommentForm( ) );
-		model.addAttribute( "elementId", elementId );
-		return "view/createComment";
-	}
-
-
-	@PostMapping( "/user/saveComment/{elementId}" )
-	public String saveComment( Model model,
-                            @PathVariable(name = "elementId") Integer elementId,
-                            @ModelAttribute("commentForm") @Valid CommentForm commentForm,
-                            BindingResult result,
-                            final RedirectAttributes redirectAttributes ) {
-		if ( result.hasErrors( ) ) {
-			return "view/createComment";
-		}
-
-		Comment newComment = null;
-
-		//Create new Comment
-		Element parentElement = getManagerFactory().getElementManager().findElementById( elementId ) ;
-
-		Comment commentToCreate = GenericBuilder.of( Comment::new )
-				                      .with( Comment::setUser, getManagerFactory( ).getUserManager( ).findByUserName( SecurityContextHolder.getContext( ).getAuthentication( ).getName( ) ) )
-			                          .with( Comment::setElement, parentElement)
-			                          .with( Comment::setTitle, commentForm.getTitle( ) )
-			                          .with( Comment::setContent, commentForm.getContent( ) )
-				                      .with( Comment::setCreateDate, LocalDateTime.now() )
-				                      .build();
-		try {
-			newComment = getManagerFactory( ).getCommentManager().createComment( commentToCreate );
-		}
-		// Other error!!
-		catch ( Exception e ) {
-			log.error( "error occuring create comment: " + commentForm.getId() + "/" + commentForm.getTitle( ), e );
-			model.addAttribute( "errorMessage", "Error: " + e.getMessage( ) );
-			return "view/createComment";
-		}
-
-		redirectAttributes.addFlashAttribute( "flashComment", newComment);
-
-		return "redirect:/user/createCommentSuccessful";
-	}
-
-
-	@GetMapping( "/user/createCommentSuccessful" )
-	public String createCommentSuccessful( Model model ) {
-		return "view/createCommentSuccessful";
 	}
 
 

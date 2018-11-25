@@ -14,16 +14,9 @@
             <div class="container">
 
                 <h1 class="row col-lg-12" style="margin-left:50px">Login</h1>
-
-                <!-- /login?error=true -->
                 <div class="row col-lg-12" th:if="${#request.getParameter('error') == 'true'}"
                      style="color:red;margin-left:50px;">
                     Login Failed!!!<br />
-                    <!--Reason :-->
-                    <!--<span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"-->
-                    <!--th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">-->
-                    <!--Static summary-->
-                    <!--</span>-->
                 </div>
 
                 <h3 class="row col-lg-12" style="margin-left:50px">Enter your email and password:</h3>

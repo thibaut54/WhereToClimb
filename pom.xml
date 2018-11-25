@@ -23,7 +23,6 @@
 		<module>model</module>
 		<module>consumer</module>
 		<module>business</module>
-		<module>batch</module>
 		<module>webapp</module>
 		<module>util</module>
 	</modules>

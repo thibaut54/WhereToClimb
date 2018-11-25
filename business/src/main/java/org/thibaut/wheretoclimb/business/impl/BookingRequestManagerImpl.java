@@ -12,8 +12,6 @@ import java.util.Optional;
 @Component
 public class BookingRequestManagerImpl extends AbstractManager implements BookingRequestManager {
 
-	@Autowired
-	BookingRequestRepository bookingRequestRepository;
 
 	@Override
 	public void saveBookingRequest( BookingRequest bookingRequest ){

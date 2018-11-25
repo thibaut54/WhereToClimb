@@ -16,4 +16,15 @@ Deployment:
 
 5 - Either double-clic on the webapp.jar file or run it from console with the command: java -jar webapp.jar
 
+6 - In a browser, open: http://localhost:8080/public/showAtlas
+
+
+Use the App:
+You have an admin account
+ID: Admin  PWD: Abcde3@
+
+You have 2 user accounts
+ID: TheJohn  PWD: Abcde1@
+ID: Lele  PWD: Abcde2@
+
 

@@ -66,13 +66,13 @@ public abstract class AbstractController {
 			areasFromUser.addAll( getManagerFactory().getAreaManager().findAreasByAtlasId( atlas.getId() ) );
 		}
 
-		List< Integer > areasId = new ArrayList<>( );
+		List< Integer > areasIds = new ArrayList<>( );
 		model.addAttribute( "areas", areasFromUser );
 
 		for ( Area area : areasFromUser ) {
-			areasId.add( area.getId( ) );
+			areasIds.add( area.getId( ) );
 		}
-		model.addAttribute( "areasIds", areasId );
+		model.addAttribute( "areasIds", areasIds );
 	}
 
 
@@ -155,7 +155,7 @@ public abstract class AbstractController {
 
 
 	public User getConnectedUser ( HttpSession httpSession ){
-		return getManagerFactory().getUserManager().findByUserName( httpSession.getAttribute( "userName" ).toString() );
+		return getManagerFactory().getUserManager().findById( ( Integer ) httpSession.getAttribute( "connectedUserId" ) );
 	}
 
 

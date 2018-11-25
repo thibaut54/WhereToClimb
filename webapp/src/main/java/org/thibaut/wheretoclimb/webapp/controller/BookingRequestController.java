@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thibaut.wheretoclimb.model.entity.Atlas;
 import org.thibaut.wheretoclimb.model.entity.BookingRequest;
 import org.thibaut.wheretoclimb.model.entity.User;
@@ -56,7 +57,8 @@ public class BookingRequestController extends AbstractController {
 	public String saveBookingRequest( Model model,
 	                                  @PathVariable(name = "atlasId") Integer atlasId,
 	                                  @ModelAttribute("bookingRequestForm") @Validated BookingRequestForm bookingRequestForm,
-	                                  BindingResult result ) {
+	                                  BindingResult result,
+	                                  final RedirectAttributes redirectAttributes) {
 
 		if ( result.hasErrors( ) ) {
 			return "view/createBookingRequest";
@@ -82,7 +84,14 @@ public class BookingRequestController extends AbstractController {
 			return "view/createBookingRequest";
 		}
 
-		return "redirect:/public/showAtlas";
+		redirectAttributes.addFlashAttribute( "bookingRequestFlash", newBookingRequest);
+		return "redirect:/user/createBookingConfirm";
+	}
+
+
+	@GetMapping( "/user/createBookingConfirm" )
+	public String createBookingConfirm( Model model ) {
+		return "view/createBookingConfirm";
 	}
 
 

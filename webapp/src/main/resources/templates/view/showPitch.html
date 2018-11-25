@@ -32,7 +32,7 @@
                             <th>NAME</th>
                             <th>GRADE</th>
                             <th>LENGTH</th>
-                            <th>METERS BETWEEN ANCHORS</th>
+                            <th>DISTANCE BETWEEN ANCHORS</th>
                             <th>VERTICALITY</th>
                             <th>STYLE</th>
                         </tr>
@@ -42,18 +42,18 @@
                             <td th:text="${pitch.name}"></td>
                             <td th:text="${pitch.grade}"></td>
                             <td th:text="${pitch.length}+' meters'"></td>
-                            <td th:text="${(pitch.length)/(pitch.nbAnchor+1)}"></td>
+                            <td th:text="${(pitch.length)/(pitch.nbAnchor+1)}+' meters'"></td>
                             <td th:text="${pitch.verticality}"></td>
-                            <td th:text="${pitch.style}"></td>
+                            <td th:text="${pitch.style==null or pitch.style.equals('')}?'NC':${pitch.style}"></td>
                             <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and pitchesIds.contains(pitch.id)))}">
                                 <td>
-                                    <a th:href="@{/user/editPitch(id=${pitch.id})}">
+                                    <a th:href="@{/user/editPitch(id=${pitch.id})}" data-toggle="tooltip" data-placement="top" title="Edit this Pitch">
                                         <i class="icon fas fa-pencil-alt"></i>
                                     </a>
                                 </td>
                                 <td>
                                     <form autocomplete="off" th:action="@{'/user/deletePitch/' + ${pitch.id}+'/'+${pitch.route.id}+'/'+${currentPage}+'/'+${size}}" method="post">
-                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Pitch?')">
+                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Pitch?')" data-toggle="tooltip" data-placement="top" title="Delete this Pitch">
                                             <i class="icon fas fa-trash"></i>
                                         </button>
                                     </form>
@@ -63,10 +63,17 @@
                     </tbody>
                 </table>
             </div>
-            <div th:if="${elementIsCommented}">
+            <div th:if="${route.comments.isEmpty()}">
                 <h6>COMMENTS</h6>
                 <div th:each="comment:${route.comments}" class="card">
                     <div class="card-header">
+                        <span th:if="${session.connectedUser!=null and session.role.contains('ROLE_ADMIN')}">
+                                <form autocomplete="off" th:action="@{'/admin/deleteComment/'+${comment.id}}" method="post">
+                                    <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Delete this comment" onclick="return confirm('Do you really want to delete this Comment?')">
+                                        <i class="icon fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </span>
                         <span th:text="'Title: '+${comment.title}+' | Author: '+${comment.user.userName}+' | Posted: ' +${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></span>
                     </div>
                     <div class="card-body">

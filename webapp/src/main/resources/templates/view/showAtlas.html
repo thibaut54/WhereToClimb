@@ -33,7 +33,7 @@
                 <tbody>
                     <tr th:each="atlas:${atlases}">
                         <td th:if="${session.connectedUser!=null}">
-                            <a th:href="@{/user/commentElement(elementId=${atlas.id})}">
+                            <a th:href="@{/user/commentElement(elementId=${atlas.id})}" data-toggle="tooltip" data-placement="top" title="Comment this atlas">
                                 <i class="fas fa-comment-dots"></i>
                             </a>
                         </td>
@@ -55,13 +55,13 @@
                         <span th:if="${session.connectedUser!=null
                         and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and atlasesIds.contains(atlas.id)))}">
                             <td>
-                                <a th:href="@{/user/editAtlas(id=${atlas.id})}" onclick="return confirm('Do you really want to modify this Atlas?')">
+                                <a th:href="@{/user/editAtlas(id=${atlas.id})}" onclick="return confirm('Do you really want to modify this Atlas?')" data-toggle="tooltip" data-placement="top" title="Edit this atlas">
                                     <i class="icon fas fa-pencil-alt"></i>
                                 </a>
                             </td>
                             <td>
                                 <form autocomplete="off" th:action="@{'/user/deleteAtlas/' + ${atlas.id}}" method="post">
-                                    <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Atlas?')">
+                                    <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Atlas?')" data-toggle="tooltip" data-placement="top" title="Delete this atlas">
                                             <i class="icon fas fa-trash"></i>
                                     </button>
                                 </form>

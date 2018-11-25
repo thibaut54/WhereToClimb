@@ -80,8 +80,24 @@ public class RouteController extends AbstractController{
 	@GetMapping( "/user/createRoute" )
 	public String  createRoute( Model model ,
 	                            HttpSession httpSession ){
+		List<Atlas> atlases = getConnectedUser( httpSession ).getAtlases();
+		List<Area> areas = new ArrayList<>();
+		List<Crag> crags = new ArrayList<>();
+		boolean hasCrag = false;
+		for ( Atlas atlas: atlases ) {
+			areas.addAll( atlas.getAreas() );
+		}
+		for ( Area area: areas) {
+			if(!area.getCrags().isEmpty()){
+				hasCrag = true;
+				break;
+			}
+		}
+		if(!hasCrag){
+			return "error/noCrag";
+		}
 		model.addAttribute( "routeForm", new RouteForm() );
-		putCragsFromUserInModel( model ,httpSession );
+		putCragsFromUserInModel( model , httpSession );
 		getGradesAndVerticalities(model);
 		return "view/createRoute";
 	}
