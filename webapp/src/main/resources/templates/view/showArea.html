@@ -38,7 +38,7 @@
                         <tbody>
                             <tr th:each="area:${atlas.areas}">
                                 <td th:if="${session.connectedUser!=null}">
-                                    <a th:href="@{/user/commentElement(elementId=${area.id})}">
+                                    <a th:href="@{/user/commentElement(elementId=${area.id})}" data-toggle="tooltip" data-placement="top" title="Comment this area">
                                         <i class="fas fa-comment-dots"></i>
                                     </a>
                                 </td>
@@ -46,20 +46,20 @@
                                     <a th:text="${area.name}" th:href="@{/public/showCrag(areaId=${area.id})}"></a>
                                 </td>
                                 <td th:text="${area.nearestCity}"></td>
-                                <td th:text="${area.access.length()!=0}?${area.access}:'NC'"></td>
-                                <td th:text="${area.rockType.length()!=0}?${area.rockType}:'NC'"></td>
-                                <td th:if="${area.approachDuration!=null}?${area.approachDuration}:'NC'"></td>
-                                <td th:if="${area.altitude!=null}?${area.altitude}:'NC'"></td>
-                                <td th:if="${area.parkingAccess.length()!=0}?${area.parkingAccess}:'NC'"></td>
+                                <td th:text="${area.access==null or area.access.equals('')}?'NC':${area.access}"></td>
+                                <td th:text="${area.rockType==null or area.rockType.equals('')}?'NC':${area.rockType}"></td>
+                                <td th:text="${area.approachDuration}+' minutes'"></td>
+                                <td th:text="${area.altitude}+' meters'"></td>
+                                <td th:text="${area.parkingAccess==null or area.parkingAccess.equals('')}?'NC':${area.parkingAccess}"></td>
                                 <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and areasIds.contains(area.id)))}">
                                     <td>
-                                        <a th:href="@{/user/editArea(id=${area.id})}">
+                                        <a th:href="@{/user/editArea(id=${area.id})}" data-toggle="tooltip" data-placement="top" title="Edit this area">
                                             <i class="icon fas fa-pencil-alt"></i>
                                         </a>
                                     </td>
                                     <td>
                                         <form autocomplete="off" th:action="@{'/user/deleteArea/' + ${area.id}+'/'+${area.atlas.id}+'/'+${currentPage}+'/'+${size}}" method="post">
-                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Area?')">
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Area?')" data-toggle="tooltip" data-placement="top" title="Delete this area">
                                                 <i class="icon fas fa-trash"></i>
                                             </button>
                                         </form>
@@ -69,11 +69,19 @@
                         </tbody>
                     </table>
                 </div>
-                <div th:if="${elementIsCommented}">
+                <div th:if="${!atlas.comments.isEmpty()}">
                     <h4>Comments</h4>
                     <div th:each="comment:${atlas.comments}" class="card">
                         <div class="card-header">
+                            <span th:if="${session.connectedUser!=null and session.role.contains('ROLE_ADMIN')}">
+                                <form autocomplete="off" th:action="@{'/admin/deleteComment/'+${comment.id}}" method="post">
+                                    <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Delete this comment" onclick="return confirm('Do you really want to delete this Comment?')">
+                                        <i class="icon fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </span>
                             <span th:text="'Title: '+${comment.title}+' | Author: '+${comment.user.userName}+' | Posted: ' +${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></span>
+
                         </div>
                         <div class="card-body">
                             <p class="card-text">

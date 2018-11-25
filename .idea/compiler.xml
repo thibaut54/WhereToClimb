@@ -6,7 +6,6 @@
         <sourceOutputDir name="output/generated-sources/annotations" />
         <sourceTestOutputDir name="output/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="batch" />
         <module name="business" />
         <module name="consumer" />
         <module name="model" />

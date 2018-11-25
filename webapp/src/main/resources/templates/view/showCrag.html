@@ -36,26 +36,26 @@
                         <tbody>
                             <tr th:each="crag:${area.crags}">
                                 <td th:if="${session.connectedUser!=null}">
-                                    <a th:href="@{/user/commentElement(elementId=${crag.id})}">
+                                    <a th:href="@{/user/commentElement(elementId=${crag.id})}" data-toggle="tooltip" data-placement="top" title="Comment this Crag">
                                         <i class="fas fa-comment-dots"></i>
                                     </a>
                                 </td>
                                 <td >
                                     <a th:text="${crag.name}" th:href="@{/public/showRoute(cragId=${crag.id})}"></a>
                                 </td>
-                                <td th:text="${crag.access}"></td>
+                                <td th:text="${crag.access==null or crag.access.equals('')}?'NC':${crag.access}"></td>
                                 <td th:text="${crag.routes.size()}"></td>
                                 <td th:text="${#temporals.format(crag.createDate, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${#temporals.format(crag.updateDate, 'yyyy-MM-dd')}"></td>
                                 <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and cragsIds.contains(crag.id)))}">
                                     <td>
-                                        <a th:href="@{/user/editCrag(id=${crag.id})}">
+                                        <a th:href="@{/user/editCrag(id=${crag.id})}" data-toggle="tooltip" data-placement="top" title="Edit this Crag">
                                             <i class="icon fas fa-pencil-alt"></i>
                                         </a>
                                     </td>
                                     <td>
                                         <form autocomplete="off" th:action="@{'/user/deleteCrag/' + ${crag.id}+'/'+${crag.area.id}+'/'+${currentPage}+'/'+${size}}" method="post">
-                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Crag?')">
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Crag?')" data-toggle="tooltip" data-placement="top" title="Delete this Crag">
                                                 <i class="icon fas fa-trash"></i>
                                             </button>
                                         </form>
@@ -65,9 +65,16 @@
                         </tbody>
                     </table>
                 </div>
-                <div th:if="${elementIsCommented}">
+                <div th:if="${!area.comments.isEmpty()}">
                     <div th:each="comment:${area.comments}" class="card">
                         <div class="card-header">
+                            <span th:if="${session.connectedUser!=null and session.role.contains('ROLE_ADMIN')}">
+                                <form autocomplete="off" th:action="@{'/admin/deleteComment/'+${comment.id}}" method="post">
+                                    <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Delete this comment" onclick="return confirm('Do you really want to delete this Comment?')">
+                                        <i class="icon fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </span>
                             <span th:text="'Title: '+${comment.title}+' | Author: '+${comment.user.userName}+' | Posted: ' +${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></span>
                         </div>
                         <div class="card-body">

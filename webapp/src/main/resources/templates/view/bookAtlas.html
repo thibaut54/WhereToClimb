@@ -4,15 +4,8 @@
       layout:decorate="layout/layout.html">
 
 
-    <!--<div layout:fragment="customCSS">-->
-        <!--<link rel="stylesheet" type="text/css" media="all"-->
-              <!--th:href="@{/static/css/area.css}" />-->
-    <!--</div>-->
-
-
     <div layout:fragment="content">
         <div class="container">
-            <!--<div class="container">-->
             <header class="container row col-lg-12">
                 <form th:action="@{/public/showAtlasDetail}" method="get">
                     <label><h5>Search area</h5></label>
@@ -26,8 +19,6 @@
                     </div>
                 </form>
             </header>
-            <!--</div>-->
-            <!--<div class="container col-lg-8">-->
             <section class="row">
                 <article class="col-lg-8">
                     <table class="listArea table table-bordered table-striped table-condensed">
@@ -77,18 +68,14 @@
                         </div>
                     </div>
                 </aside>
-                <!--</div>-->
             </section>
-            <!--<div class="container col-lg-8">-->
             <footer class="row">
-                <!--<ul class="nav nav-pills">-->
                 <ul class="pagination">
                     <li class="page-item" th:class="${currentPage}==${status.index}?'page-item active':''" th:each = "page,status:${pages}">
                         <a class="page-link" th:href="@{/public/showAtlasDetail(atlasId=${atlas.id},page=${status.index}, size=${size}, keyword=${keyword})}" th:text="${status.index}+1" >
                         </a>
                     </li>
                 </ul>
-                <!--</div>-->
             </footer>
         </div>
     </div>

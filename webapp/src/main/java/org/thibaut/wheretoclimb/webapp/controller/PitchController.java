@@ -69,7 +69,6 @@ public class PitchController extends AbstractController{
 		isCommented( model, routeOpt.get() );
 
 		routeOpt.ifPresent( atlas -> model.addAttribute( "route", routeOpt.get() ) );
-//		model.addAttribute( "route", routeOpt.get() );
 		model.addAttribute( "pitches" , pitches );
 		model.addAttribute( "pages", new int[pitches.getTotalPages()] );
 		model.addAttribute( "size", size );
@@ -82,6 +81,26 @@ public class PitchController extends AbstractController{
 	@GetMapping( "/user/createPitch" )
 	public String  createPitch( Model model,
 	                            HttpSession httpSession ){
+		List<Atlas> atlases = getConnectedUser( httpSession ).getAtlases();
+		List<Area> areas = new ArrayList<>();
+		List<Crag> crags = new ArrayList<>();
+		List<Route> routes = new ArrayList<>();
+		boolean hasRoute = false;
+		for ( Atlas atlas: atlases ) {
+			areas.addAll( atlas.getAreas() );
+		}
+		for ( Area area: areas) {
+			crags.addAll( area.getCrags() );
+		}
+		for ( Crag crag: crags ){
+			if(!crag.getRoutes().isEmpty()){
+				hasRoute = true;
+				break;
+			}
+		}
+		if(!hasRoute){
+			return "error/noRoute";
+		}
 		model.addAttribute( "pitchForm" , new PitchForm() );
 		putRoutesFromUserInModel( model , httpSession );
 		getGradesAndVerticalities( model );

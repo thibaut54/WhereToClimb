@@ -3,28 +3,21 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/layout.html">
 
-    <div layout:fragment="customCSS">
-        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/crag.css}" />
-    </div>
 
-        <div layout:fragment="content">
-            <div class="container">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>You have successfully edited your account!</h2>
-                        <div class="card-block">
-                            <div class="form-group">
-                                <label>User name:</label>
-                                <label th:text="${flashUser.userName}"></label>
-                            </div>
-                            <div class="form-group">
-                                <label>Email:</label>
-                                <label th:text="${flashUser.userName}"></label>
-                            </div>
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h2>You have successfully edited your account!</h2>
+                    <div class="card-block">
+                        <div class="form-group">
+                            <label>User name:</label>
+                            <label th:text="${flashUser.userName}"></label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 </html>

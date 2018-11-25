@@ -10,27 +10,12 @@
 
     <div layout:fragment="content">
         <div class="container">
-
-            <div class="card">
-                <div class="card-header">
-                    <h5>Confirmation</h5>
-                    <div class="card-block">
-                        <!--<div class="form-group">-->
-                            <!--<label>Concerned atlas:</label>-->
-                            <!--<label th:text="${area.atlas.id}"></label>-->
-                        <!--</div>-->
-                        <div class="form-group">
-                            <label>Area name:</label>
-                            <label th:text="${flashArea.name}"></label>
-                        </div>
-                        <div class="form-group">
-                            <label>Area nearest city:</label>
-                            <label th:text="${flashArea.nearestCity}"></label>
-                        </div>
-                    </div>
+            <div class="card-header">
+                <div class="card-body">
+                    <h4 style="color: red">You must have added at least one Atlas, so that you can add an Area in it.</h4>
                 </div>
-
             </div>
+
         </div>
     </div>
 
