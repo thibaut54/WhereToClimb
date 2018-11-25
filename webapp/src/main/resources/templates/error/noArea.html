@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+
+    <div layout:fragment="customCSS">
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/area.css}" />
+    </div>
+
+
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="card-header">
+                <div class="card-body">
+                    <h4 style="color: red">You must have added at least one Atlas, so that you can add an Area in it.</h4>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</html>
