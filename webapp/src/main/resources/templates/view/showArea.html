@@ -51,7 +51,7 @@
                                 <td th:text="${area.approachDuration}+' minutes'"></td>
                                 <td th:text="${area.altitude}+' meters'"></td>
                                 <td th:text="${area.parkingAccess==null or area.parkingAccess.equals('')}?'NC':${area.parkingAccess}"></td>
-                                <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and areasIds.contains(area.id)))}">
+                                <span th:if="${session.connectedUser!=null and (!session.role.contains('ROLE_ADMIN') and session.role.contains('ROLE_USER') and areasIds.contains(area.id))}">
                                     <td>
                                         <a th:href="@{/user/editArea(id=${area.id})}" data-toggle="tooltip" data-placement="top" title="Edit this area">
                                             <i class="icon fas fa-pencil-alt"></i>
@@ -59,7 +59,16 @@
                                     </td>
                                     <td>
                                         <form autocomplete="off" th:action="@{'/user/deleteArea/' + ${area.id}+'/'+${area.atlas.id}+'/'+${currentPage}+'/'+${size}}" method="post">
-                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Area?')" data-toggle="tooltip" data-placement="top" title="Delete this area">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Do you really want to delete this Area?')" data-toggle="tooltip" data-placement="top" title="Delete this area">
+                                                <i class="icon fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </span>
+                                <span th:if="${session.connectedUser!=null and session.role.contains('ROLE_ADMIN')}">
+                                    <td>
+                                        <form autocomplete="off" th:action="@{'/user/deleteArea/' + ${area.id}+'/'+${area.atlas.id}+'/'+${currentPage}+'/'+${size}}" method="post">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Do you really want to delete this Area?')" data-toggle="tooltip" data-placement="top" title="Delete this area">
                                                 <i class="icon fas fa-trash"></i>
                                             </button>
                                         </form>

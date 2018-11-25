@@ -45,7 +45,7 @@
                             <td th:text="${(pitch.length)/(pitch.nbAnchor+1)}+' meters'"></td>
                             <td th:text="${pitch.verticality}"></td>
                             <td th:text="${pitch.style==null or pitch.style.equals('')}?'NC':${pitch.style}"></td>
-                            <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and pitchesIds.contains(pitch.id)))}">
+                            <span th:if="${session.connectedUser!=null  and (!session.role.contains('ROLE_ADMIN') and session.role.contains('ROLE_USER') and pitchesIds.contains(pitch.id))}">
                                 <td>
                                     <a th:href="@{/user/editPitch(id=${pitch.id})}" data-toggle="tooltip" data-placement="top" title="Edit this Pitch">
                                         <i class="icon fas fa-pencil-alt"></i>
@@ -53,7 +53,16 @@
                                 </td>
                                 <td>
                                     <form autocomplete="off" th:action="@{'/user/deletePitch/' + ${pitch.id}+'/'+${pitch.route.id}+'/'+${currentPage}+'/'+${size}}" method="post">
-                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Pitch?')" data-toggle="tooltip" data-placement="top" title="Delete this Pitch">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Do you really want to delete this Pitch?')" data-toggle="tooltip" data-placement="top" title="Delete this Pitch">
+                                            <i class="icon fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </span>
+                            <span th:if="${session.connectedUser!=null and session.role.contains('ROLE_ADMIN')}">
+                                <td>
+                                    <form autocomplete="off" th:action="@{'/user/deletePitch/' + ${pitch.id}+'/'+${pitch.route.id}+'/'+${currentPage}+'/'+${size}}" method="post">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Do you really want to delete this Pitch?')" data-toggle="tooltip" data-placement="top" title="Delete this Pitch">
                                             <i class="icon fas fa-trash"></i>
                                         </button>
                                     </form>

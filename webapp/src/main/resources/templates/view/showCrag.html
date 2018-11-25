@@ -47,7 +47,7 @@
                                 <td th:text="${crag.routes.size()}"></td>
                                 <td th:text="${#temporals.format(crag.createDate, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${#temporals.format(crag.updateDate, 'yyyy-MM-dd')}"></td>
-                                <span th:if="${session.connectedUser!=null and (session.role.contains('ROLE_ADMIN') or (session.role.contains('ROLE_USER') and cragsIds.contains(crag.id)))}">
+                                <span th:if="${session.connectedUser!=null and (!session.role.contains('ROLE_ADMIN') and  session.role.contains('ROLE_USER') and cragsIds.contains(crag.id))}">
                                     <td>
                                         <a th:href="@{/user/editCrag(id=${crag.id})}" data-toggle="tooltip" data-placement="top" title="Edit this Crag">
                                             <i class="icon fas fa-pencil-alt"></i>
@@ -55,7 +55,16 @@
                                     </td>
                                     <td>
                                         <form autocomplete="off" th:action="@{'/user/deleteCrag/' + ${crag.id}+'/'+${crag.area.id}+'/'+${currentPage}+'/'+${size}}" method="post">
-                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Do you really want to delete this Crag?')" data-toggle="tooltip" data-placement="top" title="Delete this Crag">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Do you really want to delete this Crag?')" data-toggle="tooltip" data-placement="top" title="Delete this Crag">
+                                                <i class="icon fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </span>
+                                <span th:if="${session.connectedUser!=null and session.role.contains('ROLE_ADMIN')}">
+                                    <td>
+                                        <form autocomplete="off" th:action="@{'/user/deleteCrag/' + ${crag.id}+'/'+${crag.area.id}+'/'+${currentPage}+'/'+${size}}" method="post">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Do you really want to delete this Crag?')" data-toggle="tooltip" data-placement="top" title="Delete this Crag">
                                                 <i class="icon fas fa-trash"></i>
                                             </button>
                                         </form>
